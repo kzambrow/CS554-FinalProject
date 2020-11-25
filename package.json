@@ -1,0 +1,29 @@
+{
+    "name": "turnip_exchange",
+    "version": "1.0.0",
+    "description": "Final Project for CS554",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "concurrently \"npm run server\" \"npm run client\"",
+        "seed": "npm run seed --prefix server",
+        "server": "npm start --prefix server",
+        "client": "npm start --prefix client",
+        "client-install": "cd client && npm install",
+        "server-install": "cd server && npm install",
+        "install-all": "concurrently \"npm run server-install\" \"npm run client-install\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kzambrow/CS554-FinalProject.git"
+    },
+    "author": "Kamil Zambrowski, Paul Chua, Matthew Jaros, Yijie Yang, Yunxiang Fan",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/kzambrow/CS554-FinalProject/issues"
+    },
+    "homepage": "https://github.com/kzambrow/CS554-FinalProject#readme",
+    "dependencies": {
+        "concurrently":"^5.3.0"
+    }
+}
