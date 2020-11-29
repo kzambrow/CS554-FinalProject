@@ -6,6 +6,7 @@ import '../App.css';
 
 const Navigation = () => {
   const { currentUser } = useContext(AuthContext);
+  console.log(currentUser)
   return <div>{currentUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>;
 };
 
@@ -21,6 +22,11 @@ const NavigationAuth = () => {
         <li>
           <NavLink exact to="/account" activeClassName="active">
             Account
+          </NavLink>
+        </li>
+        <li>
+          <NavLink exact to="/chat" activeClassName="active">
+            Chat
           </NavLink>
         </li>
         <li>
