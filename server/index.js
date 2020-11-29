@@ -1,21 +1,29 @@
 const express = require('express');
-const http = require("http");
+const socket = require('socket.io');
 const app = express();
-const server = http.createServer(app);
-const socket = require("socket.io");
-const io = socket(server);
 const configRoutes = require('./routes');
 
-io.on('connection', socket => {
-  socket.emit("your id", socket.id);
-  socket.on("send message", body => {
-    io.broadcast.emit("message", body)
+server = app.listen(8080, function() {
+  console.log('socket server running on port 8080')
+});
+
+io = socket(server, {
+  cors: {
+    origin: '*'
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log(socket.id);
+
+  socket.on("SEND_MESSAGE", function(data){
+    io.emit("RECEIVE_MESSAGE", data);
   })
+
+  socket.on('disconnect', function() {
+    console.log("disconnect: ", socket.id);
   })
-
-server.listen(8000, () => console.log("socket server is running on port 8000"));
-
-
+})
 // app.use();
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));

@@ -1,24 +1,27 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
+import { AuthContext } from '../firebase/Auth';
 import io from "socket.io-client";
 
 
 const Chat = () => {
-    const [ID, setID] = useState();
+    const { currentUser } = useContext(AuthContext);
+    const [ID, setID] = useState("");
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const socketRef = useRef();
 
     useEffect(() => {
-        socketRef.current = io.connect('/', {transports: ['websocket']});
-        socketRef.current.on("your id", id=> {
-            setID(id);
-        })
-
-        socketRef.current.on("message", (message) => {
-            console.log("received message");
+        socketRef.current = io('http://localhost:8080', {
+            transports: ['websocket'],
+            upgrade: false
+        });
+        socketRef.current.on("RECEIVE_MESSAGE", function(message) {
             receivedMessage(message);
         })
+
+        
     })
+
 
     function receivedMessage(message) {
         setMessages(oldMessages => [...oldMessages, message]);
@@ -30,8 +33,8 @@ const Chat = () => {
             body: message,
             id: ID,
         };
+        socketRef.current.emit("SEND_MESSAGE", messageObject);
         setMessage("");
-        socketRef.current.emit("send message", messageObject);
     }
 
     function handleChange(e) {
