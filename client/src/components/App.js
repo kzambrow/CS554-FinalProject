@@ -5,6 +5,7 @@ import Account from './Account';
 import Landing from './Landing';
 import Navigation from './Navigation';
 import SignIn from './SignIn';
+import Chat from './Chat';
 import SignUp from './SignUp';
 import { AuthProvider } from '../firebase/Auth';
 import PrivateRoute from './PrivateRoute';
@@ -20,6 +21,7 @@ function App() {
         </div>
         <Route exact path="/" component={Landing} />
         <PrivateRoute path="/account" component={Account} />
+        <PrivateRoute path="/chat" component={Chat}/>
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
       </Router>
