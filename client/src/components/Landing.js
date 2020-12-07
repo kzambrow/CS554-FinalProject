@@ -50,8 +50,7 @@ const Landing = (props) => {
 		console.log('on load useeffect');
 		async function fetchData() {
 			try {
-				//Changing this to load based off page number given
-				//Change to get from database
+				//Assuming this is the address of the database (Will change if different)
 				const { data } = await axios.get('http://localhost:3000/posts');
 				setShowsData(data);
 				setLoading(false);
@@ -130,7 +129,7 @@ const Landing = (props) => {
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
 					<CardActionArea>
-						<Link to={`/posts/${show.id}`}>
+						
 							<CardMedia
 								className={classes.media}
 								component='img'
@@ -141,7 +140,7 @@ const Landing = (props) => {
 							<CardContent>
 		
 								<Typography variant='body2' color='textSecondary' component='p'>
-									{show.buying ? "Buying": "Selling"}
+									Type: {show.sellTag ? "Selling": "Buying"}
 									Price: {show.price}
 									Ticket Price: {show.ticketPrice}
 									Rating: {show.rating}
@@ -149,7 +148,7 @@ const Landing = (props) => {
 									expirationTime: {show.ExpirationTime}
 								</Typography>
 							</CardContent>
-						</Link>
+						
 					</CardActionArea>
 				</Card>
 			</Grid>
