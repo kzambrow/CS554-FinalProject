@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
-import noImage from '../img/download.jpeg';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
 
 import '../App.css';
@@ -130,12 +130,6 @@ const Landing = (props) => {
 				<Card className={classes.card} variant='outlined'>
 					<CardActionArea>
 						
-							<CardMedia
-								className={classes.media}
-								component='img'
-								image={show.image && show.image.original ? show.image.original : noImage}
-								title='show image'
-							/>
 
 							<CardContent>
 		
@@ -179,7 +173,7 @@ const Landing = (props) => {
 	} else if(pageData.page >= 1) {
 		return (
 			<div>
-				<SearchShows searchValue={searchValue} />
+			
 				<br />
 				<br />
 		
@@ -194,7 +188,7 @@ const Landing = (props) => {
 		return (
 			//This only appears on Page 1 
 			<div>
-				<SearchShows searchValue={searchValue} />
+				
 				<br />
 				<br />
 		

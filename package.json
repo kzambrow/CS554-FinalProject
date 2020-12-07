@@ -24,7 +24,7 @@
     },
     "homepage": "https://github.com/kzambrow/CS554-FinalProject#readme",
     "dependencies": {
-        "all": "^0.0.0",
+        "all": "0.0.0",
         "concurrently": "^5.3.0",
         "express": "^4.17.1",
         "socket.io": "^3.0.3"
