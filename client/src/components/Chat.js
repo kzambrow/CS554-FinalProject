@@ -17,19 +17,24 @@ const Chat = () => {
         });
         socketRef.current.on("RECEIVE_MESSAGE", function(message) {
             receivedMessage(message);
-        })
+        });
+        return () => {
+            socketRef.current.off("disconnect");
+        };
 
         
-    })
+    }, [setMessages])
 
 
     function receivedMessage(message) {
         setMessages(oldMessages => [...oldMessages, message]);
+        console.log(message);
     }
 
     function sendMessage(e) {
         e.preventDefault();
         const messageObject = {
+            name: currentUser.displayName,
             body: message,
             id: ID,
         };
@@ -48,7 +53,7 @@ const Chat = () => {
                         return (
                             <div key={index}>
                                 <div>
-                                    {message.body}
+                                    {message.name + ": " + message.body}
                                 </div>
                             </div>
                         )
