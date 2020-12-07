@@ -98,12 +98,12 @@ function SignIn() {
           Forgot Password
         </button>
         </form>
-
+        <SocialSignIn />
 
       </div>
 
       <br />
-      <SocialSignIn />
+      
     </div>
   );
 }
