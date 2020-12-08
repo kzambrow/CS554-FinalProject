@@ -14,8 +14,9 @@ const NavigationAuth = () => {
   return (
     <nav className="navigation">
       <ul>
+      
         <li>
-          <NavLink exact to="/" activeClassName="active">
+          <NavLink exact to="/" activeClassName="active" className="logo">
             Landing
           </NavLink>
         </li>

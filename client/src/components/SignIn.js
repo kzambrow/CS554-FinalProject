@@ -36,10 +36,11 @@ function SignIn() {
     return <Redirect to="/home" />;
   }
   return (
-    <div>
-      <h1>Log in</h1>
-      <form onSubmit={handleLogin}>
-        <div className="form-group">
+    <div >
+      {/* <h1>Log in</h1> */}
+      {/* <p className="sign" align="cneter">Log in</p>
+      <form className="log-in form1" onSubmit={handleLogin}>
+        <div className="form-group log-in-form" aligh="center">
           <label>
             Email:
             <input
@@ -64,15 +65,45 @@ function SignIn() {
             />
           </label>
         </div>
-        <button type="submit">Log in</button>
+        <button type="submit" aligh="center">Log in</button>
 
         <button className="forgotPassword" onClick={passwordReset}>
           Forgot Password
         </button>
-      </form>
+      </form> */}
+      <div className="signin-main">
+        <p className="sign" align="center">Sign in</p>
+        <form className="form1" onSubmit={handleLogin}>
+          <input
+            className="un form-control"
+            type="email"
+            align="center"
+            placeholder="Email"
+            name="email"
+            id="email"
+            required
+          />
+          <input 
+          className="pass form-control" 
+          type="password" 
+          align="center" 
+          placeholder="Password" 
+          name="password"
+          required
+          />
+          <button className="submit" align="center">Sign in</button>
+          <br/>
+          <br/>
+          <button className="forgot" onClick={passwordReset}>
+          Forgot Password
+        </button>
+        </form>
+        <SocialSignIn />
+
+      </div>
 
       <br />
-      <SocialSignIn />
+      
     </div>
   );
 }
