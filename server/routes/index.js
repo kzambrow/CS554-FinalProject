@@ -1,8 +1,7 @@
 const postRoutes = require("./posts");
 const userRoutes = require("./users");
-const logoutRoutes = require("./logout");
-const profileRoutes = require("./profile");
-const postRoutes = require("./post");
+// const logoutRoutes = require("./logout");
+// const profileRoutes = require("./profile");
 
 const constructorMethod = (app) => {
 
@@ -12,12 +11,12 @@ const constructorMethod = (app) => {
 
     next();
   }
-  app.use("/register", registerRoutes);
-  app.use("/login", loginRoutes);
-  app.use("/logout", logoutRoutes);
-  app.use("/profile", profileRoutes);
+//   app.use("/register", registerRoutes);
+//   app.use("/login", loginRoutes);
+//   app.use("/logout", logoutRoutes);
+  app.use("/user", userRoutes);
   app.use("/post", postRoutes);
-//   app.use(logRequestDetail);
+  app.use(logRequestDetail);
 
 //   app.use('/api/property', propertyRoutes);
 //   app.use('/api/user', userRoutes);

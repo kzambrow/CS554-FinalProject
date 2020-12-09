@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb');
 const users = mongoCollections.users;
 
 module.exports = {
-    async addNewUser(email, displayName) {
+    async addUser(email, displayName) {
         try {
             const userCollection = await users();
             const newUser = {

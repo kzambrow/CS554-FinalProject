@@ -5,12 +5,12 @@ const { ObjectId } = require('mongodb');
 module.exports = {
     async getAllSell(){
         const postCollection = await posts();
-        postCollection.remove( { endTime : {"$lt" : new Date() } });
+        await postCollection.remove( { endTime : {"$lt" : new Date() } });
         return postCollection.find({sell:true}).toArray();
     },
     async getAllBuy(){
         const postCollection = await posts();
-        postCollection.remove( { endTime : {"$lt" : new Date() } });
+        await postCollection.remove( { endTime : {"$lt" : new Date() } });
         return postCollection.find({sell:false}).toArray();
     },
     async addPost(price, userId, ticketPrice, islandCode, sellTag, description, endTime){
@@ -26,17 +26,19 @@ module.exports = {
                 comments: []
             }
             const postCollection = await posts();
-            const insertPost = await postCollection.insertOne(newProject);
+            const exist = await postCollection.findOne({creator: userId});
+            if(exist) throw 'The user already has an active post'
+            const insertPost = await postCollection.insertOne(newPost);
             if (insertPost.insertedCount === 0) throw 'Could not add post';
-            const newId = insertInfo.insertedId;
-            return await this.getPost(newId);
+            const newId = insertPost.insertedId;
+            return newId;
         }catch(error){
-            throw 'Fail to add new post'
+            throw error;
         }
     },
     async deletePost(postId){
         const postCollection = await posts();
-        postCollection.deleteOne({_id: ObjectId(postId)});
+        await postCollection.deleteOne({_id: ObjectId(postId)});
     },
     async addComment(postId, name, comment) {
         try {
@@ -62,6 +64,13 @@ module.exports = {
         } catch (error) {
             throw 'Fail to add comment'
         }
+    },
+
+    async findPostByUser(userId){
+        const postCollection = await posts();
+        const post = postCollection.findOne({creator: userId});
+        if(post) return post;
+        else throw 'The user does not have active post'
     }
 
     
