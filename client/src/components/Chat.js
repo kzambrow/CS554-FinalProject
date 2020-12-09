@@ -1,6 +1,7 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import { AuthContext } from '../firebase/Auth';
 import io from "socket.io-client";
+import '../App.css';
 
 
 const Chat = () => {
@@ -29,6 +30,7 @@ const Chat = () => {
     function receivedMessage(message) {
         setMessages(oldMessages => [...oldMessages, message]);
         console.log(message);
+        scrollDown();
     }
 
     function sendMessage(e) {
@@ -45,18 +47,40 @@ const Chat = () => {
     function handleChange(e) {
         setMessage(e.target.value);
     }
+
+    function scrollDown() {
+        var objDiv = document.getElementById("chat");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
     return (
         <div>
-            <div>
+            <div id="chat" class="chat-box">
                 {messages.map((message, index) => {
                     if (message.id === ID) {
-                        return (
-                            <div key={index}>
-                                <div>
-                                    {message.name + ": " + message.body}
+                        if (currentUser.displayName === message.name) {
+                            return (
+                                <div key={index}>
+                                    <div class="chat-user">
+                                        {message.name}
+                                        <br/>
+                                        {message.body}
+                                        <br/>
+                                    </div>
                                 </div>
-                            </div>
-                        )
+                            )
+                        } else {
+                            return (
+                                <div key={index}>
+                                    <div class="chat-other">
+                                        {message.name}
+                                        <br/>
+                                        {message.body}
+                                        <br/>
+                                    </div>
+                                </div>
+                            )
+                        }
+                        
                     }
                     return (
                         <div>
@@ -68,8 +92,8 @@ const Chat = () => {
                 })}
             </div>
             <form onSubmit={sendMessage}>
-                <textarea value={message} onChange={handleChange} placeholder="Message..." />
-                <button>Send</button>
+                <textarea class="chat-text-field" value={message} onChange={handleChange} placeholder="Message..." />
+                <button class="chat-submit">Send</button>
             </form>
         </div>
     )
