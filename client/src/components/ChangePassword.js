@@ -34,52 +34,46 @@ function ChangePassword() {
   };
   if (currentUser.providerData[0].providerId === 'password') {
     return (
-      <div>
+      <div className="signin-main">
         {pwMatch && <h4 className="error">{pwMatch}</h4>}
-        <h2>Change Password</h2>
-        <form onSubmit={submitForm}>
+        <p className="sign" align="center">Change Password</p>
+        <form className = "form3" onSubmit={submitForm}>
           <div className="form-group">
-            <label>
-              Current Password:
-              <input
-                className="form-control"
-                name="currentPassword"
-                id="currentPassword"
-                type="password"
-                placeholder="Current Password"
-                required
-              />
-            </label>
+          <input
+            className="pass form-control"
+            type="password"
+            align="center"
+            placeholder="Current Password"
+            name="current-password"
+            id="current-password"
+            required
+          />
           </div>
 
           <div className="form-group">
-            <label>
-              New Password:
-              <input
-                className="form-control"
-                name="newPasswordOne"
-                id="newPasswordOne"
-                type="password"
-                placeholder="Password"
-                required
-              />
-            </label>
+            <input
+              className="pass form-control"
+              type="password"
+              align="center"
+              placeholder="New Password"
+              name="new-password"
+              id="new-password"
+              required
+            />
           </div>
           <div className="form-group">
-            <label>
-              Confirm New Password:
-              <input
-                className="form-control"
-                name="newPasswordTwo"
-                id="newPasswordTwo"
-                type="password"
-                placeholder="Confirm Password"
-                required
-              />
-            </label>
+            <input
+              className="pass form-control"
+              type="password"
+              align="center"
+              placeholder="Confirm New Password"
+              name="confirm-new-password"
+              id="confirm-new-password"
+              required
+            />
           </div>
 
-          <button type="submit">Change Password</button>
+          <button className = "submit" align ="center" type="submit">Change Password</button>
         </form>
         <br />
       </div>
