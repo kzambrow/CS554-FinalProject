@@ -1,10 +1,18 @@
 const express = require('express');
 const socket = require('socket.io');
 const app = express();
+const bodyParser = require('body-parser');
 const configRoutes = require('./routes');
 
-server = app.listen(8080, function() {
-  console.log('socket server running on port 8080')
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.set('view engine', 'handlebars');
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+
+configRoutes(app);
+server = app.listen(5000, function() {
+  console.log('socket server running on port 5000')
 });
 
 io = socket(server, {

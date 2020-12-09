@@ -1,7 +1,7 @@
 const postData = require("./posts");
-const commentata = require("./comments")
+const userData = require("./users")
 
 module.exports = {
   posts: postData,
-  comments: commentata
+  users: userData
 };
