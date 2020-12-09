@@ -30,60 +30,53 @@ function SignUp() {
   }
 
   return (
-    <div>
-      <h1>Sign up</h1>
+    <div className="signin-main">
+      <p className="sign" align="center">Sign Up</p>
       {pwMatch && <h4 className="error">{pwMatch}</h4>}
-      <form onSubmit={handleSignUp}>
+      <form className ="form2" onSubmit={handleSignUp}>
         <div className="form-group">
-          <label>
-            Name:
-            <input
-              className="form-control"
-              required
-              name="displayName"
-              type="text"
-              placeholder="Name"
-            />
-          </label>
+          <input
+            className="un form-control"
+            type="Username"
+            align="center"
+            placeholder="Username"
+            name="Username"
+            id="Username"
+            required
+          />
         </div>
         <div className="form-group">
-          <label>
-            Email:
-            <input
-              className="form-control"
-              required
-              name="email"
+          <input
+              className="un form-control"
               type="email"
+              align="center"
               placeholder="Email"
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Password:
-            <input
-              className="form-control"
-              id="passwordOne"
-              name="passwordOne"
-              type="password"
-              placeholder="Password"
+              name="email"
+              id="email"
               required
             />
-          </label>
         </div>
         <div className="form-group">
-          <label>
-            Confirm Password:
-            <input
-              className="form-control"
-              name="passwordTwo"
-              type="password"
-              placeholder="Confirm Password"
-              required
+          <input 
+            className="pass form-control" 
+            type="password" 
+            align="center" 
+            placeholder="Password" 
+            name="password"
+            required
             />
-          </label>
         </div>
-        <button id="submitButton" name="submitButton" type="submit">
+        <div className="form-group">
+          <input 
+            className="pass form-control" 
+            type="password" 
+            align="center" 
+            placeholder="Confirm Password" 
+            name="confirm-password"
+            required
+            />
+        </div>
+        <button className = "submit" id="submitButton" name="submitButton" type="submit">
           Sign Up
         </button>
       </form>

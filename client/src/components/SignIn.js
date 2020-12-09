@@ -72,7 +72,7 @@ function SignIn() {
         </button>
       </form> */}
       <div className="signin-main">
-        <p className="sign" align="center">Sign in</p>
+        <p className="sign" align="center">Sign In</p>
         <form className="form1" onSubmit={handleLogin}>
           <input
             className="un form-control"
@@ -91,19 +91,17 @@ function SignIn() {
           name="password"
           required
           />
-          <button className="submit" align="center">Sign in</button>
+          <button className="submit" align="center">Sign In</button>
           <br/>
           <br/>
           <button className="forgot" onClick={passwordReset}>
           Forgot Password
         </button>
         </form>
+        <br />
         <SocialSignIn />
-
       </div>
-
       <br />
-      
     </div>
   );
 }
