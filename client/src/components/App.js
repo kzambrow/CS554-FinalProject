@@ -19,8 +19,8 @@ function App() {
             <Navigation />
           </header>
         </div>
-        <Route exact path="/" component={Landing} />
-        <PrivateRoute path="/account" component={Account} />
+        <Route exact path="/:pagenum" component={Landing} />
+        <PrivateRoute path="/account/:pagenum" component={Account} />
         <PrivateRoute path="/chat" component={Chat} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />

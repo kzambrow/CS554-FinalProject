@@ -42,13 +42,29 @@ const Landing = (props) => {
 	const [ loading, setLoading ] = useState(true);
 	const [ searchData, setSearchData ] = useState(undefined);
 	const [ showsData, setShowsData ] = useState(undefined);
+	const [ profileData, setProfileData ] = useState(undefined);
 	const [ searchTerm, setSearchTerm ] = useState('');
+	const [isProfile, setIsProfile] = useState(props.isProfile); 
 	const [pageData, setPageData] = useState({
 		page: parseInt(props.match.params.pagenum),
 		next: 1,
 		previous: null
 	  });
 	let card = null;
+
+	if (isProfile){
+		async function fetchDataProfile() {
+			try {
+				//getting data for user profile only
+				const { data } = await axios.get('http://localhost:3000/posts');
+				setProfileData(data);
+				setLoading(false);
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		fetchDataProfile();
+	}
 
 	useEffect(() => {
 		console.log('on load useeffect');
