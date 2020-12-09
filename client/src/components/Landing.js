@@ -52,19 +52,19 @@ const Landing = (props) => {
 	  });
 	let card = null;
 
-	if (isProfile){
-		async function fetchDataProfile() {
-			try {
-				//getting data for user profile only
-				const { data } = await axios.get('http://localhost:3000/posts');
-				setProfileData(data);
-				setLoading(false);
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		fetchDataProfile();
-	}
+	// if (isProfile){
+	// 	async function fetchDataProfile() {
+	// 		try {
+	// 			//getting data for user profile only
+	// 			const { data } = await axios.get('http://localhost:3000/posts');
+	// 			setProfileData(data);
+	// 			setLoading(false);
+	// 		} catch (e) {
+	// 			console.log(e);
+	// 		}
+	// 	}
+	// 	fetchDataProfile();
+	// }
 
 	useEffect(() => {
 		console.log('on load useeffect');
@@ -78,8 +78,22 @@ const Landing = (props) => {
 				console.log(e);
 			}
 		}
-		fetchData();
-	}, [props.match.params.pagenum]);
+		async function fetchDataProfile() {
+			try {
+				//getting data for user profile
+				const { data } = await axios.get('http://localhost:3000/posts');
+				setProfileData(data);
+				setLoading(false);
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		if(isProfile === true){
+			fetchDataProfile();
+		}else{
+			fetchData();
+		}
+	}, [props.match.params.pagenum, isProfile]);
 
 	//set Data for the previous Page
 	
@@ -182,7 +196,14 @@ const Landing = (props) => {
 				let { show } = shows;
 				return buildCard(show);
 			});
-	} else {
+	}else if(profileData){
+		card =
+		profileData &&
+		profileData.map((shows) => {
+			let { show } = shows;
+			return buildCard(show);
+		});
+	}else {
 		card =
 			showsData &&
 			showsData.map((show) => {

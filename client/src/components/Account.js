@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import SignOutButton from './SignOut'
 import '../App.css'
 import ChangePassword from './ChangePassword'
-import ProfilePostings from './ProfilePosts'
 import Landing from './Landing'; 
 
 function Account(props){
