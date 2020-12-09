@@ -1,13 +1,14 @@
 const dbConnection = require('../config/mongoConnection');
 const data = require('../data/');
-const users = data.posts;
-const projects = data.comments;
+const users = data.users;
+const posts = data.posts;
 
 
 async function main(){
     const db = await dbConnection();
     await db.dropDatabase();
     
+
 
     
     await db.serverConfig.close();

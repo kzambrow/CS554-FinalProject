@@ -3,8 +3,8 @@ const socket = require('socket.io');
 const app = express();
 const configRoutes = require('./routes');
 
-server = app.listen(8080, function() {
-  console.log('socket server running on port 8080')
+server = app.listen(5000, function() {
+  console.log('socket server running on port 5000')
 });
 
 io = socket(server, {
