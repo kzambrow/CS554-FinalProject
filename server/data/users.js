@@ -20,14 +20,15 @@ module.exports = {
 
         }
     },
-    async addStar(userId){
+    async addStar(id){
         const userCollection = await users();
-        userCollection.update( { _id: ObjectId(userId) },{ $inc: { star: 1 }});
+        const updateUser = await userCollection.updateOne( { _id: ObjectId(id) },{ $inc: { star: 1 }});
+        return updateUser;
     },
-    async getUser(){
+    async getUser(id){
         const userCollection = await users();
-        const user = userCollection.findOne({ _id: new ObjectId(id) });
-        if(user) return {displayName: user.displayName, star: user.star};
+        const user = await userCollection.findOne({ _id: new ObjectId(id) });
+        if(user) return { displayName: user.displayName, star: user.star};
         throw 'User not found';
     }
     

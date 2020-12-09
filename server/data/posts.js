@@ -5,12 +5,12 @@ const { ObjectId } = require('mongodb');
 module.exports = {
     async getAllSell(){
         const postCollection = await posts();
-        await postCollection.remove( { endTime : {"$lt" : new Date() } });
+        await postCollection.deleteMany( { endTime : {"$lt" : new Date() } });
         return postCollection.find({sell:true}).toArray();
     },
     async getAllBuy(){
         const postCollection = await posts();
-        await postCollection.remove( { endTime : {"$lt" : new Date() } });
+        await postCollection.deleteMany( { endTime : {"$lt" : new Date() } });
         return postCollection.find({sell:false}).toArray();
     },
     async addPost(price, userId, ticketPrice, islandCode, sellTag, description, endTime){
@@ -31,6 +31,7 @@ module.exports = {
             const insertPost = await postCollection.insertOne(newPost);
             if (insertPost.insertedCount === 0) throw 'Could not add post';
             const newId = insertPost.insertedId;
+            // console.log(newId);
             return newId;
         }catch(error){
             throw error;
@@ -38,7 +39,9 @@ module.exports = {
     },
     async deletePost(postId){
         const postCollection = await posts();
-        await postCollection.deleteOne({_id: ObjectId(postId)});
+        const deletePost = await postCollection.deleteOne({_id: ObjectId(postId)});
+        if(deletePost.deleteCount === 0) throw 'Could not delete post';
+        return true;
     },
     async addComment(postId, name, comment) {
         try {
@@ -56,7 +59,7 @@ module.exports = {
                 if (updatePost.modifiedCount === 0) {
                     throw 'Fail to add new comment'
                 } else {
-                    return await postCollection.findOne({ _id: ObjectId(postId) });
+                    return (await this.findPostById(postId)).comments;
                 }
             } else {
                 throw 'Post not found';
@@ -71,7 +74,13 @@ module.exports = {
         const post = postCollection.findOne({creator: userId});
         if(post) return post;
         else throw 'The user does not have active post'
-    }
+    },
 
+    async findPostById(id){
+        const postCollection = await posts();
+        const post = postCollection.findOne({_id: ObjectId(id)});
+        if(post) return post;
+        else throw 'Post not found'
+    },
     
 }
