@@ -12,7 +12,7 @@ const Chat = () => {
     const socketRef = useRef();
 
     useEffect(() => {
-        socketRef.current = io('http://localhost:8080', {
+        socketRef.current = io('http://localhost:5000', {
             transports: ['websocket'],
             upgrade: false
         });
