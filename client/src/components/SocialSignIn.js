@@ -15,11 +15,15 @@ const SocialSignIn = () => {
         onClick={() => socialSignOn('google')}
         alt="google signin"
         src="/imgs/btn_google_signin.png"
+        width = "190"
+        height = "46"
       />
       <img
         onClick={() => socialSignOn('facebook')}
-        alt="google signin"
-        src="/imgs/facebook_signin.png"
+        alt= "facebook signin"
+        src= "/imgs/btn_facebook_signin.png"
+        width = "190"
+        height = "43"
       />
     </div>
   );

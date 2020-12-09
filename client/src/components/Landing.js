@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-//import noImage from '../img/download.jpeg';
+import noImage from '../img/no-image.png';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
-
+import SearchShows from './SearchShows';
 import '../App.css';
+
+const axios = require('axios');
+
+
 const useStyles = makeStyles({
 	card: {
 		maxWidth: 250,
