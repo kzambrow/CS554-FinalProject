@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 		fontSize: 12
 	}
 });
-const Landing = (props) => {
+const Landings = (props) => {
 	const regex = /(<([^>]+)>)/gi;
 	const classes = useStyles();
 	const [ buying, setBuying ] = useState(true);
@@ -55,7 +55,7 @@ const Landing = (props) => {
 		async function fetchData() {
 			try {
 				//Assuming this is the address of the database (Will change if different)
-				const { data } = await axios.get('http://localhost:5000/post/buy');
+				const { data } = await axios.get('http://localhost:5000/post/sell');
 				setShowsData(data);
 				setLoading(false);
 			} catch (e) {
@@ -184,7 +184,7 @@ const Landing = (props) => {
 				
 				<br />
 				<br />
-				<Button> <Link to =  {"/sell" }> Selling </Link> </Button>
+                <Button> <Link to =  {"/" }> Buying </Link> </Button>
 				{DoPagination}
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
@@ -198,7 +198,8 @@ const Landing = (props) => {
 			<div>
 				<br />
 				<br />
-				<Button> <Link to =  {"/sell" }> Selling </Link> </Button>
+                
+				<Button> <Link to =  {"/" }> Buying </Link> </Button>
 				{DoPaginationf}
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
@@ -208,4 +209,4 @@ const Landing = (props) => {
 	}
 };
 
-export default Landing;
+export default Landings;
