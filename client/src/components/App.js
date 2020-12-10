@@ -3,6 +3,7 @@ import '../App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Account from './Account';
 import Landing from './Landing';
+import Landings from './Landings';
 import Navigation from './Navigation';
 import SignIn from './SignIn';
 import Chat from './Chat';
@@ -20,6 +21,7 @@ function App() {
           </header>
         </div>
         <Route exact path="/" component={Landing} />
+        <Route exact path = "/sell" component = {Landings}/>
         <PrivateRoute path="/account" component={Account} />
         <PrivateRoute path="/chat" component={Chat} />
         <Route path="/signin" component={SignIn} />

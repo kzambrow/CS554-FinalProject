@@ -36,16 +36,13 @@ const useStyles = makeStyles({
 		fontSize: 12
 	}
 });
-const Landing = (props) => {
+const Landings = (props) => {
 	const regex = /(<([^>]+)>)/gi;
 	const classes = useStyles();
-	const [ loading, setLoading ] = useState(true);
 	const [ buying, setBuying ] = useState(true);
-	const [ searchData, setSearchData ] = useState(undefined);
+ 	const [ loading, setLoading ] = useState(true);
 	const [ showsData, setShowsData ] = useState(undefined);
-	const [ profileData, setProfileData ] = useState(undefined);
 	const [ searchTerm, setSearchTerm ] = useState('');
-	const [isProfile, setIsProfile] = useState(props.isProfile); 
 	const [pageData, setPageData] = useState({
 		page: parseInt(props.match.params.pagenum),
 		next: 1,
@@ -54,26 +51,12 @@ const Landing = (props) => {
 	let card = null;
 
 	useEffect(() => {
-		//getting data for user profile
-		async function fetchDataProfile() {
-			try {
-				//getting data for main page
-				const { data } = await axios.get('http://localhost:3000/posts');
-				setProfileData(data);
-				setLoading(false);
-			} catch (e) {
-				console.log(e);
-			}
-		}
-		fetchDataProfile();
-	}, [isProfile]);
-
-	useEffect(() => {
+		console.log('on load useeffect');
 		async function fetchData() {
 			try {
-				//getting data for main page
-				const { data } = await axios.get('http://localhost:3000/posts/buy');
-				setShowData(data);
+				//Assuming this is the address of the database (Will change if different)
+				const { data } = await axios.get('http://localhost:5000/post/sell');
+				setShowsData(data);
 				setLoading(false);
 			} catch (e) {
 				console.log(e);
@@ -83,25 +66,26 @@ const Landing = (props) => {
 	}, [props.match.params.pagenum]);
 
 	//set Data for the previous Page
+
 	const setPrevPage = () => {
 		if (pageData.page >= 1) {
 		  const prevData = {
 			next: pageData.page,
 			previous: pageData.page - 2,
 			page: pageData.page - 1,
-			
+
 		  };
 		  setPageData(prevData);
 		}
 	  };
-	
+
 	  // Set Data for next Page
 	  const setNextPage = () => {
 		  const nextData = {
 			previous: pageData.page,
 			next: pageData.page + 2,
 			page: pageData.page + 1,
-			
+
 		  };
 		  setPageData(nextData);
 	  };
@@ -111,17 +95,17 @@ const Landing = (props) => {
 		<Button>
         <Link
           className="btn btn-dark"
-          to={"/shows/page/" + pageData.previous}
+          to={"/page/" + pageData.previous}
           onClick={setPrevPage}
         >
           Previous
         </Link>
 		</Button>
-		
+
 		<Button>
         <Link
           className="btn btn-dark"
-          to={"/shows/page/" + pageData.next}
+          to={"/page/" + pageData.next}
           onClick={setNextPage}
         >
           Next
@@ -134,22 +118,20 @@ const Landing = (props) => {
 		<Button>
         <Link
           className="btn btn-dark"
-          to={"/shows/page/" + pageData.next}
+          to={"/page/" + pageData.next}
           onClick={setNextPage}
         >
           Next
         </Link>
 		</Button>
 	  );
-	const searchValue = async (value) => {
-		setSearchTerm(value);
-	};
+
 	const buildCard = (show) => {
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
 					<CardActionArea>
-						
+
 							<CardMedia
 								className={classes.media}
 								component='img'
@@ -158,44 +140,37 @@ const Landing = (props) => {
 							/>
 
 							<CardContent>
-		
+
 								<Typography variant='body2' color='textSecondary' component='p'>
-									Type: {show.sellTag ? "Selling": "Buying"}
+									Type: {show.sell? "Selling": "Buying"}
+									<br></br>
+									Posted by: {show.creator} 
+									<br></br>
 									Price: {show.price}
+									<br></br>
 									Ticket Price: {show.ticketPrice}
+									<br></br>
 									Rating: {show.rating}
+									<br></br>
 									datePosted: {show.Date}
-									expirationTime: {show.ExpirationTime}
+									<br></br>
+									expirationTime: {show.endTime}
 								</Typography>
 							</CardContent>
-						
+
 					</CardActionArea>
 				</Card>
 			</Grid>
 		);
 	};
 
-	if (searchTerm) {
-		card =
-			searchData &&
-			searchData.map((shows) => {
-				let { show } = shows;
-				return buildCard(show);
-			});
-	}else if(profileData){
-		card =
-		profileData &&
-		profileData.map((shows) => {
-			let { show } = shows;
-			return buildCard(show);
-		});
-	}else {
+
 		card =
 			showsData &&
 			showsData.map((show) => {
 				return buildCard(show);
 			});
-	}
+
 
 	if (loading) {
 		return (
@@ -206,10 +181,10 @@ const Landing = (props) => {
 	} else if(pageData.page >= 1) {
 		return (
 			<div>
-				<SearchShows searchValue={searchValue} />
+
 				<br />
 				<br />
-		
+                <Button> <Link to =  {"/" }> Buying </Link> </Button>
 				{DoPagination}
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
@@ -221,10 +196,10 @@ const Landing = (props) => {
 		return (
 			//This only appears on Page 1 
 			<div>
-				<SearchShows searchValue={searchValue} />
 				<br />
 				<br />
-		
+
+				<Button> <Link to =  {"/" }> Buying </Link> </Button>
 				{DoPaginationf}
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
@@ -234,4 +209,4 @@ const Landing = (props) => {
 	}
 };
 
-export default Landing;
+export default Landings;
