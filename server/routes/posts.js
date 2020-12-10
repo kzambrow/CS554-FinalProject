@@ -8,9 +8,9 @@ const { ObjectId } = require('mongodb');
 router.get("/sell", async (req, res) => {
     try{
         const postList = await posts.getAllSell();
-        res.json(postList);
+        res.send(postList);
     }catch(error){
-        res.send(error);
+
     }
 });
 

@@ -1,6 +1,5 @@
 const postRoutes = require("./posts");
 const userRoutes = require("./users");
-var cors = require('cors');
 // const logoutRoutes = require("./logout");
 // const profileRoutes = require("./profile");
 
@@ -15,7 +14,6 @@ const constructorMethod = (app) => {
 //   app.use("/register", registerRoutes);
 //   app.use("/login", loginRoutes);
 //   app.use("/logout", logoutRoutes);
-  app.use(cors());
   app.use("/user", userRoutes);
   app.use("/post", postRoutes);
   app.use(logRequestDetail);
