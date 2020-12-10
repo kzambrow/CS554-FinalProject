@@ -20,7 +20,7 @@ function App() {
           </header>
         </div>
         <Route exact path="/" component={Landing} />
-        <PrivateRoute path="/account/:pagenum" component={Account} />
+        <PrivateRoute path="/account" component={Account} />
         <PrivateRoute path="/chat" component={Chat} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />

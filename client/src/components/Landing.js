@@ -52,35 +52,11 @@ const Landing = (props) => {
 	  });
 	let card = null;
 
-	// if (isProfile){
-	// 	async function fetchDataProfile() {
-	// 		try {
-	// 			//getting data for user profile only
-	// 			const { data } = await axios.get('http://localhost:3000/posts');
-	// 			setProfileData(data);
-	// 			setLoading(false);
-	// 		} catch (e) {
-	// 			console.log(e);
-	// 		}
-	// 	}
-	// 	fetchDataProfile();
-	// }
-
 	useEffect(() => {
-		console.log('on load useeffect');
-		async function fetchData() {
-			try {
-				//Assuming this is the address of the database (Will change if different)
-				const { data } = await axios.get('http://localhost:3000/posts');
-				setShowsData(data);
-				setLoading(false);
-			} catch (e) {
-				console.log(e);
-			}
-		}
+		//getting data for user profile
 		async function fetchDataProfile() {
 			try {
-				//getting data for user profile
+				//getting data for main page
 				const { data } = await axios.get('http://localhost:3000/posts');
 				setProfileData(data);
 				setLoading(false);
@@ -88,15 +64,24 @@ const Landing = (props) => {
 				console.log(e);
 			}
 		}
-		if(isProfile === true){
-			fetchDataProfile();
-		}else{
-			fetchData();
+		fetchDataProfile();
+	}, [isProfile]);
+
+	useEffect(() => {
+		async function fetchData() {
+			try {
+				//getting data for main page
+				const { data } = await axios.get('http://localhost:3000/posts');
+				setShowData(data);
+				setLoading(false);
+			} catch (e) {
+				console.log(e);
+			}
 		}
-	}, [props.match.params.pagenum, isProfile]);
+		fetchData();
+	}, [props.match.params.pagenum]);
 
 	//set Data for the previous Page
-	
 	const setPrevPage = () => {
 		if (pageData.page >= 1) {
 		  const prevData = {
