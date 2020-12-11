@@ -7,9 +7,9 @@ module.exports = {
         try {
             const userCollection = await users();
             const exist = await userCollection.findOne({ email: email.toLowerCase() });
-            if(exist){
+            if (exist) {
                 return exist._id;
-            }else{
+            } else {
                 const newUser = {
                     _id: email.toLowerCase(),
                     displayName: displayName,
@@ -25,22 +25,39 @@ module.exports = {
 
         }
     },
-    async addStar(id){
+    async addStar(email) {
         const userCollection = await users();
-        const updateUser = await userCollection.updateOne( { _id: ObjectId(id) },{ $inc: { star: 1 }});
+        const updateUser = await userCollection.updateOne({ _id: email.toLowerCase() }, { $inc: { star: 1 } });
         return updateUser;
     },
-    async getUser(id){
+    async getUser(email) {
         const userCollection = await users();
-        const user = await userCollection.findOne({ _id: new ObjectId(id) });
-        if(user) return { displayName: user.displayName, star: user.star};
+        const user = await userCollection.findOne({ _id: email.toLowerCase() });
+        if (user) return { displayName: user.displayName, star: user.star };
         throw 'User not found';
     },
-    async getUserByEmail(email){
+    async checkExistence(email) {
         const userCollection = await users();
-        const user = await userCollection.findOne({ email: email });
-        if(user) return true;
+        const user = await userCollection.findOne({ email: email.toLowerCase() });
+        if (user) return true;
         return false;
+    },
+    async updateDisplayName(email, newName) {
+        const exist = await this.checkExistence(email);
+        if (exist) {
+            const userCollection = await users();
+            const updateUser = await userCollection.updateOne({ _id: email.toLowerCase() }, {
+                $set: {
+                    displayName: newName
+                }
+            });
+            if (updateUser.modifiedCount === 0) {
+                throw 'Could not update project successfully';
+            }
+            return await userCollection.findOne({ email: email.toLowerCase() });
+        }else{
+            throw 'User not found'
+        }
     }
-    
+
 }

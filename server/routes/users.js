@@ -32,10 +32,19 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-router.post("/addStar/:id", async (req, res) => {
+router.post("/addStar", async (req, res) => {
     try{
-        const user = await users.addStar(req.params.id);
-        const newUser = await users.getUser(req.params.id)
+        const user = await users.addStar(req.body.email);
+        const newUser = await users.getUser(req.body.email)
+        res.send(newUser);
+    }catch(error){
+        res.send(error);
+    }
+});
+
+router.post("/changeDisplayName", async (req, res) => {
+    try{
+        const newUser = await users.updateDisplayName(req.body.email, req.body.displayName);
         res.send(newUser);
     }catch(error){
         res.send(error);
