@@ -10,6 +10,15 @@ router.post("/addUser", async (req, res) => {
         const newUserId = await users.addUser(newUser.email, newUser.displayName);
         res.send(newUserId);
     }catch(error){
+        res.send(req.body.email);
+    }
+});
+
+router.get("/", async (req, res) => {
+    try{
+        const exist = await users.getUserByEmail(req.body.email);
+        res.send(exist);
+    }catch(error){
         res.send(error);
     }
 });

@@ -6,17 +6,22 @@ module.exports = {
     async addUser(email, displayName) {
         try {
             const userCollection = await users();
-            const newUser = {
-                displayName: displayName,
-                email: email,
-                star: 0
-            };
-            let insertUser = await userCollection.insertOne(newUser);
-            if (insertUser.insertedCount === 0) throw 'Could not add user';
-            return insertUser.insertedId;
+            const exist = await userCollection.findOne({ email: email.toLowerCase() });
+            if(exist){
+                return exist._id;
+            }else{
+                const newUser = {
+                    _id: email.toLowerCase(),
+                    displayName: displayName,
+                    star: 0
+                };
+                let insertUser = await userCollection.insertOne(newUser);
+                if (insertUser.insertedCount === 0) return email.toLowerCase();
+                return insertUser.insertedId;
+            }
 
         } catch (error) {
-            return error;
+            return email.toLowerCase();
 
         }
     },
@@ -30,6 +35,12 @@ module.exports = {
         const user = await userCollection.findOne({ _id: new ObjectId(id) });
         if(user) return { displayName: user.displayName, star: user.star};
         throw 'User not found';
+    },
+    async getUserByEmail(email){
+        const userCollection = await users();
+        const user = await userCollection.findOne({ email: email });
+        if(user) return true;
+        return false;
     }
     
 }
