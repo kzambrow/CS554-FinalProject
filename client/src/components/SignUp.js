@@ -3,12 +3,15 @@ import { Redirect } from 'react-router-dom';
 import { doCreateUserWithEmailAndPassword } from '../firebase/FirebaseFunctions';
 import { AuthContext } from '../firebase/Auth';
 import SocialSignIn from './SocialSignIn';
+const axios = require('axios'); 
+
 function SignUp() {
   const { currentUser } = useContext(AuthContext);
   const [pwMatch, setPwMatch] = useState('');
+  
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const { displayName, email, passwordOne, passwordTwo } = e.target.elements;
+    const { Username, email, passwordOne, passwordTwo } = e.target.elements;
     if (passwordOne.value !== passwordTwo.value) {
       setPwMatch('Passwords do not match');
       return false;
@@ -18,8 +21,14 @@ function SignUp() {
       await doCreateUserWithEmailAndPassword(
         email.value,
         passwordOne.value,
-        displayName.value
+        Username.value
       );
+    
+    const newUser = await axios.post('http://localhost:5000/user/addUser',{
+       email:email.value, 
+       displayName: Username.value
+    });
+    
     } catch (error) {
       alert(error);
     }
@@ -37,7 +46,7 @@ function SignUp() {
         <div className="form-group">
           <input
             className="un form-control"
-            type="Username"
+            type="text"
             align="center"
             placeholder="Username"
             name="Username"
@@ -62,7 +71,7 @@ function SignUp() {
             type="password" 
             align="center" 
             placeholder="Password" 
-            name="password"
+            name="passwordOne"
             required
             />
         </div>
@@ -72,7 +81,7 @@ function SignUp() {
             type="password" 
             align="center" 
             placeholder="Confirm Password" 
-            name="confirm-password"
+            name="passwordTwo"
             required
             />
         </div>
