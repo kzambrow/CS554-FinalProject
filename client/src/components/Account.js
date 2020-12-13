@@ -164,7 +164,7 @@ function Account(props){
         let card = null;
         card =
             profileData &&
-            profileData.map((show) => {
+            profileData.data.map((show) => {
                 return buildCard(show);
         });
         if (loading) {

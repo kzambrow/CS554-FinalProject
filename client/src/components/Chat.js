@@ -54,13 +54,13 @@ const Chat = () => {
     }
     return (
         <div>
-            <div id="chat" class="chat-box">
+            <div id="chat" className="chat-box">
                 {messages.map((message, index) => {
                     if (message.id === ID) {
                         if (currentUser.displayName === message.name) {
                             return (
                                 <div key={index}>
-                                    <div class="chat-user">
+                                    <div className="chat-user">
                                         {message.name}
                                         <br/>
                                         {message.body}
@@ -71,7 +71,7 @@ const Chat = () => {
                         } else {
                             return (
                                 <div key={index}>
-                                    <div class="chat-other">
+                                    <div className="chat-other">
                                         {message.name}
                                         <br/>
                                         {message.body}
@@ -92,8 +92,8 @@ const Chat = () => {
                 })}
             </div>
             <form onSubmit={sendMessage}>
-                <textarea class="chat-text-field" value={message} onChange={handleChange} placeholder="Message..." />
-                <button class="chat-submit">Send</button>
+                <textarea className="chat-text-field" value={message} onChange={handleChange} placeholder="Message..." />
+                <button className="chat-submit">Send</button>
             </form>
         </div>
     )

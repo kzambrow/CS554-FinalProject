@@ -1,8 +1,5 @@
 const express = require("express");
 const router = express.Router();
-// const data = require('../data');
-// const users = data.users;
-// const posts = data.posts;
 const Post = require('../models/post-model');
 
 router.get("/sell", (req, res) => {

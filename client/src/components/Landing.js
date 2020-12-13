@@ -37,20 +37,20 @@ const useStyles = makeStyles({
 const Landing = (props) => {
 	const regex = /(<([^>]+)>)/gi;
 	const classes = useStyles();
-	const [ loading, setLoading ] = useState(true);
-	const [ buying, setBuying ] = useState(true);
-	const [ showsData, setShowsData ] = useState(undefined);
-	const [ searchTerm, setSearchTerm ] = useState(''); 
+	const [loading, setLoading] = useState(true);
+	const [buying, setBuying] = useState(true);
+	const [showsData, setShowsData] = useState(undefined);
+	const [searchTerm, setSearchTerm] = useState('');
 	const [pageData, setPageData] = useState({
 		page: parseInt(props.match.params.pagenum),
 		next: 1,
 		previous: null
-	  });
+	});
 
 	let card = null;
-	
+
 	console.log('1 props.match.params.pagenum is', props.match.params.pagenum);
-	
+
 	useEffect(() => {
 		console.log('2 props.match.params.pagenum is', props.match.params.pagenum);
 		async function fetchData() {
@@ -65,68 +65,68 @@ const Landing = (props) => {
 		}
 		fetchData();
 	}, [props.match.params.pagenum]);
-	
+
 	console.log('3 props.match.params.pagenum is', props.match.params.pagenum);
-	
+
 	//set Data for the previous Page
 	const setPrevPage = () => {
 		if (pageData.page >= 1) {
-		  const prevData = {
-			next: pageData.page,
-			previous: pageData.page - 2,
-			page: pageData.page - 1,
-			
-		  };
-		  setPageData(prevData);
+			const prevData = {
+				next: pageData.page,
+				previous: pageData.page - 2,
+				page: pageData.page - 1,
+
+			};
+			setPageData(prevData);
 		}
-	  };
-	
-	  // Set Data for next Page
-	  const setNextPage = () => {
-		  const nextData = {
+	};
+
+	// Set Data for next Page
+	const setNextPage = () => {
+		const nextData = {
 			previous: pageData.page,
 			next: pageData.page + 2,
 			page: pageData.page + 1,
-			
-		  };
-		  setPageData(nextData);
-	  };
 
-	  const DoPagination = (
+		};
+		setPageData(nextData);
+	};
+
+	const DoPagination = (
 		<div>
-		<Button>
-        <Link
-          className="btn btn-dark"
-          to={"/page/" + pageData.previous}
-          onClick={setPrevPage}
-        >
-          Previous
+			<Button>
+				<Link
+					className="btn btn-dark"
+					to={"/page/" + pageData.previous}
+					onClick={setPrevPage}
+				>
+					Previous
         </Link>
-		</Button>
-		
-		<Button>
-        <Link
-          className="btn btn-dark"
-          to={"/page/" + pageData.next}
-          onClick={setNextPage}
-        >
-          Next
-        </Link>
-		</Button>
-		</div>
-	  );
+			</Button>
 
-	  const DoPaginationf = (
+			<Button>
+				<Link
+					className="btn btn-dark"
+					to={"/page/" + pageData.next}
+					onClick={setNextPage}
+				>
+					Next
+        </Link>
+			</Button>
+		</div>
+	);
+
+	const DoPaginationf = (
 		<Button>
-        <Link
-          className="btn btn-dark"
-          to={"/page/" + pageData.next}
-          onClick={setNextPage}
-        >
-          Next
+			<Link
+				className="btn btn-dark"
+				to={"/page/" + pageData.next}
+				onClick={setNextPage}
+			>
+				Next
         </Link>
 		</Button>
-	  );
+	);
 	// const searchValue = async (value) => {
 	// 	setSearchTerm(value);
 	// };
@@ -135,43 +135,41 @@ const Landing = (props) => {
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
 					<CardActionArea>
-						
-							<CardMedia
-								className={classes.media}
-								component='img'
-								image={show.image && show.image.original ? show.image.original : noImage}
-								title='show image'
-							/>
 
-							<CardContent>
-		
-								<Typography variant='body2' color='textSecondary' component='p'>
-									Type: {show.sell ? "Selling": "Buying"}
-									<br></br>
+						<CardMedia
+							className={classes.media}
+							component='img'
+							image={show.image && show.image.original ? show.image.original : noImage}
+							title='show image'
+						/>
+
+						<CardContent>
+
+							<Typography variant='body2' color='textSecondary' component='p'>
+								Type: {show.sell ? "Selling" : "Buying"}
+								<br></br>
 									Price: {show.price}
-									<br></br>
+								<br></br>
 									Ticket Price: {show.ticketPrice}
-									<br></br>
+								<br></br>
 									Rating: {show.rating}
-									<br></br>
+								<br></br>
 									datePosted: {show.Date}
-									<br></br>
+								<br></br>
 									expirationTime: {show.endTime}
-								</Typography>
-							</CardContent>
-						
+							</Typography>
+						</CardContent>
+
 					</CardActionArea>
 				</Card>
 			</Grid>
 		);
 	};
 
-	
-	
 
 	card =
 		showsData &&
-		showsData.map((show) => {
+		showsData.data.map((show) => {
 			return buildCard(show);
 		});
 
@@ -181,12 +179,12 @@ const Landing = (props) => {
 				<h2>Loading....</h2>
 			</div>
 		);
-	} else if(pageData.page >= 1) {
+	} else if (pageData.page >= 1) {
 		return (
 			<div>
 				<br />
 				<br />
-				<Button> <Link to =  {"/sell" }> Selling </Link> </Button>
+				<Button> <Link to={"/sell"}> Selling </Link> </Button>
 				{DoPagination}
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
@@ -194,13 +192,13 @@ const Landing = (props) => {
 			</div>
 		);
 	}
-	else{
+	else {
 		return (
 			//This only appears on Page 1 
 			<div>
 				<br />
 				<br />
-				<Button> <Link to =  {"/sell" }> Selling </Link> </Button>
+				<Button> <Link to={"/sell"}> Selling </Link> </Button>
 				{DoPaginationf}
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
