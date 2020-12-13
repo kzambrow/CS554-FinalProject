@@ -106,13 +106,6 @@ const Landings = (props) => {
 	};
 
 
-		card =
-			showsData &&
-			showsData.map((show) => {
-				return buildCard(show);
-			});
-
-
 	if (loading) {
 		return (
 			<div>
@@ -122,7 +115,7 @@ const Landings = (props) => {
 	} else{
 		card =
 		showsData &&
-		showsData.slice(0,visible).map((show) => {
+		showsData.data.slice(0,visible).map((show) => {
 			return buildCard(show);
 		});
 		return (
