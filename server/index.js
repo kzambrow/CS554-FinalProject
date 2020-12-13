@@ -1,14 +1,24 @@
 const express = require('express');
 const socket = require('socket.io');
-const app = express();
 const bodyParser = require('body-parser');
 const configRoutes = require('./routes');
+const cors = require('cors');
+const db = require('./db');
+// const Post = require('./models/post-model');
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.set('view engine', 'handlebars');
+const app = express();
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+db.on('error', console.error.bind(console, 'MongoDB connection error: '));
+
+// setInterval( function() {
+//   let current = new Date();
+//    Post.updateMany({ endTime: {$lte: current} },{$set: { archived: true }}, (err) => {
+//     if(err) return console.log("Error while updating posts: " + err);
+//     console.log("successfully updated posts")
+//   })
+// }, 60 * 1000);
 
 configRoutes(app);
 server = app.listen(5000, function() {
