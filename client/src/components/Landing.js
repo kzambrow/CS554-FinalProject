@@ -85,25 +85,23 @@ const Landing = (props) => {
 									Posted by: {show.creator} 
 									<br></br>
 									Price: {show.price}
-									<br></br>
+								<br></br>
 									Ticket Price: {show.ticketPrice}
-									<br></br>
+								<br></br>
 									Rating: {show.rating}
-									<br></br>
+								<br></br>
 									datePosted: {show.Date}
-									<br></br>
+								<br></br>
 									expirationTime: {show.endTime}
-								</Typography>
-							</CardContent>
-						
+							</Typography>
+						</CardContent>
+
 					</CardActionArea>
 				</Card>
 			</Grid>
 		);
 	};
 
-	
-	
 
 	
 
