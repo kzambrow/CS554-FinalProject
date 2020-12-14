@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import SignOutButton from './SignOut';
 import '../App.css';
 import ChangePassword from './ChangePassword';
 import noImage from '../img/no-image.png';
 import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+import { AuthContext } from '../firebase/Auth';
 
 const axios = require('axios');
 
@@ -37,10 +38,12 @@ const useStyles = makeStyles({
 	}
 });
 
-//todo add a profile picture option in sign up
+//TODO
 //provide links to change password
 //display user info
-//ask about pagenum 
+//display different information for authenticated vs non authenticated
+//ask about updating user schema to include island code, nintendo ID
+
 function Account(props){
     const ProfilePosts = (props) => {
         const regex = /(<([^>]+)>)/gi;
@@ -201,6 +204,52 @@ function Account(props){
             );
         }
     };
+    function AccountInfo(){
+        const {currentUser}= useContext(AuthContext);
+        const [userData, setUserData] = useState(undefined); 
+        const classes = useStyles();
+        async function getData(){
+            const userInfo = await axios.get(`http://localhost:5000/user/email/${currentUser.email}`); 
+            console.log(userInfo); 
+            setUserData(userInfo); 
+            //console.log(userInfo);
+        }
+        getData(); 
+        console.log("userData is ", userData);
+        let card = null; 
+        
+        userData && (card = 
+            <Card className={classes.card} variant='outlined'>
+                <CardActionArea>
+                    <CardMedia
+                        className={classes.media}
+                        component='img'
+                        image={noImage}
+                        title='show image'
+                    />
+                    <CardContent>
+                        <Typography variant='body2' color='textSecondary' component='p'>
+                            <br></br>
+                            Username: {userData.data.data.displayName}
+                            <br></br>
+                            Island Code: ABCD 
+                            <br></br>
+                            Ingame Name: GAMER1
+                            <br></br>
+                            Nintendo ID: 1234567 
+
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
+        );
+        
+        return(
+            <Grid container className={classes.grid} spacing={5}>
+                {card}
+            </Grid>
+        );
+    };
 
     return(
         <div>
@@ -208,6 +257,7 @@ function Account(props){
             <ProfilePosts />
             <ChangePassword />
             <SignOutButton />
+            <AccountInfo />
         </div>
     );
 }

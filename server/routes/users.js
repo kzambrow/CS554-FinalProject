@@ -41,6 +41,19 @@ router.get("/", (req, res) => {
     }).catch(err => console.log(err))
 });
 
+router.get("/email/:email", (req, res) => {
+    User.findOne({ email: req.params.email }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!user) {
+            return res.status(200).json({ success: true, data: false })
+        }
+        return res.status(200).json({ success: true, data: user })
+    }).catch(err => console.log(err))
+});
+
+
 router.get("/:id", (req, res) => {
     User.findById(req.params.id, (err, user) => {
         if (err) {
