@@ -2,10 +2,6 @@ import firebase from 'firebase/app';
 const axios = require('axios');
 
 async function doCreateUserWithEmailAndPassword(email, password, displayName) {
-    await axios.post('http://localhost:5000/user/addUser', {
-        email: email,
-        displayName: displayName
-    })
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     firebase.auth().currentUser.updateProfile({ displayName: displayName });
 

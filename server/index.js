@@ -1,14 +1,15 @@
 const express = require('express');
 const socket = require('socket.io');
-const app = express();
 const bodyParser = require('body-parser');
 const configRoutes = require('./routes');
+const cors = require('cors');
+const db = require('./db');
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.set('view engine', 'handlebars');
+const app = express();
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+db.on('error', console.error.bind(console, 'MongoDB connection error: '));
 
 configRoutes(app);
 server = app.listen(5000, function() {
@@ -32,16 +33,3 @@ io.on('connection', (socket) => {
     console.log("disconnect: ", socket.id);
   })
 })
-// app.use();
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
-// app.engine('handlebars', handlebarsInstance.engine);
-// app.set('view engine', 'handlebars');
-
-// configRoutes(app);
-
-// app.listen(3000, () => {
-//   console.log("We've now got a server!");
-//   console.log('Your routes will be running on http://localhost:3000');
-// });
