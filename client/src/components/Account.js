@@ -251,7 +251,6 @@ function Account(props){
             </Grid>
         );
     };
-
     return(
         <div>
             <h2>Account Page</h2>

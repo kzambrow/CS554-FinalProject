@@ -7,20 +7,21 @@ const axios = require('axios');
 
 function Post() {
     const { currentUser } = useContext(AuthContext);
-    //const [pwMatch, setPwMatch] = useState('');
+    var button;
 
     const handlePost = async (e) => {
         e.preventDefault();
-        const { price, userId, ticketPrice, islandCode, sellTag, description, endTime } = e.target.elements;
+        const { price, creator, ticketPrice, islandCode, sell, description, endTime } = e.target.elements;
 
 
         try {
+            console.log(button);
             await axios.post('http://localhost:5000/Post/addPost', {
+                creator: creator.value,
+                sell: button,
                 price: price.value,
-                userId: userId.value,
                 ticketPrice: ticketPrice.value,
                 islandCode: islandCode.value,
-                sellTag: sellTag.value,
                 description: description.value,
                 endTime: endTime.value
             })
@@ -34,15 +35,25 @@ function Post() {
         return <Redirect to="/signup" />;
     }
 
+    const sellButton = async () => {
+        button = true;
+        console.log(button);
+    }
+
+    const buyButton = async () => {
+        button = false;
+        console.log(button);
+    }
+
     return (
-        <div className="post-main">
+        <div className="post-main" align="center">
             <p className="post" align="center">Post</p>
 
             <form className="form2" onSubmit={handlePost}>
                 <div className="form-group">
                     <input
                         className="un form-control"
-                        type="text"
+                        type="number"
                         align="center"
                         placeholder="Price"
                         name="price"
@@ -55,9 +66,9 @@ function Post() {
                         className="un form-control"
                         type="text"
                         align="center"
-                        placeholder="UserID"
-                        name="userId"
-                        id="userId"
+                        placeholder="Creator"
+                        name="creator"
+                        id="creator"
                         required
                     />
                 </div>
@@ -84,16 +95,16 @@ function Post() {
                     />
                 </div>
                 <div className="form-group">
-                    <input
-                        className="un form-control"
-                        type="text"
-                        align="center"
-                        placeholder="Sell Tag"
-                        name="sellTag"
-                        id="sellTag"
-                        required
-                    />
                 </div>
+                <div id="sell" class="dropdown" name="sell" align="center" >
+                    <div className="radio">
+                        <label>
+                            <input name="test" type="radio" onChange={sellButton} />Selling</label>
+                        <label>
+                            <input name="test" type="radio" onChange={buyButton}/>Buying</label>
+                    </div>
+                </div>
+                <br></br>
                 <div className="form-group">
                     <input
                         className="un form-control"
@@ -108,7 +119,7 @@ function Post() {
                 <div className="form-group">
                     <input
                         className="un form-control"
-                        type="text"
+                        type="date"
                         align="center"
                         placeholder="End Time"
                         name="endTime"
@@ -116,7 +127,7 @@ function Post() {
                         required
                     />
                 </div>
-                <button className="submit" id="submitButton" name="submitButton" type="submit">
+                <button className="submit" id="submitButton" name="submitButton" type="submit" align="center">
                     Post
         </button>
             </form>
