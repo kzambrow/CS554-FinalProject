@@ -8,6 +8,7 @@ import Navigation from './Navigation';
 import SignIn from './SignIn';
 import Chat from './Chat';
 import Post from './Post';
+import PostPage from './PostPage';
 import SignUp from './SignUp';
 import { AuthProvider } from '../firebase/Auth';
 import PrivateRoute from './PrivateRoute';
@@ -27,6 +28,7 @@ function App() {
         <PrivateRoute path="/chat" component={Chat} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
+        <Route path = "/posts/:id" component = {PostPage} />
         <PrivateRoute path="/post" component={Post} />
       </Router>
     </AuthProvider>

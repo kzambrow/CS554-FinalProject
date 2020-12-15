@@ -39,7 +39,7 @@ const Landing = (props) => {
 	const classes = useStyles();
 	const [ loading, setLoading ] = useState(true);
 	const [ showsData, setShowsData ] = useState(undefined);
-	const [visible, setVisible] = useState(6);
+	const [visible, setVisible] = useState(4);
 	
 	let card = null;
 
@@ -61,14 +61,14 @@ const Landing = (props) => {
 	
 	
 	const showMore = () => {
-		setVisible((prevValue) => prevValue + 6);
+		setVisible((prevValue) => prevValue + 4);
 	}
 	
 	const buildCard = (show) => {
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
-					<CardActionArea>
+				
 						
 							<CardMedia
 								className={classes.media}
@@ -90,13 +90,14 @@ const Landing = (props) => {
 								<br></br>
 									Rating: {show.rating}
 								<br></br>
-									datePosted: {show.Date}
+									datePosted: {show.createdAt}
 								<br></br>
 									expirationTime: {show.endTime}
 							</Typography>
 						</CardContent>
 
-					</CardActionArea>
+				
+					<Button><Link to = {`/posts/${show._id}`}> More Info</Link></Button>
 				</Card>
 			</Grid>
 		);
@@ -127,7 +128,7 @@ const Landing = (props) => {
 				<Grid container className={classes.grid} spacing={5}>
 				{card}
 				</Grid>
-			<button onClick = {showMore}>Load More</button>
+			<Button style = {{display: visible >= showsData.data.length? 'none' : 'block'}} onClick = {showMore}>Load More</Button>
 			</div>
 		);
 	}
