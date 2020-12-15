@@ -1,6 +1,8 @@
 const express = require("express");
+const multer = require('multer');
 const router = express.Router();
 const User = require('../models/user-model');
+
 
 router.post("/addUser", async (req, res) => {
     const body = req.body;
