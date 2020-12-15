@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import noImage from '../img/no-image.png';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
-import SearchShows from './SearchShows';
 import '../App.css';
 
 const axios = require('axios');
@@ -39,15 +38,10 @@ const useStyles = makeStyles({
 const Landings = (props) => {
 	const regex = /(<([^>]+)>)/gi;
 	const classes = useStyles();
-	const [ buying, setBuying ] = useState(true);
  	const [ loading, setLoading ] = useState(true);
 	const [ showsData, setShowsData ] = useState(undefined);
-	const [ searchTerm, setSearchTerm ] = useState('');
-	const [pageData, setPageData] = useState({
-		page: parseInt(props.match.params.pagenum),
-		next: 1,
-		previous: null
-	  });
+	const [visible, setVisible] = useState(6);
+	
 	let card = null;
 
 	useEffect(() => {
@@ -63,68 +57,15 @@ const Landings = (props) => {
 			}
 		}
 		fetchData();
-	}, [props.match.params.pagenum]);
+	}, []);
 
-	//set Data for the previous Page
 
-	const setPrevPage = () => {
-		if (pageData.page >= 1) {
-		  const prevData = {
-			next: pageData.page,
-			previous: pageData.page - 2,
-			page: pageData.page - 1,
 
-		  };
-		  setPageData(prevData);
-		}
-	  };
-
-	  // Set Data for next Page
-	  const setNextPage = () => {
-		  const nextData = {
-			previous: pageData.page,
-			next: pageData.page + 2,
-			page: pageData.page + 1,
-
-		  };
-		  setPageData(nextData);
-	  };
-
-	  const DoPagination = (
-		<div>
-		<Button>
-        <Link
-          className="btn btn-dark"
-          to={"/page/" + pageData.previous}
-          onClick={setPrevPage}
-        >
-          Previous
-        </Link>
-		</Button>
-
-		<Button>
-        <Link
-          className="btn btn-dark"
-          to={"/page/" + pageData.next}
-          onClick={setNextPage}
-        >
-          Next
-        </Link>
-		</Button>
-		</div>
-	  );
-
-	  const DoPaginationf = (
-		<Button>
-        <Link
-          className="btn btn-dark"
-          to={"/page/" + pageData.next}
-          onClick={setNextPage}
-        >
-          Next
-        </Link>
-		</Button>
-	  );
+	
+	const showMore = () => {
+		setVisible((prevValue) => prevValue + 6);
+	}
+	
 
 	const buildCard = (show) => {
 		return (
@@ -142,7 +83,7 @@ const Landings = (props) => {
 							<CardContent>
 
 								<Typography variant='body2' color='textSecondary' component='p'>
-									Type: {show.sell? "Selling": "Buying"}
+									Type: Selling
 									<br></br>
 									Posted by: {show.creator} 
 									<br></br>
@@ -165,45 +106,28 @@ const Landings = (props) => {
 	};
 
 
-		card =
-			showsData &&
-			showsData.map((show) => {
-				return buildCard(show);
-			});
-
-
 	if (loading) {
 		return (
 			<div>
 				<h2>Loading....</h2>
 			</div>
 		);
-	} else if(pageData.page >= 1) {
+	} else{
+		card =
+		showsData &&
+		showsData.data.slice(0,visible).map((show) => {
+			return buildCard(show);
+		});
 		return (
 			<div>
-
 				<br />
 				<br />
-                <Button> <Link to =  {"/" }> Buying </Link> </Button>
-				{DoPagination}
-				<Grid container className={classes.grid} spacing={5}>
-					{card}
-				</Grid>
-			</div>
-		);
-	}
-	else{
-		return (
-			//This only appears on Page 1 
-			<div>
-				<br />
-				<br />
-
 				<Button> <Link to =  {"/" }> Buying </Link> </Button>
-				{DoPaginationf}
+				
 				<Grid container className={classes.grid} spacing={5}>
-					{card}
+				{card}
 				</Grid>
+			<Button onClick = {showMore}>Load More</Button>
 			</div>
 		);
 	}
