@@ -7,6 +7,8 @@ const db = require('./db');
 
 const app = express();
 
+
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
 db.on('error', console.error.bind(console, 'MongoDB connection error: '));
