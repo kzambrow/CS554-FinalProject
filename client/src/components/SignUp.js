@@ -11,21 +11,19 @@ function SignUp() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const { Username, email, passwordOne, passwordTwo } = e.target.elements;
+    const { Username, email, passwordOne, passwordTwo,islandName,inGameName } = e.target.elements;
     if (passwordOne.value !== passwordTwo.value) {
       setPwMatch('Passwords do not match');
       return false;
     }
 
     try {
-      // await axios.post('http://localhost:5000/user/addUser', {
-      //   email: email.value,
-      //   displayName: Username.value
-      // })
       await doCreateUserWithEmailAndPassword(
         email.value,
         passwordOne.value,
-        Username.value
+        Username.value,
+        islandName.value,
+        inGameName.value
       );
 
     } catch (error) {
@@ -66,6 +64,28 @@ function SignUp() {
         </div>
         <div className="form-group">
           <input
+            className="un form-control"
+            type="text"
+            align="center"
+            placeholder="In Game Name"
+            name="inGameName"
+            id="inGameName"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            className="un form-control"
+            type="text"
+            align="center"
+            placeholder="Island Name"
+            name="islandName"
+            id="islandName"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
             className="pass form-control"
             type="password"
             align="center"
@@ -84,6 +104,7 @@ function SignUp() {
             required
           />
         </div>
+
         <button className="submit" id="submitButton" name="submitButton" type="submit">
           Sign Up
         </button>

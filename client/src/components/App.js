@@ -10,6 +10,7 @@ import Chat from './Chat';
 import Post from './Post';
 import PostPage from './PostPage';
 import SignUp from './SignUp';
+import JoinQueue from './JoinQueue';
 import { AuthProvider } from '../firebase/Auth';
 import PrivateRoute from './PrivateRoute';
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path = "/posts/:id" component = {PostPage} />
         <PrivateRoute path="/post" component={Post} />
+        <PrivateRoute exact path="/joinqueue" component = {JoinQueue} />
       </Router>
     </AuthProvider>
   );

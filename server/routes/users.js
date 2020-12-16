@@ -13,19 +13,20 @@ router.post("/addUser", async (req, res) => {
 
     const user = new User(body);
     if (!user) {
-        return res.status(200).json({ success: false, message: 'User already exist or missing info' })
+        return res.status(400).json({ success: false, error: 'You must provide post info' })
     }
 
-    user.save().then(() => {
+    const exist = await User.findOne({email: body.email});
+    if(exist) return res.status(200).json({success: true, data: exist})
+
+    return await user.save().then(() => {
         return res.status(201).json({
             success: true,
-            id: user._id,
-            data: user,
-            message: 'Post created!'
+            data: user
         })
     }).catch(err => {
         return res.status(200).json({
-            err,
+            error: err,
             message: 'User not created.'
         })
     })

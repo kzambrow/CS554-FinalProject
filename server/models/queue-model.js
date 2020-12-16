@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const QueueSchema = new Schema({
-    postId: {type: String},
-    userId: {type: String},
+    postId: {type: String, require:true},
+    userId: {type: String, require: true},
     joinTime: {type: Date, default: Date.now},
-    inGameName: {type: String}
+    inGameName: {type: String, default:'Anonymous'}
 })
 
 const Queue = module.exports = mongoose.model('queues',QueueSchema, 'queues');

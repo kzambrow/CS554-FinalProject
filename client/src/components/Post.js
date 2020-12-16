@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 //import { doCreateUserWithEmailAndPassword } from '../firebase/FirebaseFunctions';
 import { AuthContext } from '../firebase/Auth';
@@ -101,7 +101,7 @@ function Post() {
                         <label>
                             <input name="test" type="radio" onChange={sellButton} />Selling</label>
                         <label>
-                            <input name="test" type="radio" onChange={buyButton}/>Buying</label>
+                            <input name="test" type="radio" onChange={buyButton} />Buying</label>
                     </div>
                 </div>
                 <br></br>
@@ -132,7 +132,9 @@ function Post() {
         </button>
             </form>
             <br />
+            
         </div>
+
     );
 }
 

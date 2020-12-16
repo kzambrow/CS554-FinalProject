@@ -10,15 +10,21 @@ db.once('open', async function () {
 
     const user1 = await new User({
         "email": "testuser1@test.com",
-        "displayName": "testUser1"
+        "displayName": "testUser1",
+        "islandName": "testIsland1",
+        "inGameName": "inGameName1"
     }).save();
     const user2 = await new User({
         "email": "testuser2@test.com",
-        "displayName": "testUser2"
+        "displayName": "testUser2",
+        "islandName": "testIsland2",
+        "inGameName": "inGameName2"
     }).save();
     const user3 = await new User({
         "email": "testuser3@test.com",
-        "displayName": "testUser3"
+        "displayName": "testUser3",
+        "islandName": "testIsland3",
+        "inGameName": "inGameName3"
     }).save();
 
     const currTime = new Date();

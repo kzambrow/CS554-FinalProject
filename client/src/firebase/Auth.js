@@ -14,10 +14,13 @@ export const AuthProvider = ({ children }) => {
             if (user) {
                 axios.post('http://localhost:5000/user/addUser', {
                     email: user.email,
-                    displayName: user.displayName
+                    displayName: user.displayName,
+                    islandName: user.islandName,
+                    inGameName: user.inGameName
                 }).then((res) => {
-                    // console.log(res);
-                    setCurrentUser(user);
+                    // user.id = res.data.data._id;
+                    // console.log(res)
+                    setCurrentUser(res.data.data);
                     setLoadingUser(false);
                 });
             } else{

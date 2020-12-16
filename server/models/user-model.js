@@ -19,7 +19,10 @@ const User = new Schema(
     {
         email: {type: String, required: true, unique: true},
         displayName: {type: String, require: true},
-        star: {type: Number, default:0, required: false}
+        star: {type: Number, default:0, required: false},
+        inGameName: {type: String},
+        islandName: {type:String}
+        
     },
     {timestamps: true}
 );
