@@ -40,7 +40,7 @@ const Landings = (props) => {
 	const classes = useStyles();
  	const [ loading, setLoading ] = useState(true);
 	const [ showsData, setShowsData ] = useState(undefined);
-	const [visible, setVisible] = useState(6);
+	const [visible, setVisible] = useState(4);
 	
 	let card = null;
 
@@ -63,7 +63,7 @@ const Landings = (props) => {
 
 	
 	const showMore = () => {
-		setVisible((prevValue) => prevValue + 6);
+		setVisible((prevValue) => prevValue + 4);
 	}
 	
 
@@ -93,13 +93,14 @@ const Landings = (props) => {
 									<br></br>
 									Rating: {show.rating}
 									<br></br>
-									datePosted: {show.Date}
+									datePosted: {show.createdAt}
 									<br></br>
 									expirationTime: {show.endTime}
 								</Typography>
 							</CardContent>
 
 					</CardActionArea>
+					<Button><Link to = {`/posts/${show._id}`}> More Info</Link></Button>
 				</Card>
 			</Grid>
 		);
@@ -127,7 +128,7 @@ const Landings = (props) => {
 				<Grid container className={classes.grid} spacing={5}>
 				{card}
 				</Grid>
-			<Button onClick = {showMore}>Load More</Button>
+				<Button style = {{display: visible >= showsData.data.length? 'none' : 'block'}} onClick = {showMore}>Load More</Button>
 			</div>
 		);
 	}

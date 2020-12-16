@@ -206,6 +206,17 @@ function Account(props){
         }
     };
     function AccountInfo(){
+
+        useEffect(() => {
+            async function getData(){
+                const userInfo = await axios.get(`http://localhost:5000/user/email/${currentUser.email}`); 
+                //console.log(userInfo); 
+                setUserData(userInfo); 
+                console.log(userInfo);
+            };
+            getData();
+        }, []);
+        
         const {currentUser}= useContext(AuthContext);
         const [userData, setUserData] = useState(undefined); 
         const classes = useStyles();
@@ -252,7 +263,6 @@ function Account(props){
             </Grid>
         );
     };
-
     return(
         <div>
             <h2>Account Page</h2>
