@@ -10,7 +10,7 @@ router.post("/join", async (req, res) => {
     const exist = await User.findById(req.body.userId);
     if (!exist) return res.status(400).json({ success: false, error: 'User not found' })
 
-    await Queue.findOne({ userId: req.body.userId }, async (err, user) => {
+    return await Queue.findOne({ userId: req.body.userId }, async (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -18,7 +18,7 @@ router.post("/join", async (req, res) => {
         const newUser = new Queue({
             postId: req.body.postId,
             userId: req.body.userId,
-            // inGameName: req.body.inGameName
+            inGameName: req.body.inGameName
         });
         return await newUser.save().then(async () => {
             await Queue.find({ queueId: req.body.postId, joinTime: { $lt: newUser.joinTime } }, (err, users) => {
@@ -48,7 +48,7 @@ router.post("/join", async (req, res) => {
 
 });
 
-router.get("/check", async (req, res) => {
+router.post("/check", async (req, res) => {
     const user = await Queue.findById(req.body.queueId);
     if (!user) return res.status(400).json({ success: false, error: 'You are not in this line' })
     await Queue.find({ queueId: req.body.postId, joinTime: { $lt: user.joinTime } }, (err, users) => {
@@ -69,12 +69,12 @@ router.get("/check", async (req, res) => {
     });
 });
 
-router.get("/getCode", async (req, res) => {
-    await Queue.findById(req.body.queueId, async (err, user) => {
+router.post("/getCode", async (req, res) => {
+    return await Queue.findById(req.body.queueId, async (err, queue) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });
         }
-        if (!user) {
+        if (!queue) {
             return res.status(400).json({ success: false, error: 'You are not in the waiting line' })
         } else {
             return await Queue.find({ postId: req.body.postId, joinTime: { $lt: queue.joinTime } }, async (err, users) => {
@@ -94,7 +94,7 @@ router.get("/getCode", async (req, res) => {
                         return res.status(200).json({ success: true, data: post.islandCode })
                     })
                 } else {
-                    return res.status(200).json({ success: true, data: { data: 'Waiting' } })
+                    return res.status(200).json({ success: true, data: 'Waiting...' })
 
                 }
             });

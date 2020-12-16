@@ -48,15 +48,20 @@ function PostPage(props) {
     const GetPost = () => {
         const classes = useStyles();
         const [loading, setLoading] = useState(true);
-        //const [ searchData, setSearchData ] = useState(undefined);
         const [postData, setPostData] = useState(undefined);
+        const { currentUser } = useContext(AuthContext);
+
 
         useEffect(() => {
             async function fetchData() {
                 try {
                     //getting data for user profile
-                    const { data } = await axios.get("http://localhost:5000/post/" + postId);
-                    setPostData(data);
+                    const post = await axios.get("http://localhost:5000/post/" + postId);
+                    setPostData(post.data.data);
+                    const queue = await axios.post("http://localhost:5000/queue/join",{
+                        userId: currentUser.id,
+                        postId: postId
+                    })
                     setLoading(false);
                 } catch (e) {
                     console.log(e);
