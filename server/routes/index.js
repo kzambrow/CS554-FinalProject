@@ -1,7 +1,9 @@
 const postRoutes = require("./posts");
 const userRoutes = require("./users");
 const imageRoutes = require('./images');
+const queueRoutes = require('./queues');
 var cors = require('cors');
+
 // const logoutRoutes = require("./logout");
 // const profileRoutes = require("./profile");
 
@@ -20,6 +22,7 @@ const constructorMethod = (app) => {
   app.use("/user", userRoutes);
   app.use("/post", postRoutes);
   app.use("/images", imageRoutes);
+  app.use("/queue", queueRoutes);
   app.use(logRequestDetail);
 
 //   app.use('/api/property', propertyRoutes);
