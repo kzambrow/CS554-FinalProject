@@ -209,7 +209,7 @@ function Account(props){
         
         const {currentUser}= useContext(AuthContext);
         const [userData, setUserData] = useState(undefined); 
-        const classes = useStyles();
+
         useEffect(() => {
             async function getData(){
                 const userInfo = await axios.get(`http://localhost:5000/user/email/${currentUser.email}`); 
@@ -219,6 +219,9 @@ function Account(props){
             };
             getData();
         }, []);
+
+        const classes = useStyles();
+        console.log("userData is ", userData);
         let card = null; 
         
         userData && (card = 
