@@ -1,4 +1,5 @@
 const express = require("express");
+const easyimg = require('easyimage');
 const multer = require('multer');
 const router = express.Router();
 const fs = require('fs');
@@ -11,7 +12,10 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         cb(null, Date.now() + file.originalname);
     }
+
+    
 });
+
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
@@ -28,6 +32,31 @@ const upload = multer({
     },
     fileFilter: fileFilter
 });
+
+async function convertsmall(source) {
+    try {
+        let strData;
+        if (source.includes(".png")) {
+            strData = source.replace(".png", "_small.png");
+        }
+        if (source.includes(".jpg")) {
+            strData = source.replace(".jpg", "_small.jpg");
+        }
+        if (source.includes(".jpeg")) {
+            strData = source.replace(".jpeg", "_small.jpeg");
+        }
+        await easyimg.resize({
+            src: source,
+            dst: strData,
+            height: 50,
+            width: 50 
+        })
+        console.log(strData);
+        console.log("image resized");
+    } catch (e) {
+        console.log(e);
+    }
+}
 
 router.get("/:email", (req, res) => {
     ImageScheme.findOne({ userEmail: req.params.email }, (err, image) => {
@@ -53,6 +82,15 @@ router.delete("/:email", (req, res) => {
         }
         try{
             fs.unlinkSync(image.imageData);
+            if (image.imageData.includes(".png")) {
+                fs.unlinkSync(image.imageData.replace(".png", "_small.png"));
+            }
+            if (image.imageData.includes(".jpg")) {
+                fs.unlinkSync(image.imageData.replace(".jpg", "_small.jpg"));
+            }
+            if (image.imageData.includes(".jpeg")) {
+                fs.unlinkSync(image.imageData.replace(".jpeg", "_small.jpeg"));
+            }
             console.log("old image removed locally");
             res.status(200).json({ success: true, data: image })
             return;
@@ -77,8 +115,15 @@ router.route("/uploadmulter")
                 success: true,
                 document: result
             });
+
+            convertsmall(req.file.path);
+
         })
         .catch((err) => next(err));
+
+
 });
+
+
 
 module.exports = router;
