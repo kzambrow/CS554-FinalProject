@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
-import { doCreateUserWithEmailAndPassword } from '../firebase/FirebaseFunctions';
+import { Redirect, NavLink } from 'react-router-dom';
 import { AuthContext } from '../firebase/Auth';
 import SocialSignIn from './SocialSignIn';
 const axios = require('axios');
@@ -24,9 +23,15 @@ function EditAccount() {
         if (inGameName.value == "") {
             inGame = currentUser.inGameName;
         }
+        if (islandName.value == "" && currentUser.islandName == undefined) {
+            island = "No Name";
+        }
+        if (inGameName.value == "" && currentUser.inGameName == undefined) {
+            inGame = "No Name";
+        }
         try {
             await axios.post('http://localhost:5000/user/editUser', {
-                id: currentUser.id,
+                id: currentUser._id,
                 displayName: user,
                 inGameName: inGame,
                 islandName: island
@@ -43,6 +48,15 @@ function EditAccount() {
 
     return (
         <div className="signin-main">
+            <nav className="navigation">
+                <ul>
+                    <li>
+                        <NavLink exact to="/changePassword" activeClassName="active" className="logo">
+                            Change your Password
+                        </NavLink>
+                    </li>
+                </ul>
+            </nav>
             <p className="sign" align="center">Edit Account Info</p>
             <form className="form2" onSubmit={handleEdit}>
                 <div className="form-group">

@@ -11,9 +11,11 @@ import Post from './Post';
 import PostPage from './PostPage';
 import SignUp from './SignUp';
 import EditAccount from './EditAccount';
+import ChangePassword from './ChangePassword';
 import JoinQueue from './JoinQueue';
 import { AuthProvider } from '../firebase/Auth';
 import PrivateRoute from './PrivateRoute';
+//<PrivateRoute exact path="/changepassword" component={ChangePassword} />
 
 function App() {
   return (
@@ -33,7 +35,8 @@ function App() {
         <Route path = "/posts/:id" component = {PostPage} />
         <PrivateRoute path="/post" component={Post} />
         <PrivateRoute path="/editaccount" component={EditAccount} />
-        <PrivateRoute exact path="/joinqueue" component = {JoinQueue} />
+        <PrivateRoute exact path="/joinqueue" component={JoinQueue} />
+        
       </Router>
     </AuthProvider>
   );

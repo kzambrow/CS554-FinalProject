@@ -140,12 +140,12 @@ router.post("/changeDisplayName/:id", async (req, res) => {
 
 router.post("/editUser", async (req, res) => {
     const body = req.body;
-    console.log(body.id);
+    console.log(body);
 
     if (!body) {
         return res.status(400).json({ success: false, error: 'You must change something' })
     }
-    User.findOneAndUpdate(body.id, { $set: { displayName: body.displayName, inGameName: body.inGameName, islandName: body.islandName } },
+    User.findByIdAndUpdate(body.id, { $set: { displayName: body.displayName, inGameName: body.inGameName, islandName: body.islandName } },
         (err, user) => {
             if (err) {
                 return res.status(404).json({
