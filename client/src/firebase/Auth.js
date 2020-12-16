@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         firebaseApp.auth().onAuthStateChanged((user) => {
             if (user) {
-                axios.post('http://localhost:5000/user/addUser', {
+                try{axios.post('http://localhost:5000/user/addUser', {
                     email: user.email,
                     displayName: user.displayName,
                     islandName: user.islandName,
@@ -22,7 +22,9 @@ export const AuthProvider = ({ children }) => {
                     // console.log(res)
                     setCurrentUser(user);
                     setLoadingUser(false);
-                });
+                });}catch(e){
+                    console.log(e.response)
+                }
             } else{
                 setCurrentUser(user);
                 setLoadingUser(false);

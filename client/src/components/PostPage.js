@@ -58,7 +58,7 @@ function PostPage(props) {
                     //getting data for user profile
                     const post = await axios.get("http://localhost:5000/post/" + postId);
                     setPostData(post.data.data);
-                    const queue = await axios.post("http://localhost:5000/queue/join",{
+                    const queue = await axios.post("http://localhost:5000/queue/join", {
                         userId: currentUser.id,
                         postId: postId
                     })
@@ -71,43 +71,6 @@ function PostPage(props) {
         }, []);
 
 
-        const buildCard = (show) => {
-            return (
-                <Card className={classes.card} variant='outlined'>
-                    <CardActionArea>
-
-                        <CardMedia
-                            className={classes.media}
-                            component='img'
-                            image={show.image && show.image.original ? show.image.original : noImage}
-                            title='show image'
-                        />
-
-                        <CardContent>
-
-                            <Typography variant='body2' color='textSecondary' component='p'>
-                                <br></br>
-                                        Price: {show.creator}
-                                <br></br>
-                                        Ticket Price: {show.price}
-                                {/* <br></br>
-                                        Rating: {show.rating}
-                                    <br></br>
-                                        datePosted: {show.Date}
-                                    <br></br>
-                                        expirationTime: {show.endTime} */}
-                            </Typography>
-                        </CardContent>
-
-                    </CardActionArea>
-                </Card>
-            );
-        };
-
-        let card = null;
-        card =
-            postData &&
-            buildCard(postData);
         if (loading) {
             return (
                 <div>
@@ -123,9 +86,36 @@ function PostPage(props) {
                     <br />
                     {/* <Button> <Link to={"/sell"}> Selling </Link> </Button> */}
                     {/* {DoPaginationf} */}
-                    <Grid container className={classes.grid} spacing={5}>
-                        {card}
-                    </Grid>
+
+                    <Card className={classes.card} variant='outlined'>
+                        <CardActionArea>
+
+                            {/* <CardMedia
+                                className={classes.media}
+                                component='img'
+                                image={show.image && show.image.original ? show.image.original : noImage}
+                                title='show image'
+                            /> */}
+
+                            <CardContent>
+
+                                <Typography variant='body2' color='textSecondary' component='p'>
+                                    <br></br>
+                                        Description: {postData.description}
+                                    <br></br>
+                                        Ticket Price: {postData.ticketPrice}
+                                    {/* <br></br>
+                                        Rating: {show.rating}
+                                    <br></br>
+                                        datePosted: {show.Date}
+                                    <br></br>
+                                        expirationTime: {show.endTime} */}
+                                </Typography>
+                            </CardContent>
+
+                        </CardActionArea>
+                    </Card>
+
                 </div>
             );
         }
@@ -137,14 +127,20 @@ function PostPage(props) {
         const classes = useStyles();
         useEffect(() => {
             const getCode = async () => {
-                const userInfo = await axios.get(`http://localhost:5000/user/email/${currentUser.email}`);
-                const code = await axios({
-                    method: 'get',
-                    url: 'http://localhost:5000/queue/getCode',
-                    postId: postId,
-                    userId: userInfo.data.data._id
-                })
-                setIslandCode(code.data.data);
+                // const userInfo = await axios.get(`http://localhost:5000/user/email/${currentUser.email}`);
+                try {
+                    const queue = await axios.post('http://localhost:5000/queue/find', {
+                        userId: currentUser.id,
+                        postId: postId
+                    })
+                    const code = await axios.post('http://localhost:5000/queue/getCode', {
+                        postId: postId,
+                        queueId: queue.data.data._id
+                    })
+                    setIslandCode(code.data.data);
+                } catch (e) {
+                    console.log(e.response)
+                }
             }
             getCode();
 

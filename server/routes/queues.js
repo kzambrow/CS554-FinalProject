@@ -105,13 +105,23 @@ router.post("/getCode", async (req, res) => {
 
 });
 
-router.post("/leave", (req, res) => {
-    const queueId = req.body.queueId;
-    Queue.findByIdAndDelete(queueId, (err, result) => {
+router.post("/find",async(req,res)=>{
+    return await Queue.findOne({postId: req.body.postId, userId: req.body.userId}, (err,queue)=>{
         if (err) {
             res.status(400).json({ success: false, error: err })
         }
-        res.status(200).json({ success: true })
+        if(queue) return res.status(200).json({success: true, data: queue});
+        return res.status(400).json({success:false, error: 'You are not waiting in any line'})
+    })
+})
+
+router.post("/leave", (req, res) => {
+    const queueId = req.body.queueId;
+    return Queue.findByIdAndDelete(queueId, (err, result) => {
+        if (err) {
+            res.status(400).json({ success: false, error: err })
+        }
+        return res.status(200).json({ success: true })
 
     })
 })
