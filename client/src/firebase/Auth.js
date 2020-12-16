@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
                     islandName: user.islandName,
                     inGameName: user.inGameName
                 }).then((res) => {
-                    // user.id = res.data.data._id;
+                    user.id = res.data.data._id;
                     // console.log(res)
                     setCurrentUser(user);
                     setLoadingUser(false);
