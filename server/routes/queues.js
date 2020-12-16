@@ -33,7 +33,7 @@ router.post("/join", (req, res) => {
     })
 });
 
-router.get("/check",(req,res)=>{
+router.get("/check", (req, res) => {
     Queue.find({ queueId: req.body.postId, joinTime: { $lt: newUser.joinTime } }, (err, users) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -48,7 +48,7 @@ router.get("/check",(req,res)=>{
     });
 });
 
-router.get("/getCode",(req,res) => {
+router.get("/getCode", async (req, res) => {
     let usersInFront = await Queue.find({ queueId: req.body.postId, joinTime: { $lt: newUser.joinTime } }, (err, users) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -58,7 +58,7 @@ router.get("/getCode",(req,res) => {
         }
         return users;
     });
-    while(usersInFront !== -1){
+    while (usersInFront !== -1) {
         usersInFront = await Queue.find({ queueId: req.body.postId, joinTime: { $lt: newUser.joinTime } }, (err, users) => {
             if (err) {
                 return res.status(400).json({ success: false, error: err })
@@ -69,14 +69,14 @@ router.get("/getCode",(req,res) => {
             return users;
         });
     }
-    Post.findById(req.postId,(err,post)=>{
+    Post.findById(req.postId, (err, post) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if(!post){
-            return res.status(404).json({success: false, message: 'The island is already closed.'})
+        if (!post) {
+            return res.status(404).json({ success: false, message: 'The island is already closed.' })
         }
-        return res.status(200).json({success: true, data: post.islandCode})
+        return res.status(200).json({ success: true, data: post.islandCode })
     })
 })
 
