@@ -91,7 +91,7 @@ const Landings = (props) => {
 									<br></br>
 									Ticket Price: {show.ticketPrice}
 									<br></br>
-									Rating: {show.rating}
+									Description: {show.description ? <p>{show.description}</p> : "None available"}
 									<br></br>
 									datePosted: {show.createdAt}
 									<br></br>
