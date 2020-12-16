@@ -138,4 +138,40 @@ router.post("/changeDisplayName/:id", async (req, res) => {
 
 });
 
+router.post("/editUser", async (req, res) => {
+    const body = req.body;
+    console.log(body.id);
+
+    if (!body) {
+        return res.status(400).json({ success: false, error: 'You must change something' })
+    }
+    User.findOneAndUpdate(body.id, { $set: { displayName: body.displayName, inGameName: body.inGameName, islandName: body.islandName } },
+        (err, user) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: 'Could not update information'
+                })
+            }
+            if (user) {
+                return res.status(200).json({
+                    success: true,
+                    data: user,
+                    message: 'Information changed!'
+                })
+            }
+            return res.status(404).json({
+                err,
+                message: 'Information not changed.'
+            })
+        }
+    ).catch(err => {
+        return res.status(400).json({
+            err,
+            message: 'Information not changed.'
+        })
+    })
+
+});
+
 module.exports = router;
