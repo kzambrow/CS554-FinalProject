@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import noImage from '../img/no-image.png';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
 import '../App.css';
+import turnip from '../img/turnip.png'
 import { AuthContext } from '../firebase/Auth';
 
 
@@ -77,7 +78,7 @@ const Landing = (props) => {
 					<CardMedia
 						className={classes.media}
 						component='img'
-						image={show.image && show.image.original ? show.image.original : noImage}
+						image={turnip}
 						title='show image'
 					/>
 
