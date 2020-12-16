@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
                 }).then((res) => {
                     // user.id = res.data.data._id;
                     // console.log(res)
-                    setCurrentUser(res.data.data);
+                    setCurrentUser(user);
                     setLoadingUser(false);
                 });
             } else{
