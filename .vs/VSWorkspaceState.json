@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\client\\src",
+    "\\client\\src\\components",
+    "\\client\\src\\firebase",
+    "\\server",
+    "\\server\\models",
+    "\\server\\routes",
+    "\\server\\tasks"
+  ],
+  "SelectedNode": "\\client\\src\\components\\App.js",
+  "PreviewInSolutionExplorer": false
+}

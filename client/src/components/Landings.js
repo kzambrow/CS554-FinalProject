@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import noImage from '../img/no-image.png';
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+
+import { Card, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+import turnip from '../img/turnip.png'
 import '../App.css';
 
 const axios = require('axios');
@@ -35,12 +36,12 @@ const useStyles = makeStyles({
 		fontSize: 12
 	}
 });
-const Landings = (props) => {
-	const regex = /(<([^>]+)>)/gi;
+const Landings = () => {
+	
 	const classes = useStyles();
  	const [ loading, setLoading ] = useState(true);
 	const [ showsData, setShowsData ] = useState(undefined);
-	const [visible, setVisible] = useState(6);
+	const [visible, setVisible] = useState(4);
 	
 	let card = null;
 
@@ -63,7 +64,7 @@ const Landings = (props) => {
 
 	
 	const showMore = () => {
-		setVisible((prevValue) => prevValue + 6);
+		setVisible((prevValue) => prevValue + 4);
 	}
 	
 
@@ -71,11 +72,12 @@ const Landings = (props) => {
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
+					
+
 							<CardMedia
 								className={classes.media}
 								component='img'
-								image='/imgs/turnip.png'
-								alt = {noImage}
+								image={turnip}
 								title='show image'
 							/>
 
@@ -90,13 +92,15 @@ const Landings = (props) => {
 									<br></br>
 									Ticket Price: {show.ticketPrice}
 									<br></br>
-									Rating: {show.rating}
+									Description: {show.description ? <p>{show.description}</p> : "None available"}
 									<br></br>
-									datePosted: {show.Date}
+									datePosted: {show.createdAt}
 									<br></br>
 									expirationTime: {show.endTime}
 								</Typography>
 							</CardContent>
+
+					<Button><Link to = {`/posts/${show._id}`}> More Info</Link></Button>
 				</Card>
 			</Grid>
 		);
@@ -124,7 +128,7 @@ const Landings = (props) => {
 				<Grid container className={classes.grid} spacing={5}>
 				{card}
 				</Grid>
-			<Button onClick = {showMore}>Load More</Button>
+				<Button style = {{display: visible >= showsData.data.length? 'none' : 'block'}} onClick = {showMore}>Load More</Button>
 			</div>
 		);
 	}

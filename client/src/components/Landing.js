@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {Route, Redirect} from 'react-router'; 
-import noImage from '../img/no-image.png';
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
-import Account from './Account'; 
+
+import { Card, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
 import '../App.css';
+import turnip from '../img/turnip.png'
+import Account from './Account'; 
+
 
 const axios = require('axios');
 
@@ -37,17 +38,19 @@ const useStyles = makeStyles({
 	}
 });
 const Landing = (props) => {
-	const regex = /(<([^>]+)>)/gi;
+	
 	const classes = useStyles();
-	const [ loading, setLoading ] = useState(true);
-	const [ showsData, setShowsData ] = useState(undefined);
-	const [visible, setVisible] = useState(6);
-	//const [creatorID, setCreatorID] = useState(undefined); 
-	//const [user, setUser] = useState(undefined); 
+	const [loading, setLoading] = useState(true);
+	const [showsData, setShowsData] = useState(undefined);
+	const [visible, setVisible] = useState(4);
+	
+
 
 	let card = null;
 
+
 	useEffect(() => {
+
 		async function fetchData() {
 			try {
 				//getting data for main page
@@ -60,9 +63,10 @@ const Landing = (props) => {
 		}
 		fetchData();
 	}, []);
-	
+
+
 	const showMore = () => {
-		setVisible((prevValue) => prevValue + 6);
+		setVisible((prevValue) => prevValue + 4);
 	}
 	
 	// useEffect(() => {
@@ -111,22 +115,27 @@ const Landing = (props) => {
 																	 */}
 									<Link to = {'/account/' + show.creator}> {show.displayName} </Link>
 									<br></br>
+							<br></br>
 									Price: {show.price}
-								<br></br>
+							<br></br>
 									Ticket Price: {show.ticketPrice}
-								<br></br>
-									Rating: {show.rating}
-								<br></br>
-									datePosted: {show.Date}
-								<br></br>
-									expirationTime: {show.endTime}
-							</Typography>
-						</CardContent>
+							<br></br>
+									Description: {show.description ? <p>{show.description}</p> : "None available"}
+							<br></br>
+									datePosted: {show.createdAt}
+							<br></br>
+									expirationTime: {show.endTime}<br />
+						</Typography>
+					</CardContent>
+
+					{/* <Button><Link to={'/joinqueue'} postId={show.id}></Link></Button> */}
+					<Button><Link to={`/posts/${show._id}`} > More Info</Link></Button>
 				</Card>
 			</Grid>
 		);
 	};
-	
+
+
 
 	if (loading) {
 		return (
@@ -134,22 +143,23 @@ const Landing = (props) => {
 				<h2>Loading....</h2>
 			</div>
 		);
-	} 
-	else{
+	}
+	else {
 		card =
-		showsData &&
-		showsData.data.slice(0,visible).map((show) => {
-			return buildCard(show);
-		});
+			showsData &&
+			showsData.data.slice(0, visible).map((show) => {
+				return buildCard(show);
+			});
 		return (
 			<div>
 				<br />
 				<br />
-				<Button> <Link to =  {"/sell" }> Selling </Link> </Button>
+				<Button> <Link to={"/sell"}> Selling </Link> </Button>
+
 				<Grid container className={classes.grid} spacing={5}>
-				{card}
+					{card}
 				</Grid>
-			<button onClick = {showMore}>Load More</button>
+				<Button style={{ display: visible >= showsData.data.length ? 'none' : 'block' }} onClick={showMore}>Load More</Button>
 			</div>
 		);
 	}

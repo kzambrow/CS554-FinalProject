@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import SignOutButton from './SignOut';
 import '../App.css';
 import ChangePassword from './ChangePassword';
+import UploadProfilePic from './UploadProfilePic';
 import noImage from '../img/no-image.png';
 import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
@@ -129,7 +130,7 @@ function Account(props){
                     <CardMedia
                         className={classes.media}
                         component='img'
-                        image={noImage}
+                        image={multerImage}
                         title='show image'
                     />
                     <CardContent>

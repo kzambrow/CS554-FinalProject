@@ -1,13 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const Post = require('../models/post-model');
+const Queue = require('../models/queue-model');
 
 router.get("/sell", (req, res) => {
     const current = new Date();
-    Post.updateMany({ endTime: { $lte: current } }, { $set: { archived: true } }, (err) => {
+    Post.find({ archived: false, endTime: { $lte: current } }, (err, posts) => {
         if (err) return console.log("Error while updating posts: " + err);
-        console.log("successfully updated posts")
+        if (posts) {
+            posts.forEach(post => {
+                Queue.deleteMany({postId:post._id.toString()})
+                Post.findByIdAndUpdate(post._id.toString(), { $set: { archived: true } })
+            });
+        }
+
     })
+
     Post.find({ sell: true, archived: false }, (err, posts) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -15,15 +23,24 @@ router.get("/sell", (req, res) => {
         if (!posts) {
             return res.status(204).json({ sucess: false, message: 'No selling post' })
         }
+        posts.forEach(post => {
+            delete post["islandCode"];
+        });
         return res.status(200).json({ success: true, data: posts })
     }).catch(err => console.log(err))
 });
 
 router.get("/buy", (req, res) => {
     const current = new Date();
-    Post.updateMany({ endTime: { $lte: current } }, { $set: { archived: true } }, (err) => {
+    Post.find({ archived: false, endTime: { $lte: current } }, (err, posts) => {
         if (err) return console.log("Error while updating posts: " + err);
-        console.log("successfully updated posts")
+        if (posts) {
+            posts.forEach(post => {
+                Queue.deleteMany({postId:post._id.toString()})
+                Post.findByIdAndUpdate(post._id.toString(), { $set: { archived: true } })
+            });
+        }
+
     })
     Post.find({ sell: false, archived: false }, (err, posts) => {
         if (err) {
@@ -32,6 +49,9 @@ router.get("/buy", (req, res) => {
         if (!posts) {
             return res.status(204).json({ sucess: false, message: 'No selling post' })
         }
+        posts.forEach(post => {
+            delete post["islandCode"];
+        });
         return res.status(200).json({ success: true, data: posts })
     }).catch(err => console.log(err))
 });
@@ -44,6 +64,7 @@ router.get("/:id", async (req, res) => {
         if (!post) {
             return res.status(404).json({ success: false, error: 'Post not found' })
         }
+        delete post["islandCode"];
         return res.status(200).json({ success: true, data: post })
     }).catch(err => console.log(err))
 });
@@ -140,5 +161,18 @@ router.post("/addComment", async (req, res) => {
     })
 
 });
+
+// router.get("/getIslandCode", async (req, res) => {
+//     await Post.findById(req.body.id, (err, post) => {
+//         if (err) {
+//             return res.status(400).json({ success: false, error: err })
+//         }
+//         if (!post) {
+//             return res.status(404).json({ success: false, error: 'Post not found' })
+//         }
+//         delete post["islandCode"];
+//         return res.status(200).json({ success: true, data: post["islandCode"] })
+//     }).catch(err => console.log(err))
+// });
 
 module.exports = router;

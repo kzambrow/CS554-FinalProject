@@ -1,6 +1,8 @@
 const express = require("express");
+const multer = require('multer');
 const router = express.Router();
 const User = require('../models/user-model');
+
 
 router.post("/addUser", async (req, res) => {
     const body = req.body;
@@ -11,19 +13,20 @@ router.post("/addUser", async (req, res) => {
 
     const user = new User(body);
     if (!user) {
-        return res.status(200).json({ success: false, message: 'User already exist or missing info' })
+        return res.status(400).json({ success: false, error: 'You must provide post info' })
     }
 
-    user.save().then(() => {
+    const exist = await User.findOne({email: body.email});
+    if(exist) return res.status(200).json({success: true, data: exist})
+
+    return await user.save().then(() => {
         return res.status(201).json({
             success: true,
-            id: user._id,
-            data: user,
-            message: 'Post created!'
+            data: user
         })
     }).catch(err => {
         return res.status(200).json({
-            err,
+            error: err,
             message: 'User not created.'
         })
     })
@@ -130,6 +133,42 @@ router.post("/changeDisplayName/:id", async (req, res) => {
         return res.status(400).json({
             err,
             message: 'Display name not changed.'
+        })
+    })
+
+});
+
+router.post("/editUser", async (req, res) => {
+    const body = req.body;
+    console.log(body);
+
+    if (!body) {
+        return res.status(400).json({ success: false, error: 'You must change something' })
+    }
+    User.findByIdAndUpdate(body.id, { $set: { displayName: body.displayName, inGameName: body.inGameName, islandName: body.islandName } },
+        (err, user) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: 'Could not update information'
+                })
+            }
+            if (user) {
+                return res.status(200).json({
+                    success: true,
+                    data: user,
+                    message: 'Information changed!'
+                })
+            }
+            return res.status(404).json({
+                err,
+                message: 'Information not changed.'
+            })
+        }
+    ).catch(err => {
+        return res.status(400).json({
+            err,
+            message: 'Information not changed.'
         })
     })
 
