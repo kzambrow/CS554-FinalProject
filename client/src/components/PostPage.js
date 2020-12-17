@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import '../App.css';
 import { Link, Redirect } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+
 import { AuthContext } from '../firebase/Auth';
 import GetWaitingInfo from './GetWaitingInfo';
 // import { Beforeunload } from 'react-beforeunload';

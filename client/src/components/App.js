@@ -10,9 +10,12 @@ import Chat from './Chat';
 import Post from './Post';
 import PostPage from './PostPage';
 import SignUp from './SignUp';
+import EditAccount from './EditAccount';
+import ChangePassword from './ChangePassword';
 import JoinQueue from './JoinQueue';
 import { AuthProvider } from '../firebase/Auth';
 import PrivateRoute from './PrivateRoute';
+//<PrivateRoute exact path="/changepassword" component={ChangePassword} />
 
 function App() {
   return (
@@ -25,13 +28,15 @@ function App() {
         </div>
         <Route exact path="/" component={Landing} />
         <Route exact path = "/sell" component = {Landings}/>
-        <PrivateRoute path="/account" component = {Account}/>
+        <Route path="/account/:id" component = {Account}/>
         <PrivateRoute path="/chat" component={Chat} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path = "/posts/:id" component = {PostPage} />
         <PrivateRoute path="/post" component={Post} />
-        <PrivateRoute exact path="/joinqueue" component = {JoinQueue} />
+        <PrivateRoute path="/editaccount" component={EditAccount} />
+        <PrivateRoute exact path="/joinqueue" component={JoinQueue} />
+        
       </Router>
     </AuthProvider>
   );

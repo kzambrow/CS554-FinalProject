@@ -71,7 +71,20 @@ router.get("/:id", async (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.post("/addPost", async (req, res) => {
+
+router.get("/byUser/:id", async (req, res) => {
+    await Post.findOne({ creator: req.params.id }, (err, post) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!post) {
+            return res.status(200).json({ success: true, data: false })
+        }
+        return res.status(200).json({ success: true, data: post })
+    }).catch(err => console.log(err))
+});
+
+router.post("/addPost", (req, res) => {
     const body = req.body;
     const currentTime = new Date();
 
