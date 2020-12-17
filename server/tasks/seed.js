@@ -36,7 +36,12 @@ db.once('open', async function () {
         ticketPrice: 'Any',
         islandCode: 'ABCD',
         description: 'Don\'t share the password!',
-        endTime: new Date(currTime.getTime() + 1 * 60000)
+        endTime: new Date(currTime.getTime() + 1 * 60000),
+        email: user1.email,
+        displayName: user1.displayName,
+        star: user1.star,
+        inGameName: user1.inGameName,
+        islandName: user1.islandName
     }).save();
 
     await new Post({
@@ -46,7 +51,12 @@ db.once('open', async function () {
         ticketPrice: 'Any',
         islandCode: 'ACDC',
         description: 'Don\'t share the password!',
-        endTime: new Date(currTime.getTime() + 10 * 60000)
+        endTime: new Date(currTime.getTime() + 10 * 60000),
+        email: user2.email,
+        displayName: user2.displayName,
+        star: user2.star,
+        inGameName: user2.inGameName,
+        islandName: user2.islandName
     }).save();
 
     await new Post({
@@ -56,7 +66,12 @@ db.once('open', async function () {
         ticketPrice: 'Any',
         islandCode: 'DCBA',
         description: 'Don\'t share the password!',
-        endTime: new Date(currTime.getTime() + 30 * 60000)
+        endTime: new Date(currTime.getTime() + 30 * 60000),
+        email: user3.email,
+        displayName: user3.displayName,
+        star: user3.star,
+        inGameName: user3.inGameName,
+        islandName: user3.islandName
     }).save();
 
     console.log('Done Seeding!!!')

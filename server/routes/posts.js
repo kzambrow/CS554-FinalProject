@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Post = require('../models/post-model');
 const Queue = require('../models/queue-model');
+const User = require('../models/user-model');
+
 
 router.get("/sell", (req, res) => {
     const current = new Date();
@@ -69,14 +71,28 @@ router.get("/:id", async (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.post("/addPost", (req, res) => {
+router.post("/addPost", async (req, res) => {
     const body = req.body;
 
     if (!body) {
         return res.status(400).json({ success: false, error: 'You must provide post info' })
     }
+    const poster = await User.findById(req.body.creator);
 
-    const post = new Post(body);
+    const post = new Post({
+        creator: body.creator,
+        sell: body.sell,
+        price: body.price,
+        ticketPrice: body.ticketPrice,
+        islandCode: body.islandCode,
+        description: body.description,
+        endTime: body.endTime,
+        email: poster.email,
+        displayName: poster.displayName,
+        star: poster.star,
+        inGameName: poster.inGameName,
+        islandName: poster.islandName
+    });
     if (!post) {
         return res.status(400).json({ success: false, error: 'Create new post fail' })
     }
