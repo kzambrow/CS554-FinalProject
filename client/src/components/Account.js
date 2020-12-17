@@ -66,6 +66,7 @@ function Account(props){
                     console.log(e);
                 }
             }
+
             fetchData();
         }, []);
     
@@ -209,6 +210,7 @@ function Account(props){
         
         const {currentUser}= useContext(AuthContext);
         const [userData, setUserData] = useState(undefined); 
+        const [multerImage, setMulterImage] = useState("/imgs/turnip.png");
 
         useEffect(() => {
             async function getData(){
@@ -218,7 +220,29 @@ function Account(props){
                 console.log(userInfo);
             };
             getData();
-        }, []);
+            async function getImage() {
+                try {
+                    const profile = await axios.get(`http://localhost:5000/images/${currentUser.email}`); 
+                    let newimageSource = profile.data.data.imageData;
+                    let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
+                    if (finalimageSource.includes(".png")) {
+                        finalimageSource = finalimageSource.replace(".png", "_medium.png");
+                    }
+                    if (finalimageSource.includes(".jpeg")) {
+                        finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
+                    }
+                    if (finalimageSource.includes(".jpg")) {
+                        finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
+                    }
+                    setMulterImage(finalimageSource);
+                    console.log(multerImage);
+                } catch (e) {
+                    setMulterImage("/imgs/turnip.png");
+                    console.log(e);
+                }
+            }
+            getImage();
+        }, [multerImage]);
 
         const classes = useStyles();
         console.log("userData is ", userData);
@@ -230,7 +254,7 @@ function Account(props){
                     <CardMedia
                         className={classes.media}
                         component='img'
-                        image={noImage}
+                        image={multerImage}
                         title='show image'
                     />
                     <CardContent>

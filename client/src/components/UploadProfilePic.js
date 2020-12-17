@@ -55,7 +55,6 @@ function UploadProfilePic() {
                 onChange={uploadImage}
             />
             </form>
-            <img src={(multerImage)} alt="upload-image" />
         </div>
     )
 }

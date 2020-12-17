@@ -49,7 +49,34 @@ async function convertsmall(source) {
             src: source,
             dst: strData,
             height: 50,
-            width: 50 
+            width: 50,
+            ignoreAspectRatio: true,
+        })
+        console.log(strData);
+        console.log("image resized");
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+async function convertmedium(source) {
+    try {
+        let strData;
+        if (source.includes(".png")) {
+            strData = source.replace(".png", "_medium.png");
+        }
+        if (source.includes(".jpg")) {
+            strData = source.replace(".jpg", "_medium.jpg");
+        }
+        if (source.includes(".jpeg")) {
+            strData = source.replace(".jpeg", "_medium.jpeg");
+        }
+        await easyimg.resize({
+            src: source,
+            dst: strData,
+            height: 500,
+            width: 500 ,
+            ignoreAspectRatio: true,
         })
         console.log(strData);
         console.log("image resized");
@@ -84,12 +111,17 @@ router.delete("/:email", (req, res) => {
             fs.unlinkSync(image.imageData);
             if (image.imageData.includes(".png")) {
                 fs.unlinkSync(image.imageData.replace(".png", "_small.png"));
+                fs.unlinkSync(image.imageData.replace(".png", "_medium.png"));
             }
             if (image.imageData.includes(".jpg")) {
                 fs.unlinkSync(image.imageData.replace(".jpg", "_small.jpg"));
+                fs.unlinkSync(image.imageData.replace(".jpg", "_medium.jpg"));
+
             }
             if (image.imageData.includes(".jpeg")) {
                 fs.unlinkSync(image.imageData.replace(".jpeg", "_small.jpeg"));
+                fs.unlinkSync(image.imageData.replace(".jpeg", "_medium.jpeg"));
+
             }
             console.log("old image removed locally");
             res.status(200).json({ success: true, data: image })
@@ -117,6 +149,7 @@ router.route("/uploadmulter")
             });
 
             convertsmall(req.file.path);
+            convertmedium(req.file.path);
 
         })
         .catch((err) => next(err));
