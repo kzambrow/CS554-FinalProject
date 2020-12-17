@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import '../App.css';
-import noImage from '../img/no-image.png';
+
 import { Link } from 'react-router-dom';
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+import { Card, CardActionArea, CardContent, Grid, Typography, makeStyles} from '@material-ui/core';
 import { AuthContext } from '../firebase/Auth';
 
 const axios = require('axios');

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import noImage from '../img/no-image.png';
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+
+import { Card, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
 import turnip from '../img/turnip.png'
 import '../App.css';
 
@@ -36,8 +36,8 @@ const useStyles = makeStyles({
 		fontSize: 12
 	}
 });
-const Landings = (props) => {
-	const regex = /(<([^>]+)>)/gi;
+const Landings = () => {
+	
 	const classes = useStyles();
  	const [ loading, setLoading ] = useState(true);
 	const [ showsData, setShowsData ] = useState(undefined);
@@ -72,7 +72,7 @@ const Landings = (props) => {
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
-					<CardActionArea>
+					
 
 							<CardMedia
 								className={classes.media}
@@ -100,7 +100,6 @@ const Landings = (props) => {
 								</Typography>
 							</CardContent>
 
-					</CardActionArea>
 					<Button><Link to = {`/posts/${show._id}`}> More Info</Link></Button>
 				</Card>
 			</Grid>

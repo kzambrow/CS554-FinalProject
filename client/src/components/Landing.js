@@ -1,10 +1,10 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import noImage from '../img/no-image.png';
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+
+import { Card, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
 import '../App.css';
 import turnip from '../img/turnip.png'
-import { AuthContext } from '../firebase/Auth';
+
 
 
 const axios = require('axios');
@@ -38,12 +38,12 @@ const useStyles = makeStyles({
 	}
 });
 const Landing = (props) => {
-	const regex = /(<([^>]+)>)/gi;
+	
 	const classes = useStyles();
 	const [loading, setLoading] = useState(true);
 	const [showsData, setShowsData] = useState(undefined);
 	const [visible, setVisible] = useState(4);
-	const [userData, setUserData] = useState(undefined);
+	
 
 
 	let card = null;
@@ -102,28 +102,11 @@ const Landing = (props) => {
 					</CardContent>
 
 					{/* <Button><Link to={'/joinqueue'} postId={show.id}></Link></Button> */}
-					<Button><Link to={`/posts/${show._id}`} userInfo={userData}> More Info</Link></Button>
+					<Button><Link to={`/posts/${show._id}`} > More Info</Link></Button>
 				</Card>
 			</Grid>
 		);
 	};
-
-	const UserInfo = () => {
-		const { currentUser } = useContext(AuthContext);
-		const classes = useStyles();
-		useEffect(() => {
-			async function getData() {
-				if (currentUser) {
-					const userInfo = await axios.get(`http://localhost:5000/user/email/${currentUser.email}`);
-					//console.log(userInfo); 
-					setUserData(userInfo);
-					console.log(userInfo);
-				}
-			};
-			getData();
-		}, []);
-	}
-	UserInfo();
 
 
 
@@ -144,7 +127,7 @@ const Landing = (props) => {
 			<div>
 				<br />
 				<br />
-				<Button> <Link to={"/sell"} userInfo={userData}> Selling </Link> </Button>
+				<Button> <Link to={"/sell"}> Selling </Link> </Button>
 
 				<Grid container className={classes.grid} spacing={5}>
 					{card}

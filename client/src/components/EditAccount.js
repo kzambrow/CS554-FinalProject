@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import { AuthContext } from '../firebase/Auth';
-import SocialSignIn from './SocialSignIn';
+//import SocialSignIn from './SocialSignIn';
 import UploadProfilePic from './UploadProfilePic';
 const axios = require('axios');
 
@@ -15,19 +15,19 @@ function EditAccount() {
         let user = Username.value;
         let island = islandName.value;
         let inGame = inGameName.value;
-        if (Username.value == "") {
+        if (Username.value === "") {
             user = currentUser.displayName;
         }
-        if (islandName.value == "") {
+        if (islandName.value === "") {
             island = currentUser.islandName;
         }
-        if (inGameName.value == "") {
+        if (inGameName.value === "") {
             inGame = currentUser.inGameName;
         }
-        if (islandName.value == "" && currentUser.islandName == undefined) {
+        if (islandName.value === "" && currentUser.islandName === undefined) {
             island = "No Name";
         }
-        if (inGameName.value == "" && currentUser.inGameName == undefined) {
+        if (inGameName.value === "" && currentUser.inGameName === undefined) {
             inGame = "No Name";
         }
         try {
