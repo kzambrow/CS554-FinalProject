@@ -87,11 +87,13 @@ const Chat = () => {
                         if (currentUser.email === message.email) {
                             return (
                                 <div key={index}>
-                                    <div className="chat-user">
+                                    <div className="chat-user" >
                                         {message.name}
-                                        <img src={message.image}/>
+                                        <img src={message.image} className="round-profile" alt="Image"/>
                                         <br/>
+                                        <div class="chat-bubble-user">
                                         {message.body}
+                                        </div>
                                         <br/>
                                     </div>
                                 </div>
@@ -99,11 +101,13 @@ const Chat = () => {
                         } else {
                             return (
                                 <div key={index}>
-                                    <div className="chat-other">
+                                    <div className="chat-other chat-bubble">
+                                        <img src={message.image} class="round-profile" alt="Image"/>
                                         {message.name}
-                                        <img src={message.image}/>
                                         <br/>
+                                        <div class="chat-bubble-other">
                                         {message.body}
+                                        </div>
                                         <br/>
                                     </div>
                                 </div>
