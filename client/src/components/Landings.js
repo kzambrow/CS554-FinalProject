@@ -78,6 +78,7 @@ const Landings = () => {
 								className={classes.media}
 								component='img'
 								image={turnip}
+								alt = 'No image'
 								title='show image'
 							/>
 
@@ -85,8 +86,9 @@ const Landings = () => {
 
 								<Typography variant='body2' color='textSecondary' component='p'>
 									Type: Selling
-									<br></br>
-									Posted by: {show.creator} 
+									<br></br> 
+									Posted by: 
+									<Link to = {'/account/' + show.creator}> {show.displayName} </Link>
 									<br></br>
 									Price: {show.price}
 									<br></br>

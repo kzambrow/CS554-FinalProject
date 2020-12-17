@@ -53,7 +53,8 @@ function Account(props){
     const [profilePost, setProfilePost ] = useState(undefined); 
     const [userData, setUserData] = useState(undefined); 
     const [userId, setUserId] = useState(props.match.params.id); 
-    
+    const [multerImage, setMulterImage] = useState("/imgs/turnip.png");
+
     const { currentUser } = useContext(AuthContext);
     console.log(currentUser.id); 
     useEffect(() => {
@@ -114,11 +115,35 @@ function Account(props){
     useEffect(() => {
         async function getData(){
             const userInfo = await axios.get(`http://localhost:5000/user/${userId}`); 
-            setUserData(userInfo); 
-            setLoading(false); 
-            console.log('user info is ' , userInfo);
+            //console.log(userInfo); 
+            setUserData(userInfo);
+            setLoading(false);  
+            console.log(userInfo);
         };
         getData();
+        async function getImage() {
+            
+            try {
+                const profile = await axios.get(`http://localhost:5000/images/${userData.data.data.email}`); 
+                let newimageSource = profile.data.data.imageData;
+                let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
+                if (finalimageSource.includes(".png")) {
+                    finalimageSource = finalimageSource.replace(".png", "_medium.png");
+                }
+                if (finalimageSource.includes(".jpeg")) {
+                    finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
+                }
+                if (finalimageSource.includes(".jpg")) {
+                    finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
+                }
+                setMulterImage(finalimageSource);
+                console.log(multerImage);
+            } catch (e) {
+                setMulterImage("/imgs/turnip.png");
+                console.log(e);
+            }
+        }
+        getImage();
     }, [userId]);
 
     let userCard = null; 

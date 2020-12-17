@@ -6,7 +6,6 @@ import '../App.css';
 import turnip from '../img/turnip.png'
 import Account from './Account'; 
 
-
 const axios = require('axios');
 
 const useStyles = makeStyles({
@@ -69,27 +68,9 @@ const Landing = (props) => {
 		setVisible((prevValue) => prevValue + 4);
 	}
 	
-	// useEffect(() => {
-	// 	console.log('in setUser useEffect'); 
-	// 		async function fetchUser() {
-	// 			try {
-	// 				const user = await axios.get(`http://localhost:5000/user/${creatorID}`);
-	// 				setUser(user);
-	// 				setLoading(false);
-	// 				console.log('in fetchUser, user is ', user); 
-	// 			} catch (e) {
-	// 				console.log(e);
-	// 			}
-	// 		}
-	// 		fetchUser();
-	// }, [creatorID]);
-
-	//console.log('out of setUser useEffect , creator is ', creatorID);
 	
 	const buildCard = (show) => { 
-		// setCreatorID(show.creator);
-		// console.log('creator is ,' , creatorID); 
-
+		console.log(show); 
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
@@ -97,16 +78,17 @@ const Landing = (props) => {
 								className={classes.media}
 								component='img'
 								image='/imgs/turnip.png'
-								alt = {noImage}
+								alt = 'No image'
 								title='show image'
 							/>
 
 							<CardContent>
-		
+							
 								<Typography variant='body2' color='textSecondary' component='p'>
 									Type: Buying
 									<br></br>
 									Posted by: 
+									 
 									{/* <Link to ={{pathname: '/account',
 										state:{
 											user:user
