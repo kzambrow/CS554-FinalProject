@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Redirect, NavLink } from 'react-router-dom';
 import { AuthContext } from '../firebase/Auth';
 import SocialSignIn from './SocialSignIn';
+import UploadProfilePic from './UploadProfilePic';
 const axios = require('axios');
 
 function EditAccount() {
@@ -57,6 +58,9 @@ function EditAccount() {
                     </li>
                 </ul>
             </nav>
+            <div align="center">
+            <UploadProfilePic />
+            </div>
             <p className="sign" align="center">Edit Account Info</p>
             <form className="form2" onSubmit={handleEdit}>
                 <div className="form-group">

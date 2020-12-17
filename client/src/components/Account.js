@@ -288,7 +288,6 @@ function Account(props){
             <ChangePassword />
             <SignOutButton />
             <AccountInfo />
-            <UploadProfilePic />
         </div>
     );
 }
