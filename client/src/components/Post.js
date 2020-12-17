@@ -27,6 +27,7 @@ function Post() {
             })
 
         } catch (error) {
+            console.log(error.response.data)
             alert(error);
         }
     };

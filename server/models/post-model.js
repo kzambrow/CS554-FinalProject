@@ -11,7 +11,7 @@ const Comment = new Schema(
 
 const Post = new Schema(
     {
-        creator: { type: String, required: true, unique: true },
+        creator: { type: String, required: true},
         sell: { type: Boolean, require: true },
         price: {type: Number, require: true},
         ticketPrice: { type: String, required: true },
