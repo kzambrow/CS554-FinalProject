@@ -4,9 +4,12 @@
     "\\client",
     "\\client\\src",
     "\\client\\src\\components",
+    "\\client\\src\\firebase",
     "\\server",
-    "\\server\\routes"
+    "\\server\\models",
+    "\\server\\routes",
+    "\\server\\tasks"
   ],
-  "SelectedNode": "\\client\\src\\components\\Post.js",
+  "SelectedNode": "\\client\\src\\components\\App.js",
   "PreviewInSolutionExplorer": false
 }
