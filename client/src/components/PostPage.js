@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
 import { AuthContext } from '../firebase/Auth';
 import GetWaitingInfo from './GetWaitingInfo';
-import { Beforeunload } from 'react-beforeunload';
+// import { Beforeunload } from 'react-beforeunload';
 
 const axios = require('axios');
 
@@ -100,10 +100,10 @@ function PostPage(props) {
         // }
         return (
             <div>
-                <Beforeunload onBeforeunload={() => {
+                {/* <Beforeunload onBeforeunload={() => {
                     axios.post('http://localhost:5000/queue/leave', { queueId: queueId })
 
-                }}>
+                }}> */}
                     <br />
                     <br />
                     {/* <Button> <Link to={"/sell"}> Selling </Link> </Button> */}
@@ -138,7 +138,7 @@ function PostPage(props) {
                     <br />
                     <GetWaitingInfo queueId={queueId} postId={postId} />
                     <Link className='showlink' to='/'>Homepage</Link>
-                </Beforeunload >
+                {/* </Beforeunload > */}
             </div>
 
         );

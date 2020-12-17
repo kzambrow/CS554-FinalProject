@@ -87,7 +87,7 @@ const Landing = (props) => {
 						<Typography variant='body2' color='textSecondary' component='p'>
 							Type: Buying
 									<br></br>
-									Posted by: {show.creator}
+									Posted by: {show.displayName}
 							<br></br>
 									Price: {show.price}
 							<br></br>
