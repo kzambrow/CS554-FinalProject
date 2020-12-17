@@ -97,6 +97,8 @@ const Landing = (props) => {
 																	 */}
 									<Link to = {'/account/' + show.creator}> {show.displayName} </Link>
 									<br></br>
+
+
 							<br></br>
 									Price: {show.price}
 							<br></br>
