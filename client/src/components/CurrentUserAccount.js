@@ -1,14 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
-import SignOutButton from './SignOut';
-import '../App.css';
-import ChangePassword from './ChangePassword';
 import noImage from '../img/no-image.png';
-import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
-import { AuthContext } from '../firebase/Auth';
-import CurrentUserAccount from './CurrentUserAccount';
-
-
+import { Link } from 'react-router-dom';
 const axios = require('axios');
 
 const useStyles = makeStyles({
@@ -40,47 +33,46 @@ const useStyles = makeStyles({
 	}
 });
 
-//TODO
+function CurrentUserAccount(props){
 
-//display different information for authenticated vs non authenticated
-
-function Account(props){
-    console.log(props.match.params.id); 
     const regex = /(<([^>]+)>)/gi;
     const classes = useStyles();
-    const [loading, setLoading ] = useState(true);
-    const [profilePost, setProfilePost ] = useState(undefined); 
+    const [ loading, setLoading ] = useState(true);
+    const [ buying, setBuying ] = useState(true);
+    const [profileData, setProfileData ] = useState(undefined);
+    const [authUser, setAuthUser] = useState(props.user); 
     const [userData, setUserData] = useState(undefined); 
-    const [userId, setUserId] = useState(props.match.params.id); 
-    
-    const { currentUser } = useContext(AuthContext);
-    console.log(currentUser.id); 
+
+
     useEffect(() => {
         async function fetchData() {
             try {
                 //getting data for user profile
-                const { data } = await axios.get(`http://localhost:5000/byUser/${userId}`);
-                setProfilePost(data);
+                const { data } = await axios.get('http://localhost:5000/post/buy');
+                setProfileData(data);
                 setLoading(false);
             } catch (e) {
                 console.log(e);
             }
         }
         fetchData();
-    }, [userId]);
+    }, []);
     
     const buildCard = (show) => {
         return (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
                 <Card className={classes.card} variant='outlined'>
                     <CardActionArea>
+                        
                             <CardMedia
                                 className={classes.media}
                                 component='img'
                                 image={show.image && show.image.original ? show.image.original : noImage}
                                 title='show image'
                             />
+
                             <CardContent>
+        
                                 <Typography variant='body2' color='textSecondary' component='p'>
                                     Type: {show.sell ? "Selling": "Buying"}
                                     <br></br>
@@ -102,27 +94,25 @@ function Account(props){
         );
     };
     
+
     let card = null;
     card =
-        profilePost &&
-        profilePost.data.map((show) => {
+        profileData &&
+        profileData.data.map((show) => {
             return buildCard(show);
     });
 
-    //GET User Info to be displayed on the side
     useEffect(() => {
         async function getData(){
-            const userInfo = await axios.get(`http://localhost:5000/user/${userId}`); 
+            const userInfo = await axios.get(`http://localhost:5000/user/email/${authUser.email}`); 
+            //console.log(userInfo); 
             setUserData(userInfo); 
-            setLoading(false); 
-            console.log('user info is ' , userInfo);
+            console.log(userInfo); 
         };
         getData();
-    }, [userId]);
-
+    }, []);
     let userCard = null; 
-
-        //non authenticated view
+        
          userData && (userCard = 
             <Card className={classes.card} variant='outlined'>
                 <CardActionArea>
@@ -143,41 +133,16 @@ function Account(props){
                             <br></br>
                             Nintendo ID: 1234567 
                             <br></br>
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        );
-        
-        //authenticated view 
-        userData && currentUser && currentUser.id == userId && (userCard = 
-            <Card className={classes.card} variant='outlined'>
-                <CardActionArea>
-                    <CardMedia
-                        className={classes.media}
-                        component='img'
-                        image={noImage}
-                        title='show image'
-                    />
-                    <CardContent>
-                        <Typography variant='body2' color='textSecondary' component='p'>
+                            redirect to change password
                             <br></br>
-                            Username: {currentUser.displayName}
-                            <br></br>
-                            Island Code: ABCD 
-                            <br></br>
-                            Ingame Name: GAMER1
-                            <br></br>
-                            Nintendo ID: 1234567 
-                            <br></br>
-                            Email: {currentUser.email}
+                            redirect to Edit profile
                             <br></br>
                         </Typography>
                     </CardContent>
                 </CardActionArea>
             </Card>
-    
-    )
+    );
+
     if (loading) {
         return (
             <div>
@@ -202,4 +167,4 @@ function Account(props){
     }
 }
 
-export default Account; 
+export default CurrentUserAccount; 

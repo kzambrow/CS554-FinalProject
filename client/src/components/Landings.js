@@ -71,12 +71,11 @@ const Landings = (props) => {
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
-					<CardActionArea>
-
 							<CardMedia
 								className={classes.media}
 								component='img'
-								image={show.image && show.image.original ? show.image.original : noImage}
+								image='/imgs/turnip.png'
+								alt = {noImage}
 								title='show image'
 							/>
 
@@ -98,8 +97,6 @@ const Landings = (props) => {
 									expirationTime: {show.endTime}
 								</Typography>
 							</CardContent>
-
-					</CardActionArea>
 				</Card>
 			</Grid>
 		);

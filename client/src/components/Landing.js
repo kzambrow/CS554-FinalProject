@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {Route, Redirect} from 'react-router'; 
 import noImage from '../img/no-image.png';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
+import Account from './Account'; 
 import '../App.css';
 
 const axios = require('axios');
@@ -40,12 +42,12 @@ const Landing = (props) => {
 	const [ loading, setLoading ] = useState(true);
 	const [ showsData, setShowsData ] = useState(undefined);
 	const [visible, setVisible] = useState(6);
-	
+	//const [creatorID, setCreatorID] = useState(undefined); 
+	//const [user, setUser] = useState(undefined); 
+
 	let card = null;
 
-	
 	useEffect(() => {
-	
 		async function fetchData() {
 			try {
 				//getting data for main page
@@ -59,21 +61,39 @@ const Landing = (props) => {
 		fetchData();
 	}, []);
 	
-	
 	const showMore = () => {
 		setVisible((prevValue) => prevValue + 6);
 	}
 	
-	const buildCard = (show) => {
+	// useEffect(() => {
+	// 	console.log('in setUser useEffect'); 
+	// 		async function fetchUser() {
+	// 			try {
+	// 				const user = await axios.get(`http://localhost:5000/user/${creatorID}`);
+	// 				setUser(user);
+	// 				setLoading(false);
+	// 				console.log('in fetchUser, user is ', user); 
+	// 			} catch (e) {
+	// 				console.log(e);
+	// 			}
+	// 		}
+	// 		fetchUser();
+	// }, [creatorID]);
+
+	//console.log('out of setUser useEffect , creator is ', creatorID);
+	
+	const buildCard = (show) => { 
+		// setCreatorID(show.creator);
+		// console.log('creator is ,' , creatorID); 
+
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
-					<CardActionArea>
-						
 							<CardMedia
 								className={classes.media}
 								component='img'
-								image={show.image && show.image.original ? show.image.original : noImage}
+								image='/imgs/turnip.png'
+								alt = {noImage}
 								title='show image'
 							/>
 
@@ -82,7 +102,14 @@ const Landing = (props) => {
 								<Typography variant='body2' color='textSecondary' component='p'>
 									Type: Buying
 									<br></br>
-									Posted by: {show.creator} 
+									Posted by: 
+									{/* <Link to ={{pathname: '/account',
+										state:{
+											user:user
+										}
+									}}>a</Link>	
+																	 */}
+									<Link to = {'/account/' + show.creator}> {show.displayName} </Link>
 									<br></br>
 									Price: {show.price}
 								<br></br>
@@ -95,14 +122,10 @@ const Landing = (props) => {
 									expirationTime: {show.endTime}
 							</Typography>
 						</CardContent>
-
-					</CardActionArea>
 				</Card>
 			</Grid>
 		);
 	};
-
-
 	
 
 	if (loading) {
@@ -123,7 +146,6 @@ const Landing = (props) => {
 				<br />
 				<br />
 				<Button> <Link to =  {"/sell" }> Selling </Link> </Button>
-				
 				<Grid container className={classes.grid} spacing={5}>
 				{card}
 				</Grid>

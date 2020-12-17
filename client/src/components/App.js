@@ -22,7 +22,7 @@ function App() {
         </div>
         <Route exact path="/" component={Landing} />
         <Route exact path = "/sell" component = {Landings}/>
-        <PrivateRoute path="/account" component = {Account}/>
+        <Route path="/account/:id" component = {Account}/>
         <PrivateRoute path="/chat" component={Chat} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
