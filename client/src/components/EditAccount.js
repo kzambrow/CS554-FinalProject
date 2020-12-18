@@ -7,7 +7,6 @@ const axios = require('axios');
 
 function EditAccount() {
     const { currentUser } = useContext(AuthContext);
-    //const [pwMatch, setPwMatch] = useState('');
 
     const handleEdit = async (e) => {
         e.preventDefault();
