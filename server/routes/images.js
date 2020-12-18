@@ -4,6 +4,7 @@ const multer = require('multer');
 const router = express.Router();
 const fs = require('fs');
 const ImageScheme = require('../models/image-model');
+const UserScheme = require('../models/user-model');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -140,6 +141,19 @@ router.route("/uploadmulter")
             imageName: req.body.imageName,
             imageData: req.file.path
         });
+        let user1 = 
+        UserScheme.findOneAndUpdate({userEmail: newImage.userEmail}, { $set: { imageData: newImage.imageData}}, (err, user)=>{
+            if (err) {
+                res.status(400).json( {success: false, error: err })
+                return;
+            }
+            if (!user) {
+                res.status(200).json({ success: true, data: false })
+                return;
+            }
+           } 
+        )
+        console.log(user1);
 
         newImage.save()
         .then((result) => {

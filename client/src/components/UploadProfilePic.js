@@ -37,7 +37,7 @@ function UploadProfilePic() {
             .then((data) => {
                 if (data.data.success) {
                     alert("Image successfully uploaded");
-                    setMulterImage("/imgs/turnip.png");
+                    //setMulterImage("/imgs/turnip.png");
 
                 }
             })
