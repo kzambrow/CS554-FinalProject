@@ -84,7 +84,7 @@ router.get("/byUser/:id", async (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.post("/addPost", (req, res) => {
+router.post("/addPost", async (req, res) => {
     const body = req.body;
     const currentTime = new Date();
 
