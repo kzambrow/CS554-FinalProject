@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../firebase/Auth';
 import SignOutButton from './SignOut';
 import '../App.css';
+import Navbar from 'react-bootstrap/Navbar'; 
+import Nav from 'react-bootstrap/Nav'; 
+import button from 'react-bootstrap/Button'; 
 
 const Navigation = () => {
   const { currentUser } = useContext(AuthContext);
@@ -11,30 +14,44 @@ const Navigation = () => {
 };
 
 const NavigationAuth = () => {
+  const { currentUser } = useContext(AuthContext);
   return (
-    <nav className="navigation">
-      <ul>
-      
-        <li>
-          <NavLink exact to="/" activeClassName="active" className="logo">
-            Landing
-          </NavLink>
-        </li>
-        <li>
-          <NavLink exact to="/account" activeClassName="active">
+    <Navbar bg="dark" variant="dark">
+      <Navbar.Brand href="/">Navbar</Navbar.Brand>
+      <Nav className="mr-auto">
+        <Nav.Link href="/">Home</Nav.Link>
+        <NavLink exact to={'/account/' + currentUser.id} activeClassName="active">
             Account
           </NavLink>
-        </li>
-        <li>
           <NavLink exact to="/chat" activeClassName="active">
             Chat
           </NavLink>
-        </li>
-        <li>
           <SignOutButton />
-        </li>
-      </ul>
-    </nav>
+      </Nav>
+    </Navbar>
+
+    // <nav className="navigation">
+    //   <ul>
+    //     <li>
+    //       <NavLink exact to="/" activeClassName="active" className="logo">
+    //         Landing
+    //       </NavLink>
+    //     </li>
+    //     <li>
+    //       <NavLink exact to={'/account/' + currentUser.id} activeClassName="active">
+    //         Account
+    //       </NavLink>
+    //     </li>
+    //     <li>
+    //       <NavLink exact to="/chat" activeClassName="active">
+    //         Chat
+    //       </NavLink>
+    //     </li>
+    //     <li>
+    //       <SignOutButton />
+    //     </li>
+    //   </ul>
+    // </nav>
   );
 };
 

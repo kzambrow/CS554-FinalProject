@@ -70,7 +70,7 @@ const Landing = (props) => {
 	
 	
 	const buildCard = (show) => { 
-		console.log(show); 
+		console.log('show ID is ' + show.creator); 
 		return (
 			<Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
 				<Card className={classes.card} variant='outlined'>
@@ -97,7 +97,6 @@ const Landing = (props) => {
 																	 */}
 									<Link to = {'/account/' + show.creator}> {show.displayName} </Link>
 									<br></br>
-
 
 							<br></br>
 									Price: {show.price}

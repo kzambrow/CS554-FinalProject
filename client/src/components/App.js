@@ -35,6 +35,7 @@ function App() {
         <Route path = "/posts/:id" component = {PostPage} />
         <PrivateRoute path="/post" component={Post} />
         <PrivateRoute path="/editaccount" component={EditAccount} />
+        <PrivateRoute path="/changePassword" component={ChangePassword} />
         <PrivateRoute exact path="/joinqueue" component={JoinQueue} />
         
       </Router>
