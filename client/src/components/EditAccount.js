@@ -9,6 +9,7 @@ function EditAccount() {
     const { currentUser } = useContext(AuthContext);
 
     const handleEdit = async (e) => {
+        //console.log(currentUser);
         e.preventDefault();
         const { Username, islandName, inGameName } = e.target.elements;
         let user = Username.value;
@@ -31,7 +32,7 @@ function EditAccount() {
         }
         try {
             await axios.post('http://localhost:5000/user/editUser', {
-                id: currentUser._id,
+                id: currentUser.id,
                 displayName: user,
                 inGameName: inGame,
                 islandName: island
