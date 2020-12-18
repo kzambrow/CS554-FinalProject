@@ -17,7 +17,8 @@ const useStyles = makeStyles({
 		maxWidth: 250,
 		height: 'auto',
 		marginLeft: 'auto',
-		marginRight: 'auto',
+        marginRight: 'auto',
+        marginTop: 100,
 		borderRadius: 5,
 		border: '1px solid #1e8678',
 		boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
@@ -118,37 +119,56 @@ function Account(props){
         async function getData(){
             const userInfo = await axios.get(`http://localhost:5000/user/${userId}`); 
             //console.log(userInfo); 
-            setUserData(userInfo);
-            setLoading(false);  
+            setUserData(userInfo);  
         };
         getData();
+        try{
+        let newimageSource = userData.imageData;
+        let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
+        if (finalimageSource.includes(".png")) {
+            finalimageSource = finalimageSource.replace(".png", "_medium.png");
+        }
+        if (finalimageSource.includes(".jpeg")) {
+            finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
+        }
+        if (finalimageSource.includes(".jpg")) {
+            finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
+        }
+        setMulterImage(finalimageSource);
+        console.log('multer image is ' + multerImage);
+        } catch (e) {
+            setMulterImage("/imgs/turnip.png");
+            console.log(e);
+        }
+
+            setLoading(false);
     }, [userId]);
 
-    useEffect(() => {
-        async function getImage() {
+    // useEffect(() => {
+    //     async function getImage() {
             
-            try {
-                const profile = await axios.get(`http://localhost:5000/images/${userData.data.data.email}`); 
-                let newimageSource = profile.data.data.imageData;
-                let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
-                if (finalimageSource.includes(".png")) {
-                    finalimageSource = finalimageSource.replace(".png", "_medium.png");
-                }
-                if (finalimageSource.includes(".jpeg")) {
-                    finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
-                }
-                if (finalimageSource.includes(".jpg")) {
-                    finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
-                }
-                setMulterImage(finalimageSource);
-                console.log('multer image is ' + multerImage);
-            } catch (e) {
-                setMulterImage("/imgs/turnip.png");
-                console.log(e);
-            }
-        }
-        getImage();
-    }, [userId]);
+    //         try {
+    //             const profile = await axios.get(`http://localhost:5000/images/${userData.data.data.email}`); 
+    //             let newimageSource = profile.data.data.imageData;
+    //             let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
+    //             if (finalimageSource.includes(".png")) {
+    //                 finalimageSource = finalimageSource.replace(".png", "_medium.png");
+    //             }
+    //             if (finalimageSource.includes(".jpeg")) {
+    //                 finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
+    //             }
+    //             if (finalimageSource.includes(".jpg")) {
+    //                 finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
+    //             }
+    //             setMulterImage(finalimageSource);
+    //             console.log('multer image is ' + multerImage);
+    //         } catch (e) {
+    //             setMulterImage("/imgs/turnip.png");
+    //             console.log(e);
+    //         }
+    //     }
+    //     getImage();
+    // }, [userId]);
 
 
     //console.log('userData is, ' + userData);
@@ -158,6 +178,7 @@ function Account(props){
 
         //non authenticated view
          userData && (userCard = 
+
             <Card className={classes.card} variant='outlined'>
                 <CardActionArea>
                     <CardMedia

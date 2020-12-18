@@ -1,22 +1,26 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Image = new Schema({
-    imageName: {
-        type: String,
-        default: "none",
-        required: true
-    },
-    imageData: {
-        type: String,
-        required: true
-    }
-}
+// const Image = new Schema({
+//     imageName: {
+//         type: String,
+//         default: "none",
+//         required: true
+//     },
+//     imageData: {
+//         type: String,
+//         required: true
+//     }
+// }
     
-)
+
 
 const User = new Schema(
     {
+        imageData: {
+            type: String,
+            required:false
+            },
         email: {type: String, required: true, unique: true},
         displayName: {type: String, require: true},
         star: {type: Number, default:0, required: false},
