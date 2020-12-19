@@ -71,6 +71,18 @@ router.get("/:id", async (req, res) => {
     }).catch(err => console.log(err))
 });
 
+router.patch("/:id", async (req, res) => {
+    const body = req.body;
+    await Post.findByIdAndUpdate({_id: req.params.id}, {$push: {comments: body}}, (err, post) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err})
+        }
+        if (!post) {
+            return res.status(200).json({ success: true, data: false })
+        }
+        return res.status(200).json({ success: true, data: post})
+    }).catch(err => console.log(err))
+});
 
 router.get("/byUser/:id", async (req, res) => {
     await Post.findOne({ creator: req.params.id }, (err, post) => {

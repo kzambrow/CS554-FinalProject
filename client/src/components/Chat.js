@@ -24,9 +24,14 @@ const Chat = () => {
             receivedMessage(message);
         });
         async function getData(){
-            const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
-            //console.log(userInfo); 
-            setUserData(userInfo);
+            try {
+                const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
+                //console.log(userInfo); 
+                setUserData(userInfo);
+            } catch (e) {
+                console.log(e);
+            }
+            
         };
         async function getImage() {
             try {
