@@ -94,11 +94,12 @@ function SignIn() {
           <button className="submit" align="center">Sign In</button>
           <br/>
           <br/>
-          <button className="forgot" onClick={passwordReset}>
-          Forgot Password
-        </button>
+            <button className="forgot" onClick={passwordReset}>
+                Forgot Password
+            </button>
         </form>
-        <br />
+              <br />
+              <br />
         <SocialSignIn />
       </div>
       <br />
