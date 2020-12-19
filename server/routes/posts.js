@@ -73,7 +73,9 @@ router.get("/:id", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
     const body = req.body;
-    await Post.findByIdAndUpdate({_id: req.params.id}, {$push: {comments: body}}, (err, post) => {
+    await Post.findByIdAndUpdate(req.params.id, {$addToSet: {comments: body}},
+        {safe: true, upsert: true, new: true},
+        (err, post) => {
         if (err) {
             return res.status(400).json({ success: false, error: err})
         }

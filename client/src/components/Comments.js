@@ -7,7 +7,7 @@ const axios = require('axios');
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 250,
+        maxWidth: 600,
         height: 'auto',
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -36,41 +36,42 @@ const useStyles = makeStyles({
 
 const Comments = props => {
     const [comment, setComment] = useState("");
+    const [sentComment, setSentComment] = useState("");
     const { currentUser } = useContext(AuthContext);
     const [userData, setUserData] = useState(undefined);
+    const postId = props.postInfo.id;
     const classes = useStyles();
-    const postInfo = props.postInfo;
-
+    const [postInfo, setPostInfo] = useState(props.postInfo);
     useEffect(() => {
-        async function getData(){
-            const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
-            //console.log(userInfo); 
-            setUserData(userInfo);
-        };
-        getData();
-    }, [currentUser]);
+   
+        
+    }, [sentComment]);
 
 
     async function sendMessage(e) {
+        setSentComment(comment);
         e.preventDefault();
+        console.log('clicked');
         const messageObject = {
             userId: currentUser.id,
             displayName: currentUser.displayName,
             comment: comment,
         };
-        console.log(messageObject);
+
         try {
-            let test = await axios.patch(`localhost:5000/posts/${postInfo.id}`, messageObject)
-            console.log(test);
+            let test = await axios.patch(`http://localhost:5000/post/${postInfo._id}`, messageObject);
+            setPostInfo(test.data.data);
         } catch (e) {
             console.log(e);
         }
     }
 
+
     function handleChange(e) {
         setComment(e.target.value);
     }
 
+    console.log("rending");
 
     return(
         <div>
@@ -81,7 +82,7 @@ const Comments = props => {
             </form>
             </div>
             <div>
-                <Card className={classes.card} variant='outlined'>
+                <Card className={classes.card}>
                     <CardActionArea>
                         {postInfo.comments.map(item => (
                             <CardContent>

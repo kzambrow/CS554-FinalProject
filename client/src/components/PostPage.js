@@ -105,6 +105,7 @@ function PostPage(props) {
         // }
         return (
             <div>
+            <div>
                 {/* <Beforeunload onBeforeunload={() => {
                     axios.post('http://localhost:5000/queue/leave', { queueId: queueId })
 
@@ -142,14 +143,16 @@ function PostPage(props) {
                     </Card>
                     <br />
                     <GetWaitingInfo queueId={queueId} postId={postId} />
-                    <Comments postInfo={postData}/>
-
                     
-                    <Link className='showlink' to='/'>Homepage</Link>
+
                 {/* </Beforeunload > */}
                 
             </div>
-
+            <br />
+            <br />
+            <br />
+            <Comments postInfo={postData}/>
+            </div>
         );
     }
 

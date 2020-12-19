@@ -47,8 +47,6 @@ const Chat = () => {
             socketRef.current.off("disconnect");
         };
         
-
-        
     }, [setMessages])
 
 
