@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 //import { doCreateUserWithEmailAndPassword } from '../firebase/FirebaseFunctions';
 import { AuthContext } from '../firebase/Auth';
 //import SocialSignIn from './SocialSignIn';
@@ -7,6 +7,7 @@ const axios = require('axios');
 
 function Post() {
     const { currentUser } = useContext(AuthContext);
+    const [ posted, setPosted ] = useState(false);
     var button;
 
     const handlePost = async (e) => {
@@ -15,7 +16,6 @@ function Post() {
 
 
         try {
-            console.log(button);
             await axios.post('http://localhost:5000/Post/addPost', {
                 creator: currentUser.id,
                 sell: button,
@@ -25,9 +25,8 @@ function Post() {
                 description: description.value,
                 endTime: endTime.value
             })
-
+            setPosted(true);
         } catch (error) {
-            console.log(error.response.data)
             alert(error);
         }
     };
@@ -35,6 +34,14 @@ function Post() {
     if (!currentUser) {
         return <Redirect to="/signup" />;
     }
+
+    if (posted) {
+        return <Redirect to="/" />;
+    }
+
+    //const redir = async () => {
+    //    return <Redirect to="/home" />;
+    //}
 
     const sellButton = async () => {
         button = true;
@@ -128,7 +135,7 @@ function Post() {
                 </div>
                 <button className="submit" id="submitButton" name="submitButton" type="submit" align="center">
                     Post
-        </button>
+                </button>
             </form>
             <br />
             

@@ -28,6 +28,7 @@ function App() {
         </div>
         <div className="chat-compensation">
         <Route exact path="/" component={Landing} />
+        <Route path="/home" component={Landing} />
         <Route exact path = "/sell" component = {Landings}/>
         <Route path="/account/:id" component = {Account}/>
         <Route path="/signin" component={SignIn} />

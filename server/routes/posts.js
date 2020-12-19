@@ -99,6 +99,9 @@ router.get("/byUser/:id", async (req, res) => {
 router.post("/addPost", async (req, res) => {
     const body = req.body;
     const currentTime = new Date();
+    if (body.price < 0) {
+        return res.status(400).json({ success: false, message: 'Price cannot be below 0' })
+    }
 
     if (!body) {
         return res.status(400).json({ success: false, message: 'You must provide post info' })
