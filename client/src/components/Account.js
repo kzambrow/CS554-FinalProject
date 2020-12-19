@@ -17,7 +17,8 @@ const useStyles = makeStyles({
 		maxWidth: 250,
 		height: 'auto',
 		marginLeft: 'auto',
-		marginRight: 'auto',
+        marginRight: 'auto',
+        marginTop: 100,
 		borderRadius: 5,
 		border: '1px solid #1e8678',
 		boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
@@ -42,11 +43,11 @@ const useStyles = makeStyles({
 });
 
 //TODO
-
-//display different information for authenticated vs non authenticated
+//Add nintendo id attribute to user 
+//fix page changing issue on accounts
 
 function Account(props){
-    console.log(props.match.params.id); 
+    //console.log(props.match.params.id); 
     const regex = /(<([^>]+)>)/gi;
     const classes = useStyles();
     const [loading, setLoading ] = useState(true);
@@ -56,12 +57,13 @@ function Account(props){
     const [multerImage, setMulterImage] = useState("/imgs/turnip.png");
 
     const { currentUser } = useContext(AuthContext);
-    console.log(currentUser.id); 
+    //console.log(currentUser.id); 
+
+    //Get all the posts posted by the user
     useEffect(() => {
         async function fetchData() {
             try {
-                //getting data for user profile
-                const { data } = await axios.get(`http://localhost:5000/byUser/${userId}`);
+                const { data } = await axios.get(`http://localhost:5000/post/byUser/${userId}`);
                 setProfilePost(data);
                 setLoading(false);
             } catch (e) {
@@ -76,12 +78,13 @@ function Account(props){
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
                 <Card className={classes.card} variant='outlined'>
                     <CardActionArea>
-                            <CardMedia
-                                className={classes.media}
-                                component='img'
-                                image={show.image && show.image.original ? show.image.original : noImage}
-                                title='show image'
-                            />
+                    <CardMedia
+								className={classes.media}
+								component='img'
+								image='/imgs/turnip.png'
+								alt = 'No image'
+								title='show image'
+							/>
                             <CardContent>
                                 <Typography variant='body2' color='textSecondary' component='p'>
                                     Type: {show.sell ? "Selling": "Buying"}
@@ -104,27 +107,48 @@ function Account(props){
         );
     };
     
+    console.log('profilePost is ', profilePost); 
     let card = null;
     card =
-        profilePost &&
-        profilePost.data.map((show) => {
-            return buildCard(show);
-    });
+        profilePost && profilePost.data &&(
+        buildCard(profilePost.data)
+    );
 
     //GET User Info to be displayed on the side
     useEffect(() => {
         async function getData(){
             const userInfo = await axios.get(`http://localhost:5000/user/${userId}`); 
             //console.log(userInfo); 
-            setUserData(userInfo);
-            setLoading(false);  
-            console.log(userInfo);
+            setUserData(userInfo);  
         };
         getData();
+        // try{
+        // let newimageSource = userData.imageData;
+        // let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
+        // if (finalimageSource.includes(".png")) {
+        //     finalimageSource = finalimageSource.replace(".png", "_medium.png");
+        // }
+        // if (finalimageSource.includes(".jpeg")) {
+        //     finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
+        // }
+        // if (finalimageSource.includes(".jpg")) {
+        //     finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
+        // }
+        // setMulterImage(finalimageSource);
+        // console.log('multer image is ' + multerImage);
+        // } catch (e) {
+        //     setMulterImage("/imgs/turnip.png");
+        //     console.log(e);
+        // }
+
+            setLoading(false);
+    }, [userId]);
+
+    useEffect(() => {
         async function getImage() {
             
             try {
-                const profile = await axios.get(`http://localhost:5000/images/${userData.data.data.email}`); 
+                const profile = await axios.get(`http://localhost:5000/images/${userId}`); 
                 let newimageSource = profile.data.data.imageData;
                 let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
                 if (finalimageSource.includes(".png")) {
@@ -137,7 +161,7 @@ function Account(props){
                     finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
                 }
                 setMulterImage(finalimageSource);
-                console.log(multerImage);
+                console.log('multer image is ' + multerImage);
             } catch (e) {
                 setMulterImage("/imgs/turnip.png");
                 console.log(e);
@@ -146,10 +170,15 @@ function Account(props){
         getImage();
     }, [userId]);
 
+
+    //console.log('userData is, ' + userData);
+    //console.log('userData email is, ' + userData.data.data.email);
+
     let userCard = null; 
 
         //non authenticated view
          userData && (userCard = 
+
             <Card className={classes.card} variant='outlined'>
                 <CardActionArea>
                     <CardMedia
@@ -163,12 +192,13 @@ function Account(props){
                             <br></br>
                             Username: {userData.data.data.displayName}
                             <br></br>
-                            Island Code: ABCD 
+                            Island Code: {userData.data.data.islandName} 
                             <br></br>
-                            Ingame Name: GAMER1
+                            Ingame Name: {userData.data.data.inGameName}
                             <br></br>
                             Nintendo ID: 1234567 
                             <br></br>
+                            Stars: {userData.data.data.star}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
@@ -176,27 +206,32 @@ function Account(props){
         );
         
         //authenticated view 
-        userData && currentUser && currentUser.id == userId && (userCard = 
+        userData && multerImage && currentUser && currentUser.id === userId && (userCard = 
             <Card className={classes.card} variant='outlined'>
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
                         component='img'
-                        image={noImage}
+                        image={multerImage}
                         title='show image'
                     />
                     <CardContent>
                         <Typography variant='body2' color='textSecondary' component='p'>
+                        <br></br>
+                            Username: {userData.data.data.displayName}
                             <br></br>
-                            Username: {currentUser.displayName}
+                            Island Code: {userData.data.data.islandName} 
                             <br></br>
-                            Island Code: ABCD 
-                            <br></br>
-                            Ingame Name: GAMER1
+                            Ingame Name: {userData.data.data.inGameName}
                             <br></br>
                             Nintendo ID: 1234567 
                             <br></br>
                             Email: {currentUser.email}
+                            <br></br>
+                            Stars: {userData.data.data.star}
+                            <br></br>
+                            <br></br>
+                            <Link to = '/editaccount'> Edit Profile</Link>
                             <br></br>
                         </Typography>
                     </CardContent>
@@ -216,7 +251,6 @@ function Account(props){
             <div>
                 <br />
                 <br />
-                <Button> <Link to =  {"/sell" }> Selling </Link> </Button>
                 <Grid container className={classes.grid} spacing={5}>
                     {card}
                 </Grid>

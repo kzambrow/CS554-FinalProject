@@ -24,7 +24,7 @@ const Chat = () => {
         });
         async function getImage() {
             try {
-                const profile = await axios.get(`http://localhost:5000/images/${currentUser.email}`); 
+                const profile = await axios.get(`http://localhost:5000/images/${currentUser.id}`); 
                 let newimageSource = profile.data.data.imageData;
                 let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
                 if (finalimageSource.includes(".png")) {

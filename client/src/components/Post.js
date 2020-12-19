@@ -11,13 +11,13 @@ function Post() {
 
     const handlePost = async (e) => {
         e.preventDefault();
-        const { price, creator, ticketPrice, islandCode, sell, description, endTime } = e.target.elements;
+        const { price, ticketPrice, islandCode, sell, description, endTime } = e.target.elements;
 
 
         try {
             console.log(button);
             await axios.post('http://localhost:5000/Post/addPost', {
-                creator: creator.value,
+                creator: currentUser.id,
                 sell: button,
                 price: price.value,
                 ticketPrice: ticketPrice.value,
@@ -27,6 +27,7 @@ function Post() {
             })
 
         } catch (error) {
+            console.log(error.response.data)
             alert(error);
         }
     };
@@ -61,7 +62,7 @@ function Post() {
                         required
                     />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                     <input
                         className="un form-control"
                         type="text"
@@ -71,7 +72,7 @@ function Post() {
                         id="creator"
                         required
                     />
-                </div>
+                </div> */}
                 <div className="form-group">
                     <input
                         className="un form-control"

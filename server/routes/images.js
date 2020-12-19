@@ -4,6 +4,7 @@ const multer = require('multer');
 const router = express.Router();
 const fs = require('fs');
 const ImageScheme = require('../models/image-model');
+const UserScheme = require('../models/user-model');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -85,8 +86,8 @@ async function convertmedium(source) {
     }
 }
 
-router.get("/:email", (req, res) => {
-    ImageScheme.findOne({ userEmail: req.params.email }, (err, image) => {
+router.get("/:id", (req, res) => {
+    ImageScheme.findOne({ userId: req.params.id }, (err, image) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -136,6 +137,7 @@ router.delete("/:email", (req, res) => {
 router.route("/uploadmulter")
     .post(upload.single('imageData'), (req, res, next) => {
         const newImage = new ImageScheme({
+            userId: req.body.userId,
             userEmail: req.body.userEmail,
             imageName: req.body.imageName,
             imageData: req.file.path

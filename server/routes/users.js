@@ -6,7 +6,7 @@ const User = require('../models/user-model');
 
 router.post("/addUser", async (req, res) => {
     const body = req.body;
-
+    body.imageData = ('/imgs/turnip.png');
     if (!body) {
         return res.status(400).json({ success: false, error: 'You must provide post info' })
     }

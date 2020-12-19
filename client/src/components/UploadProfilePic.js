@@ -28,6 +28,7 @@ function UploadProfilePic() {
 
     const uploadImage = (e) => {
         let imageFormObj = new FormData();
+        imageFormObj.append("userId", currentUser.id);
         imageFormObj.append("userEmail", currentUser.email);
         imageFormObj.append("imageName", "multer-image-" + Date.now());
         imageFormObj.append("imageData", e.target.files[0]);
@@ -37,7 +38,7 @@ function UploadProfilePic() {
             .then((data) => {
                 if (data.data.success) {
                     alert("Image successfully uploaded");
-                    setMulterImage("/imgs/turnip.png");
+                    //setMulterImage("/imgs/turnip.png");
 
                 }
             })

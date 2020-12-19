@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Post = require('../models/post-model');
 const Queue = require('../models/queue-model');
+const User = require('../models/user-model');
+
 
 router.get("/sell", (req, res) => {
     const current = new Date();
@@ -69,6 +71,7 @@ router.get("/:id", async (req, res) => {
     }).catch(err => console.log(err))
 });
 
+
 router.get("/byUser/:id", async (req, res) => {
     await Post.findOne({ creator: req.params.id }, (err, post) => {
         if (err) {
@@ -81,16 +84,34 @@ router.get("/byUser/:id", async (req, res) => {
     }).catch(err => console.log(err))
 });
 
-router.post("/addPost", (req, res) => {
+router.post("/addPost", async (req, res) => {
     const body = req.body;
+    const currentTime = new Date();
 
     if (!body) {
-        return res.status(400).json({ success: false, error: 'You must provide post info' })
+        return res.status(400).json({ success: false, message: 'You must provide post info' })
     }
+    const existPost =await Post.find({creator: body.creator, archived: false});
+    if(existPost.length>0) return res.status(400).json({success: false, message: 'You already have an active post', data: existPost});
 
-    const post = new Post(body);
+    const poster = await User.findById(req.body.creator);
+
+    const post = new Post({
+        creator: body.creator,
+        sell: body.sell,
+        price: body.price,
+        ticketPrice: body.ticketPrice,
+        islandCode: body.islandCode,
+        description: body.description,
+        endTime: body.endTime,
+        email: poster.email,
+        displayName: poster.displayName,
+        star: poster.star,
+        inGameName: poster.inGameName,
+        islandName: poster.islandName
+    });
     if (!post) {
-        return res.status(400).json({ success: false, error: 'Create new post fail' })
+        return res.status(400).json({ success: false, message: 'Create new post fail' })
     }
 
     post.save().then(() => {
@@ -110,13 +131,13 @@ router.post("/addPost", (req, res) => {
 });
 
 router.post("/delete/:id", async (req, res) => {
-    await Post.findByIdAndDelete(req.params.id, (err, post) => {
+    await Post.findByIdAndUpdate(req.params.id, {$set:{archived: true}},(err, post) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
 
         if (!post) {
-            return res.status(404).json({ success: false, error: 'Post not found' })
+            return res.status(404).json({ success: false, error: 'Post doesn\'t exist or already expired' })
         }
         return res.status(200).json({ success: true, data: post })
     }).catch(err => {

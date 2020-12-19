@@ -14,6 +14,10 @@ const Image = new Schema({
     imageData: {
         type: String,
         required: true
+    },
+    userId: {
+        type: String,
+        required:true
     }
 });
 

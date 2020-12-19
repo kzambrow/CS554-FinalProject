@@ -32,7 +32,7 @@ function EditAccount() {
         }
         try {
             await axios.post('http://localhost:5000/user/editUser', {
-                id: currentUser._id,
+                id: currentUser.id,
                 displayName: user,
                 inGameName: inGame,
                 islandName: island

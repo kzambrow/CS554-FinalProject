@@ -51,17 +51,16 @@ router.post("/join", async (req, res) => {
 router.post("/check", async (req, res) => {
     const user = await Queue.findById(req.body.queueId);
     if (!user) return res.status(400).json({ success: false, error: 'You are not in this line' })
-    await Queue.find({ queueId: req.body.postId, joinTime: { $lt: user.joinTime } }, (err, users) => {
+    return await Queue.find({ postId: user.postId, joinTime: { $lt: user.joinTime } }, (err, users) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
+        // console.log(users)
         if (users.length) {
-
+            const result = users.map(user=>user.inGameName)
             return res.status(201).json({
                 success: true,
-                data: users.forEach((user) => {
-                    return user.inGameName
-                })
+                data: result
             })
         }
         return res.status(200).json({ success: true, data: -1 })
@@ -82,12 +81,12 @@ router.post("/getCode", async (req, res) => {
                     return res.status(400).json({ success: false, error: err })
                 }
                 if (users.length <= 0) {
-                    await Queue.findByIdAndDelete(req.body.queueId);
+                    // await Queue.findByIdAndDelete(req.body.queueId);
                     return await Post.findById(req.body.postId, (err, post) => {
                         if (err) {
                             return res.status(400).json({ success: false, error: err })
                         }
-                        console.log(post);
+                        // console.log(post);
                         if (!post) {
                             return res.status(404).json({ success: false, message: 'The island is already closed.' })
                         }
@@ -115,15 +114,10 @@ router.post("/find",async(req,res)=>{
     })
 })
 
-router.post("/leave", (req, res) => {
+router.post("/leave", async(req, res) => {
     const queueId = req.body.queueId;
-    return Queue.findByIdAndDelete(queueId, (err, result) => {
-        if (err) {
-            res.status(400).json({ success: false, error: err })
-        }
-        return res.status(200).json({ success: true })
-
-    })
+    const result = await Queue.findByIdAndDelete(queueId);
+    console.log(result);
 })
 
 module.exports = router;
