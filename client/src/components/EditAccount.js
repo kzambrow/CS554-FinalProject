@@ -30,17 +30,24 @@ function EditAccount() {
         if (inGameName.value === "" && currentUser.inGameName === undefined) {
             inGame = "No Name";
         }
-        try {
-            await axios.post('http://localhost:5000/user/editUser', {
-                id: currentUser.id,
-                displayName: user,
-                inGameName: inGame,
-                islandName: island
-            })
+        
+        await axios.post('http://localhost:5000/user/editUser', {
+            id: currentUser.id,
+            displayName: user,
+            inGameName: inGame,
+            islandName: island
+        })
+        .then((data) => {
+            if (data.data.success) {
+                alert("Profile successfully updated!");
+                //setMulterImage("/imgs/turnip.png");
 
-        } catch (error) {
+            }
+        })
+
+        .catch ((error) => {
             alert(error);
-        }
+        })
     };
 
     if (!currentUser) {

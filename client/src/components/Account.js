@@ -44,7 +44,8 @@ const useStyles = makeStyles({
 
 //TODO
 //Add nintendo id attribute to user 
-//fix page changing issue on accounts
+//Change color on user links and more info 
+//format account page
 
 function Account(props){
     //console.log(props.match.params.id); 
