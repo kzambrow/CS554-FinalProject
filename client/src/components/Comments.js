@@ -7,7 +7,7 @@ const axios = require('axios');
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 250,
+        maxWidth: 600,
         height: 'auto',
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -82,7 +82,7 @@ const Comments = props => {
             </form>
             </div>
             <div>
-                <Card className={classes.card} variant='outlined'>
+                <Card className={classes.card}>
                     <CardActionArea>
                         {postInfo.comments.map(item => (
                             <CardContent>
