@@ -42,6 +42,8 @@
 }
 
 body {
+  width: 100%;
+  overflow-x: hidden;
   background-color: #f3f1c6;
   font-family: 'Ubuntu', sans-serif;
 }
