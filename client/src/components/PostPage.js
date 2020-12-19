@@ -5,6 +5,7 @@ import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeSty
 
 import { AuthContext } from '../firebase/Auth';
 import GetWaitingInfo from './GetWaitingInfo';
+import Comments from './Comments';
 // import { Beforeunload } from 'react-beforeunload';
 
 const axios = require('axios');
@@ -85,7 +86,9 @@ function PostPage(props) {
             window.removeEventListener('beforeunload', cleanup);
         }
     }, []);
-
+    if (!currentUser) {
+        return <Redirect to="/signup" />;
+    }
 
 
     if (loading) {
@@ -95,6 +98,7 @@ function PostPage(props) {
             </div>
         );
     }
+
     else {
         // function handleModalLeave(){
         //     axios.post('http://localhost:5000/queue/',{queueId: queueId});
@@ -138,8 +142,12 @@ function PostPage(props) {
                     </Card>
                     <br />
                     <GetWaitingInfo queueId={queueId} postId={postId} />
+                    <Comments postInfo={postData}/>
+
+                    
                     <Link className='showlink' to='/'>Homepage</Link>
                 {/* </Beforeunload > */}
+                
             </div>
 
         );
