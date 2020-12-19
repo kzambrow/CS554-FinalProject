@@ -80,11 +80,12 @@ const Chat = () => {
         objDiv.scrollTop = objDiv.scrollHeight;
     }
     return (
+        
         <div>
             <div id="chat" className="chat-box">
                 {messages.map((message, index) => {
                     if (message.id === ID) {
-                        if (currentUser.email === message.email) {
+                        if (currentUser && currentUser.email === message.email) {
                             return (
                                 <div key={index}>
                                     <div className="chat-user" >
@@ -124,10 +125,16 @@ const Chat = () => {
                     )
                 })}
             </div>
+            {currentUser ?
+            
             <form onSubmit={sendMessage}>
                 <textarea className="chat-text-field" value={message} onChange={handleChange} placeholder="Message..." />
                 <button className="chat-submit">Send</button>
             </form>
+            : 
+            null
+            }
+            
         </div>
     )
 };

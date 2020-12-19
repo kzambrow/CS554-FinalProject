@@ -5,7 +5,6 @@ import { Card, CardContent, CardMedia, Grid, Typography, makeStyles, Button } fr
 import '../App.css';
 import turnip from '../img/turnip.png'
 import Account from './Account'; 
-
 const axios = require('axios');
 
 const useStyles = makeStyles({
@@ -145,6 +144,7 @@ const Landing = (props) => {
 				</Grid>
 				<Button style={{ display: visible >= showsData.data.length ? 'none' : 'block' }} onClick={showMore}>Load More</Button>
 			</div>
+			
 		);
 	}
 };

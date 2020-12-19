@@ -173,7 +173,15 @@ a {
   margin-top:20px; 
   display: flex;
   flex-direction: column;
+}
 
+.chat-main-div {
+  float: right;
+}
+
+.chat-compensation {
+  float: left;
+  width: 60%;
 }
 
 .chat-text-field {
