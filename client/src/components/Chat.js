@@ -12,6 +12,7 @@ const Chat = () => {
     const [currentImage, setCurrentImage] = useState("/imgs/turnipSmall.png");
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
+    const [userData, setUserData] = useState(undefined);
     const socketRef = useRef();
 
     useEffect(() => {
@@ -22,6 +23,15 @@ const Chat = () => {
         socketRef.current.on("RECEIVE_MESSAGE", function(message) {
             receivedMessage(message);
         });
+        async function getData(){
+            try{
+            const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
+            //console.log(userInfo); 
+            setUserData(userInfo);
+            }catch(e){
+                console.log(e);
+            }
+        };
         async function getImage() {
             try {
                 const profile = await axios.get(`http://localhost:5000/images/${currentUser.id}`); 
@@ -42,14 +52,19 @@ const Chat = () => {
                 console.log(e);
             }
         }
+        
+        getData();
         getImage();
+        
+        console.log("useEffect has been activated");
+        console.log('setMessages : ', setMessages); 
+        console.log('currentUser: ', currentUser); 
+        
         return () => {
             socketRef.current.off("disconnect");
         };
         
-
-        
-    }, [setMessages])
+    }, [setMessages, currentUser])
 
 
     function receivedMessage(message) {
@@ -63,7 +78,7 @@ const Chat = () => {
         const messageObject = {
             image: currentImage,
             email: currentUser.email,
-            name: currentUser.displayName,
+            name: userData.data.data.displayName,
             body: message,
             id: ID,
         };
@@ -80,11 +95,12 @@ const Chat = () => {
         objDiv.scrollTop = objDiv.scrollHeight;
     }
     return (
+        
         <div>
             <div id="chat" className="chat-box">
                 {messages.map((message, index) => {
                     if (message.id === ID) {
-                        if (currentUser.email === message.email) {
+                        if (currentUser && currentUser.email === message.email) {
                             return (
                                 <div key={index}>
                                     <div className="chat-user" >
@@ -124,10 +140,16 @@ const Chat = () => {
                     )
                 })}
             </div>
+            {currentUser ?
+            
             <form onSubmit={sendMessage}>
                 <textarea className="chat-text-field" value={message} onChange={handleChange} placeholder="Message..." />
                 <button className="chat-submit">Send</button>
             </form>
+            : 
+            null
+            }
+            
         </div>
     )
 };

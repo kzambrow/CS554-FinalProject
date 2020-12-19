@@ -38,17 +38,15 @@ function Post() {
 
     const sellButton = async () => {
         button = true;
-        console.log(button);
     }
 
     const buyButton = async () => {
         button = false;
-        console.log(button);
     }
 
     return (
-        <div className="post-main" align="center">
-            <p className="post" align="center">Post</p>
+        <div className="add-post" align="center">
+            <h2 className="post" align="center">Post</h2>
 
             <form className="form2" onSubmit={handlePost}>
                 <div className="form-group">
@@ -120,7 +118,7 @@ function Post() {
                 <div className="form-group">
                     <input
                         className="un form-control"
-                        type="date"
+                        type="datetime-local"
                         align="center"
                         placeholder="End Time"
                         name="endTime"

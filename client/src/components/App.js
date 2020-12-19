@@ -26,10 +26,10 @@ function App() {
             <Navigation />
           </header>
         </div>
+        <div className="chat-compensation">
         <Route exact path="/" component={Landing} />
         <Route exact path = "/sell" component = {Landings}/>
         <Route path="/account/:id" component = {Account}/>
-        <PrivateRoute path="/chat" component={Chat} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path = "/posts/:id" component = {PostPage} />
@@ -37,6 +37,11 @@ function App() {
         <PrivateRoute path="/editaccount" component={EditAccount} />
         <PrivateRoute path="/changePassword" component={ChangePassword} />
         <PrivateRoute exact path="/joinqueue" component={JoinQueue} />
+        </div>
+        <div className="chat-main-div">
+            <Chat/>
+          </div>
+        
         
       </Router>
     </AuthProvider>

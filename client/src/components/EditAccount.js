@@ -7,9 +7,9 @@ const axios = require('axios');
 
 function EditAccount() {
     const { currentUser } = useContext(AuthContext);
-    //const [pwMatch, setPwMatch] = useState('');
 
     const handleEdit = async (e) => {
+        //console.log(currentUser);
         e.preventDefault();
         const { Username, islandName, inGameName } = e.target.elements;
         let user = Username.value;
@@ -55,7 +55,7 @@ function EditAccount() {
     }
 
     return (
-        <div className="signin-main">
+        <div className="editAcc">
             <nav className="navigation">
                 <ul>
                     <li>

@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require('multer');
 const router = express.Router();
 const User = require('../models/user-model');
+const Post = require('../models/post-model');
 
 
 router.post("/addUser", async (req, res) => {
@@ -140,11 +141,28 @@ router.post("/changeDisplayName/:id", async (req, res) => {
 
 router.post("/editUser", async (req, res) => {
     const body = req.body;
-    console.log(body);
 
     if (!body) {
         return res.status(400).json({ success: false, error: 'You must change something' })
     }
+    Post.findOneAndUpdate({ creator: body.id }, { $set: { displayName: body.displayName } },
+        (err, post) => {
+            if (err) {
+                return res.status(404).json({
+                    err,
+                    message: 'Could not update information on post'
+                })
+            }
+            if (post) {
+                console.log("nice")
+            }
+        }
+    ).catch(err => {
+        return res.status(400).json({
+            err,
+            message: 'Information not changed in post.'
+        })
+    })
     User.findByIdAndUpdate(body.id, { $set: { displayName: body.displayName, inGameName: body.inGameName, islandName: body.islandName } },
         (err, user) => {
             if (err) {

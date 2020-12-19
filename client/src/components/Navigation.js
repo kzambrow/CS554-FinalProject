@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../firebase/Auth';
 import SignOutButton from './SignOut';
 import '../App.css';
@@ -20,11 +20,11 @@ const NavigationAuth = () => {
     <nav className="navigation">
     <div class = "topnav">
         
-          <a activeClassName="active" href="/">Turnip Exchange</a>
-          <a activeClassName="active" href="/">Home</a>
-          <a href={'/account/' + currentUser.id}>Account</a>
-          <a href="/chat">Chat</a>
-          <a href="#signout" onClick={doSignOut}> Sign Out</a>
+          <Link activeClassName="active" to="/">Turnip Exchange</Link>
+          <Link activeClassName="active" to="/">Home</Link>
+          <Link to={'/account/' + currentUser.id}>Account</Link>
+          <Link to={'/post/addpost'}>Add Post</Link>
+          <Link to="#signout" onClick={doSignOut}> Sign Out</Link>
           {/* <NavLink exact to="/" activeClassName="active" className="logo">
               Landing
           </NavLink>
@@ -46,10 +46,10 @@ const NavigationNonAuth = () => {
   return (
     <nav className="navigation">
       <div class = "topnav">
-      <a href="/">Turnip Exchange</a>
-          <a href="/">Home</a>
-          <a href='/signup' >Sign Up</a>
-          <a href="/signin">Sign In</a>
+      <Link to="/">Turnip Exchange</Link>
+          <Link to="/">Home</Link>
+          <Link to='/signup' >Sign Up</Link>
+          <Link to="/signin">Sign In</Link>
       </div>
       {/* <ul>
         <li>

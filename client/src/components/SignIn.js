@@ -71,7 +71,7 @@ function SignIn() {
           Forgot Password
         </button>
       </form> */}
-      <div className="signin-main">
+      <div className="signin-in">
         <p className="sign" align="center">Sign In</p>
         <form className="form1" onSubmit={handleLogin}>
           <input
@@ -94,11 +94,12 @@ function SignIn() {
           <button className="submit" align="center">Sign In</button>
           <br/>
           <br/>
-          <button className="forgot" onClick={passwordReset}>
-          Forgot Password
-        </button>
+            <button className="forgot" onClick={passwordReset}>
+                Forgot Password
+            </button>
         </form>
-        <br />
+              <br />
+              <br />
         <SocialSignIn />
       </div>
       <br />

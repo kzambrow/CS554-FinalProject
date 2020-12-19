@@ -5,7 +5,6 @@ import { Card, CardContent, CardMedia, Grid, Typography, makeStyles, Button } fr
 import '../App.css';
 import turnip from '../img/turnip.png'
 import Account from './Account'; 
-
 const axios = require('axios');
 
 const useStyles = makeStyles({
@@ -137,13 +136,15 @@ const Landing = (props) => {
 			<div>
 				<br />
 				<br />
-				<Button> <Link to={"/sell"}> Selling </Link> </Button>
+				<Button style = {{position: 'absolute', left: '50%'}}> <Link to={"/sell"}> View Selling </Link> </Button>
+				<br/><br/>
 
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
 				</Grid>
 				<Button style={{ display: visible >= showsData.data.length ? 'none' : 'block' }} onClick={showMore}>Load More</Button>
 			</div>
+			
 		);
 	}
 };
