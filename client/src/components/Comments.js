@@ -36,41 +36,44 @@ const useStyles = makeStyles({
 
 const Comments = props => {
     const [comment, setComment] = useState("");
+    const [sentComment, setSentComment] = useState("");
     const { currentUser } = useContext(AuthContext);
     const [userData, setUserData] = useState(undefined);
+    const postId = props.postInfo.id;
     const classes = useStyles();
-    const postInfo = props.postInfo;
-
+    const [postInfo, setPostInfo] = useState(props.postInfo);
     useEffect(() => {
-        async function getData(){
-            const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
-            //console.log(userInfo); 
-            setUserData(userInfo);
-        };
-        getData();
-    }, [currentUser]);
+   
+        
+    }, [sentComment]);
 
 
     async function sendMessage(e) {
+        setSentComment(comment);
         e.preventDefault();
+        console.log('clicked');
         const messageObject = {
             userId: currentUser.id,
             displayName: currentUser.displayName,
             comment: comment,
         };
-        console.log(messageObject);
+
         try {
+
             let test = await axios.patch(`localhost:5000/post/${postInfo.id}`, messageObject)
             console.log(test);
+          
         } catch (e) {
             console.log(e);
         }
     }
 
+
     function handleChange(e) {
         setComment(e.target.value);
     }
 
+    console.log("rending");
 
     return(
         <div>
