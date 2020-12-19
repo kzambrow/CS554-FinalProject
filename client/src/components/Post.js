@@ -45,8 +45,8 @@ function Post() {
     }
 
     return (
-        <div className="post-main" align="center">
-            <p className="post" align="center">Post</p>
+        <div className="add-post" align="center">
+            <h2 className="post" align="center">Post</h2>
 
             <form className="form2" onSubmit={handlePost}>
                 <div className="form-group">

@@ -23,6 +23,7 @@ const NavigationAuth = () => {
           <Link activeClassName="active" to="/">Turnip Exchange</Link>
           <Link activeClassName="active" to="/">Home</Link>
           <Link to={'/account/' + currentUser.id}>Account</Link>
+          <Link to={'/post/addpost'}>Add Post</Link>
           <Link to="#signout" onClick={doSignOut}> Sign Out</Link>
           {/* <NavLink exact to="/" activeClassName="active" className="logo">
               Landing
