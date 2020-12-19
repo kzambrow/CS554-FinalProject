@@ -102,7 +102,7 @@ const Landings = () => {
 								</Typography>
 							</CardContent>
 
-					<Button><Link to = {`/posts/${show._id}`}> More Info</Link></Button>
+							<Button style = {{left: '25%'}}><Link to = {`/posts/${show._id}`}> More Info</Link></Button>
 				</Card>
 			</Grid>
 		);
@@ -125,7 +125,8 @@ const Landings = () => {
 			<div>
 				<br />
 				<br />
-				<Button> <Link to =  {"/" }> Buying </Link> </Button>
+				<Button style = {{ position: 'absolute', left: '50%'}}> <Link to =  {"/" }> View Buying </Link> </Button>
+				<br/><br/>
 				
 				<Grid container className={classes.grid} spacing={5}>
 				{card}

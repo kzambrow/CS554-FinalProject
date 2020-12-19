@@ -53,6 +53,16 @@ body {
   margin: 7em auto;
   border-radius: 1.5em;
   box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+  
+}
+
+.signout-main {
+  background-color: #FFFFFF;
+  width: 400px;
+  height: 625px;
+  margin: 7em auto;
+  border-radius: 1.5em;
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
 }
 
 .sign {
@@ -133,6 +143,8 @@ cursor: pointer;
   background: none!important;
   border: none;
   padding: 0!important;
+  position: absolute;
+  left: 46.8%;
   /*optional*/
   font-family: arial, sans-serif;
   /*input has OS specific font-family*/
@@ -143,7 +155,7 @@ cursor: pointer;
 
 a {
   text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
-  color: #c48d3f;
+  color: #936300;
   text-decoration: none
 }
 
@@ -258,4 +270,9 @@ a {
     background-color: #4CAF50;
     color: white;
   }
+
+  .form-group:focus{
+     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  }
+
 

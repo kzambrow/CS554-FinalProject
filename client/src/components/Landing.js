@@ -137,7 +137,8 @@ const Landing = (props) => {
 			<div>
 				<br />
 				<br />
-				<Button> <Link to={"/sell"}> Selling </Link> </Button>
+				<Button style = {{position: 'absolute', left: '50%'}}> <Link to={"/sell"}> View Selling </Link> </Button>
+				<br/><br/>
 
 				<Grid container className={classes.grid} spacing={5}>
 					{card}
