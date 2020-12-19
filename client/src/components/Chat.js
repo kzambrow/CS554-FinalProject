@@ -12,6 +12,7 @@ const Chat = () => {
     const [currentImage, setCurrentImage] = useState("/imgs/turnipSmall.png");
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
+    const [userData, setUserData] = useState(undefined);
     const socketRef = useRef();
 
     useEffect(() => {
@@ -22,6 +23,11 @@ const Chat = () => {
         socketRef.current.on("RECEIVE_MESSAGE", function(message) {
             receivedMessage(message);
         });
+        async function getData(){
+            const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
+            //console.log(userInfo); 
+            setUserData(userInfo);
+        };
         async function getImage() {
             try {
                 const profile = await axios.get(`http://localhost:5000/images/${currentUser.id}`); 
@@ -42,6 +48,7 @@ const Chat = () => {
                 console.log(e);
             }
         }
+        getData();
         getImage();
         return () => {
             socketRef.current.off("disconnect");
@@ -63,7 +70,7 @@ const Chat = () => {
         const messageObject = {
             image: currentImage,
             email: currentUser.email,
-            name: currentUser.displayName,
+            name: userData.data.data.displayName,
             body: message,
             id: ID,
         };
