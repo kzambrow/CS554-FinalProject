@@ -67,7 +67,7 @@ body {
 
 .sign {
   padding-top: 40px;
-  color: #c48d3f;
+  color: #a06c00;
   font-family: 'Ubuntu', sans-serif;
   font-weight: bold;
   font-size: 23px;
@@ -127,7 +127,7 @@ font-family: 'Ubuntu', sans-serif;
 cursor: pointer;
   border-radius: 5em;
   color: #fff;
-  background: #c48d3f;
+  background: #a06c00;
   border: 0;
   padding-left: 40px;
   padding-right: 40px;
@@ -192,7 +192,7 @@ a {
   cursor: pointer;
     border-radius: 5em;
     color: #fff;
-    background: #c48d3f;
+    background: #a06c00;
     border: 0;
     padding-left: 40px;
     padding-right: 40px;
@@ -272,7 +272,7 @@ a {
   }
 
   .form-group:focus{
-     box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+     outline: 0;
   }
 
 
