@@ -71,7 +71,7 @@ function SignIn() {
           Forgot Password
         </button>
       </form> */}
-      <div className="signin-main">
+      <div className="signin-in">
         <p className="sign" align="center">Sign In</p>
         <form className="form1" onSubmit={handleLogin}>
           <input

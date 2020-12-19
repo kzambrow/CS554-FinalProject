@@ -32,6 +32,7 @@ function EditAccount() {
         }
         try {
             await axios.post('http://localhost:5000/user/editUser', {
+                //currentUser: currentUser,
                 id: currentUser.id,
                 displayName: user,
                 inGameName: inGame,
@@ -48,7 +49,7 @@ function EditAccount() {
     }
 
     return (
-        <div className="signin-main">
+        <div className="editAcc">
             <nav className="navigation">
                 <ul>
                     <li>
