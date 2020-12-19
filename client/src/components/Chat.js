@@ -12,7 +12,6 @@ const Chat = () => {
     const [currentImage, setCurrentImage] = useState("/imgs/turnipSmall.png");
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
-    const [userData, setUserData] = useState(undefined);
     const socketRef = useRef();
 
     useEffect(() => {
@@ -23,15 +22,6 @@ const Chat = () => {
         socketRef.current.on("RECEIVE_MESSAGE", function(message) {
             receivedMessage(message);
         });
-        async function getData(){
-            try{
-            const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
-            //console.log(userInfo); 
-            setUserData(userInfo);
-            }catch(e){
-                console.log(e);
-            }
-        };
         async function getImage() {
             try {
                 const profile = await axios.get(`http://localhost:5000/images/${currentUser.id}`); 
@@ -52,14 +42,7 @@ const Chat = () => {
                 console.log(e);
             }
         }
-        
-        getData();
         getImage();
-        
-        console.log("useEffect has been activated");
-        console.log('setMessages : ', setMessages); 
-        console.log('currentUser: ', currentUser); 
-        
         return () => {
             socketRef.current.off("disconnect");
         };
@@ -78,7 +61,7 @@ const Chat = () => {
         const messageObject = {
             image: currentImage,
             email: currentUser.email,
-            name: userData.data.data.displayName,
+            name: currentUser.displayName,
             body: message,
             id: ID,
         };

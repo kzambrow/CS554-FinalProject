@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const Comment = new Schema(
     {
-        name: {type: String, require: true},
-        posterId: {type: String, require: true},
+        displayName: {type: String, require: true},
+        userId: {type: String, require: true},
         comment: {type: String, require: true}
     }
 );

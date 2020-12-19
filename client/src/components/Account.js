@@ -22,7 +22,17 @@ const useStyles = makeStyles({
 		borderRadius: 5,
 		border: '1px solid #1e8678',
 		boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
-	},
+    },
+    card2: {
+		maxWidth: 250,
+		height: 'auto',
+		marginLeft: 'auto',
+        marginRight: 0,
+        marginTop: 0,
+		borderRadius: 5,
+		border: '1px solid #1e8678',
+		boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);'
+    },
 	titleHead: {
 		borderBottom: '1px solid #1e8678',
 		fontWeight: 'bold'
@@ -123,28 +133,10 @@ function Account(props){
             setUserData(userInfo);  
         };
         getData();
-        // try{
-        // let newimageSource = userData.imageData;
-        // let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
-        // if (finalimageSource.includes(".png")) {
-        //     finalimageSource = finalimageSource.replace(".png", "_medium.png");
-        // }
-        // if (finalimageSource.includes(".jpeg")) {
-        //     finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
-        // }
-        // if (finalimageSource.includes(".jpg")) {
-        //     finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
-        // }
-        // setMulterImage(finalimageSource);
-        // console.log('multer image is ' + multerImage);
-        // } catch (e) {
-        //     setMulterImage("/imgs/turnip.png");
-        //     console.log(e);
-        // }
-
             setLoading(false);
     }, [userId]);
 
+    //get User profile image
     useEffect(() => {
         async function getImage() {
             
@@ -180,7 +172,7 @@ function Account(props){
         //non authenticated view
          userData && (userCard = 
 
-            <Card className={classes.card} variant='outlined'>
+            <Card className={classes.card2} variant='outlined'>
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
@@ -188,7 +180,7 @@ function Account(props){
                         image={multerImage}
                         title='show image'
                     />
-                    <CardContent>
+                    <CardContent >
                         <Typography variant='body2' color='textSecondary' component='p'>
                             <br></br>
                             Username: {userData.data.data.displayName}
@@ -208,7 +200,7 @@ function Account(props){
         
         //authenticated view 
         userData && multerImage && currentUser && currentUser.id === userId && (userCard = 
-            <Card className={classes.card} variant='outlined'>
+            <Card className={classes.card2} variant='outlined'>
                 <CardActionArea>
                     <CardMedia
                         className={classes.media}
@@ -252,11 +244,11 @@ function Account(props){
             <div>
                 <br />
                 <br />
+                    {userCard}
+                <div>
                 <Grid container className={classes.grid} spacing={5}>
                     {card}
                 </Grid>
-                <div>
-                    {userCard}
                 </div>
             </div>
         );

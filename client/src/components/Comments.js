@@ -1,6 +1,7 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import { AuthContext } from '../firebase/Auth';
 import '../App.css';
+import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, makeStyles, Button } from '@material-ui/core';
 const axios = require('axios');
 
@@ -36,18 +37,34 @@ const useStyles = makeStyles({
 const Comments = props => {
     const [comment, setComment] = useState("");
     const { currentUser } = useContext(AuthContext);
+    const [userData, setUserData] = useState(undefined);
     const classes = useStyles();
     const postInfo = props.postInfo;
 
+    useEffect(() => {
+        async function getData(){
+            const userInfo = await axios.get(`http://localhost:5000/user/${currentUser.id}`); 
+            //console.log(userInfo); 
+            setUserData(userInfo);
+        };
+        getData();
+    }, [currentUser]);
 
-    function sendMessage(e) {
+
+    async function sendMessage(e) {
         e.preventDefault();
         const messageObject = {
             userId: currentUser.id,
-            name: currentUser.displayName,
+            displayName: currentUser.displayName,
             comment: comment,
         };
-        axios.patch(`localhost:5000/posts/${postInfo.id}`,messageObject)
+        console.log(messageObject);
+        try {
+            let test = await axios.patch(`localhost:5000/post/${postInfo.id}`, messageObject)
+            console.log(test);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     function handleChange(e) {
@@ -69,7 +86,7 @@ const Comments = props => {
                         {postInfo.comments.map(item => (
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p">
-                                    {item.displayName}
+                                    <Link to = {'/account/' + item.userId}> {item.displayName} </Link>
                                     {item.comment}
                                 </Typography>
                             </CardContent>
