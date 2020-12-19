@@ -47,9 +47,7 @@ const Chat = () => {
             socketRef.current.off("disconnect");
         };
         
-
-        
-    }, [setMessages])
+    }, [setMessages, currentUser])
 
 
     function receivedMessage(message) {

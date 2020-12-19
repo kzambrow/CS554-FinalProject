@@ -59,8 +59,10 @@ const Comments = props => {
         };
 
         try {
-            let test = await axios.patch(`http://localhost:5000/post/${postInfo._id}`, messageObject);
-            setPostInfo(test.data.data);
+
+            let test = await axios.patch(`localhost:5000/post/${postInfo.id}`, messageObject)
+            console.log(test);
+          
         } catch (e) {
             console.log(e);
         }

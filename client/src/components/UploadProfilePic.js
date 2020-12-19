@@ -25,7 +25,7 @@ function UploadProfilePic() {
         }
         getImage();
     }, [multerImage]);
-
+    
     const uploadImage = (e) => {
         let imageFormObj = new FormData();
         imageFormObj.append("userId", currentUser.id);
