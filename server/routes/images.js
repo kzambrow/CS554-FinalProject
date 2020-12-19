@@ -86,8 +86,8 @@ async function convertmedium(source) {
     }
 }
 
-router.get("/:email", (req, res) => {
-    ImageScheme.findOne({ userEmail: req.params.email }, (err, image) => {
+router.get("/:id", (req, res) => {
+    ImageScheme.findOne({ userId: req.params.id }, (err, image) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -137,23 +137,11 @@ router.delete("/:email", (req, res) => {
 router.route("/uploadmulter")
     .post(upload.single('imageData'), (req, res, next) => {
         const newImage = new ImageScheme({
+            userId: req.body.userId,
             userEmail: req.body.userEmail,
             imageName: req.body.imageName,
             imageData: req.file.path
         });
-        let user1 = 
-        UserScheme.findOneAndUpdate({userEmail: newImage.userEmail}, { $set: { imageData: newImage.imageData}}, (err, user)=>{
-            if (err) {
-                res.status(400).json( {success: false, error: err })
-                return;
-            }
-            if (!user) {
-                res.status(200).json({ success: true, data: false })
-                return;
-            }
-           } 
-        )
-        console.log(user1);
 
         newImage.save()
         .then((result) => {

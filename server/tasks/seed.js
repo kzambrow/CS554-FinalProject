@@ -5,8 +5,8 @@ const User = require('../models/user-model');
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async function () {
     console.log("Connection Successful!");
-    await User.collection.drop();
-    await Post.collection.drop();
+    //await User.collection.drop();
+    //await Post.collection.drop();
 
     const user1 = await new User({
         "email": "testuser1@test.com",

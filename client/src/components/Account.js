@@ -122,53 +122,53 @@ function Account(props){
             setUserData(userInfo);  
         };
         getData();
-        try{
-        let newimageSource = userData.imageData;
-        let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
-        if (finalimageSource.includes(".png")) {
-            finalimageSource = finalimageSource.replace(".png", "_medium.png");
-        }
-        if (finalimageSource.includes(".jpeg")) {
-            finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
-        }
-        if (finalimageSource.includes(".jpg")) {
-            finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
-        }
-        setMulterImage(finalimageSource);
-        console.log('multer image is ' + multerImage);
-        } catch (e) {
-            setMulterImage("/imgs/turnip.png");
-            console.log(e);
-        }
+        // try{
+        // let newimageSource = userData.imageData;
+        // let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
+        // if (finalimageSource.includes(".png")) {
+        //     finalimageSource = finalimageSource.replace(".png", "_medium.png");
+        // }
+        // if (finalimageSource.includes(".jpeg")) {
+        //     finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
+        // }
+        // if (finalimageSource.includes(".jpg")) {
+        //     finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
+        // }
+        // setMulterImage(finalimageSource);
+        // console.log('multer image is ' + multerImage);
+        // } catch (e) {
+        //     setMulterImage("/imgs/turnip.png");
+        //     console.log(e);
+        // }
 
             setLoading(false);
     }, [userId]);
 
-    // useEffect(() => {
-    //     async function getImage() {
+    useEffect(() => {
+        async function getImage() {
             
-    //         try {
-    //             const profile = await axios.get(`http://localhost:5000/images/${userData.data.data.email}`); 
-    //             let newimageSource = profile.data.data.imageData;
-    //             let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
-    //             if (finalimageSource.includes(".png")) {
-    //                 finalimageSource = finalimageSource.replace(".png", "_medium.png");
-    //             }
-    //             if (finalimageSource.includes(".jpeg")) {
-    //                 finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
-    //             }
-    //             if (finalimageSource.includes(".jpg")) {
-    //                 finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
-    //             }
-    //             setMulterImage(finalimageSource);
-    //             console.log('multer image is ' + multerImage);
-    //         } catch (e) {
-    //             setMulterImage("/imgs/turnip.png");
-    //             console.log(e);
-    //         }
-    //     }
-    //     getImage();
-    // }, [userId]);
+            try {
+                const profile = await axios.get(`http://localhost:5000/images/${userId}`); 
+                let newimageSource = profile.data.data.imageData;
+                let finalimageSource = newimageSource.replaceAll("\\", "/").replace("../client/public", "");
+                if (finalimageSource.includes(".png")) {
+                    finalimageSource = finalimageSource.replace(".png", "_medium.png");
+                }
+                if (finalimageSource.includes(".jpeg")) {
+                    finalimageSource = finalimageSource.replace(".jpeg", "_medium.jpeg");
+                }
+                if (finalimageSource.includes(".jpg")) {
+                    finalimageSource = finalimageSource.replace(".jpg", "_medium.jpg");
+                }
+                setMulterImage(finalimageSource);
+                console.log('multer image is ' + multerImage);
+            } catch (e) {
+                setMulterImage("/imgs/turnip.png");
+                console.log(e);
+            }
+        }
+        getImage();
+    }, [userId]);
 
 
     //console.log('userData is, ' + userData);

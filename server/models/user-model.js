@@ -17,10 +17,6 @@ const Schema = mongoose.Schema;
 
 const User = new Schema(
     {
-        imageData: {
-            type: String,
-            required:false
-            },
         email: {type: String, required: true, unique: true},
         displayName: {type: String, require: true},
         star: {type: Number, default:0, required: false},
