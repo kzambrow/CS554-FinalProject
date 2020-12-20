@@ -77,7 +77,8 @@ const Comments = props => {
         <div>
             <div>
             <form onSubmit={sendMessage}>
-                <textarea className="chat-text-field" value={comment} onChange={handleChange} placeholder="Message..." />
+            <label className="center" for = "comment-text-field">Enter Comment</label>
+                <textarea id="comment-text-field" className="chat-text-field" value={comment} onChange={handleChange} />
                 <button className="chat-submit">Send</button>
             </form>
             </div>
