@@ -37,40 +37,6 @@ function SignIn() {
   }
   return (
     <div >
-      {/* <h1>Log in</h1> */}
-      {/* <p className="sign" align="cneter">Log in</p>
-      <form className="log-in form1" onSubmit={handleLogin}>
-        <div className="form-group log-in-form" aligh="center">
-          <label>
-            Email:
-            <input
-              className="form-control"
-              name="email"
-              id="email"
-              type="email"
-              placeholder="Email"
-              required
-            />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Password:
-            <input
-              className="form-control"
-              name="password"
-              type="password"
-              placeholder="Password"
-              required
-            />
-          </label>
-        </div>
-        <button type="submit" aligh="center">Log in</button>
-
-        <button className="forgotPassword" onClick={passwordReset}>
-          Forgot Password
-        </button>
-      </form> */}
       <div className="signin-in">
         <p className="sign center">Sign In</p>
         <form className="form1" onSubmit={handleLogin}>
