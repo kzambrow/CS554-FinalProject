@@ -126,7 +126,8 @@ const Chat = () => {
             {currentUser ?
             
             <form onSubmit={sendMessage}>
-                <textarea className="chat-text-field" value={message} onChange={handleChange} placeholder="Message..." />
+                <label for = "chat-text-field">Enter message</label>
+                <textarea id = "chat-text-field" className="chat-text-field" value={message} onChange={handleChange} />
                 <button className="chat-submit">Send</button>
             </form>
             : 

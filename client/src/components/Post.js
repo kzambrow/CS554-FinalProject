@@ -52,16 +52,15 @@ function Post() {
     }
 
     return (
-        <div className="add-post" align="center">
-            <h2 className="post" align="center">Post</h2>
+        <div className="add-post ">
+            <h1 className="post center">Post</h1>
 
-            <form className="form2" onSubmit={handlePost}>
+            <form className="form2 center" onSubmit={handlePost}>
                 <div className="form-group">
+                <label for="price">Price  <br></br>  </label>
                     <input
                         className="un form-control"
                         type="number"
-                        align="center"
-                        placeholder="Price"
                         name="price"
                         id="price"
                         required
@@ -78,32 +77,34 @@ function Post() {
                         required
                     />
                 </div> */}
-                <div className="form-group">
+                <div className="form-group center">
+                <label for="ticketPrice">Ticket Price <br></br>  </label>
                     <input
                         className="un form-control"
                         type="text"
-                        align="center"
-                        placeholder="Ticket Price"
+                       
+                       
                         name="ticketPrice"
                         id="ticketPrice"
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group center">
+                    <label for = "islandCode"> Island Code  <br></br></label>
                     <input
                         className="un form-control"
                         type="text"
-                        align="center"
-                        placeholder="Island Code"
+                       
+                        
                         name="islandCode"
                         id="islandCode"
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group center">
                 </div>
-                <div id="sell" class="dropdown" name="sell" align="center" >
-                    <div className="radio">
+                <div id="sell" class="dropdown" >
+                    <div className="radio center">
                         <label>
                             <input name="test" type="radio" onChange={sellButton} />Selling</label>
                         <label>
@@ -111,29 +112,30 @@ function Post() {
                     </div>
                 </div>
                 <br></br>
-                <div className="form-group">
+                <div className="form-group center">
+                    <label for = "description">Description <br></br></label>
                     <input
                         className="un form-control"
                         type="text"
-                        align="center"
-                        placeholder="Description"
+                        
+                        
                         name="description"
                         id="description"
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group center">
+                    <label for = "endTime"> End Time <br></br></label>
                     <input
                         className="un form-control"
                         type="datetime-local"
-                        align="center"
-                        placeholder="End Time"
+                    
                         name="endTime"
                         id="endTime"
                         required
                     />
                 </div>
-                <button className="submit" id="submitButton" name="submitButton" type="submit" align="center">
+                <button className="submit" id="submitButton" name="submitButton" type="submit" >
                     Post
                 </button>
             </form>
