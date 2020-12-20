@@ -37,70 +37,66 @@ function SignUp() {
 
   return (
     <div className="signout-main">
-      <p className="sign" align="center">Sign Up</p>
+      <p className="sign center">Sign Up</p>
       {pwMatch && <h4 className="error">{pwMatch}</h4>}
       <form className="form2" onSubmit={handleSignUp}>
         <div className="form-group">
+          <label className="center" for="Username">Username</label>
           <input
-            className="un form-control"
+            className="un form-control center"
             type="text"
-            align="center"
-            placeholder="Username"
             name="Username"
             id="Username"
             required
           />
         </div>
         <div className="form-group">
+        <label className="center" for="email">Email</label>
           <input
             className="un form-control"
             type="email"
-            align="center"
-            placeholder="Email"
             name="email"
             id="email"
             required
           />
         </div>
         <div className="form-group">
+        <label className="center" for="inGameName">In Game Name</label>
           <input
             className="un form-control"
             type="text"
-            align="center"
-            placeholder="In Game Name"
             name="inGameName"
             id="inGameName"
             required
           />
         </div>
         <div className="form-group">
+        <label className="center" for="islandName">Island Name</label>
           <input
             className="un form-control"
             type="text"
-            align="center"
-            placeholder="Island Name"
             name="islandName"
             id="islandName"
             required
           />
         </div>
         <div className="form-group">
+        <label className="center" for="passwordOne">Password</label>
           <input
             className="pass form-control"
             type="password"
-            align="center"
-            placeholder="Password"
             name="passwordOne"
+            id="passwordOne"
             required
           />
         </div>
         <div className="form-group">
+        <label className="center" for="passwordTwo">Confirm Password</label>
           <input
             className="pass form-control"
             type="password"
-            align="center"
-            placeholder="Confirm Password"
             name="passwordTwo"
+            id="passwordTwo"
             required
           />
         </div>

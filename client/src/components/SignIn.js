@@ -72,31 +72,29 @@ function SignIn() {
         </button>
       </form> */}
       <div className="signin-in">
-        <p className="sign" align="center">Sign In</p>
+        <p className="sign center">Sign In</p>
         <form className="form1" onSubmit={handleLogin}>
+          <label for="email" className="center">Email</label>
           <input
             className="un form-control"
+            id="email"
             type="email"
-            align="center"
-            placeholder="Email"
             name="email"
             id="email"
             required
           />
+          <label for="password" className="center">Password</label>
           <input 
-          className="pass form-control" 
-          type="password" 
-          align="center" 
-          placeholder="Password" 
+          className="pass form-control"
+          id="password"
+          type="password"  
           name="password"
           required
           />
-          <button className="submit" align="center">Sign In</button>
+          <button className="submit center">Sign In</button>
           <br/>
           <br/>
-            <button className="forgot" onClick={passwordReset}>
-                Forgot Password
-            </button>
+          <button className="forgot center" onClick={passwordReset}>Forgot Password</button>
         </form>
               <br />
               <br />
