@@ -54,10 +54,12 @@ function Post() {
     return (
         <div className="add-post ">
             <h1 className="post center">Post</h1>
+            <br>
+            </br>
 
             <form className="form2 center" onSubmit={handlePost}>
-                <div className="form-group">
-                <label for="price">Price  <br></br>  </label>
+                <div className="form-group center">
+                <label for="price">Price  <br></br></label>
                     <input
                         className="un form-control"
                         type="number"
@@ -78,7 +80,7 @@ function Post() {
                     />
                 </div> */}
                 <div className="form-group center">
-                <label for="ticketPrice">Ticket Price <br></br>  </label>
+                <label for="ticketPrice">Ticket Price <br></br></label>
                     <input
                         className="un form-control"
                         type="text"
@@ -90,7 +92,7 @@ function Post() {
                     />
                 </div>
                 <div className="form-group center">
-                    <label for = "islandCode"> Island Code  <br></br></label>
+                    <label for = "islandCode"> Island Code <br></br></label>
                     <input
                         className="un form-control"
                         type="text"
@@ -125,7 +127,7 @@ function Post() {
                     />
                 </div>
                 <div className="form-group center">
-                    <label for = "endTime"> End Time <br></br></label>
+                    <label for = "endTime"> End Time:</label>
                     <input
                         className="un form-control"
                         type="datetime-local"
@@ -135,7 +137,7 @@ function Post() {
                         required
                     />
                 </div>
-                <button className="submit" id="submitButton" name="submitButton" type="submit" >
+                <button className="submit center" id="submitButton" name="submitButton" type="submit" >
                     Post
                 </button>
             </form>
