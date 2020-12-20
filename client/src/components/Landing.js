@@ -102,16 +102,16 @@ const Landing = (props) => {
 							<br></br>
 									Ticket Price: {show.ticketPrice}
 							<br></br>
-									Description: {show.description ? <p>{show.description}</p> : "None available"}
+									Description: {show.description}
 							<br></br>
 									datePosted: {show.createdAt}
 							<br></br>
-									expirationTime: {show.endTime}<br />
+									expirationTime: {show.endTime}
 						</Typography>
 					</CardContent>
 
 					{/* <Button><Link to={'/joinqueue'} postId={show.id}></Link></Button> */}
-					<Button><Link to={`/posts/${show._id}`} > More Info</Link></Button>
+					<Link to={`/posts/${show._id}`} > More Info </Link>
 				</Card>
 			</Grid>
 		);
@@ -136,7 +136,7 @@ const Landing = (props) => {
 			<div>
 				<br />
 				<br />
-				<Button style = {{position: 'absolute', left: '50%'}}> <Link to={"/sell"}> View Selling </Link> </Button>
+				<Link  style = {{position: 'absolute', left: '50%'}} to={"/sell"}>  View Selling </Link>
 				<br/><br/>
 
 				<Grid container className={classes.grid} spacing={5}>

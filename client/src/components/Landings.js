@@ -94,7 +94,7 @@ const Landings = () => {
 									<br></br>
 									Ticket Price: {show.ticketPrice}
 									<br></br>
-									Description: {show.description ? <p>{show.description}</p> : "None available"}
+									Description: {show.description}
 									<br></br>
 									datePosted: {show.createdAt}
 									<br></br>
@@ -102,7 +102,7 @@ const Landings = () => {
 								</Typography>
 							</CardContent>
 
-							<Button style = {{left: '25%'}}><Link to = {`/posts/${show._id}`}> More Info</Link></Button>
+							<Link  style = {{left: '25%'}} to = {`/posts/${show._id}`}> More Info</Link>
 				</Card>
 			</Grid>
 		);
@@ -125,7 +125,7 @@ const Landings = () => {
 			<div>
 				<br />
 				<br />
-				<Button style = {{ position: 'absolute', left: '50%'}}> <Link to =  {"/" }> View Buying </Link> </Button>
+				 <Link  style = {{ position: 'absolute', left: '50%'}} to =  {"/" }> View Buying </Link>
 				<br/><br/>
 				
 				<Grid container className={classes.grid} spacing={5}>
