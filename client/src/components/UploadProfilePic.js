@@ -52,7 +52,9 @@ function UploadProfilePic() {
     return (
         <div>
             <form>
-                <input type="file"
+                <label for ="profilePic">
+                </label>
+                <input type="file" id="profilePic"
                 onChange={uploadImage}
             />
             </form>

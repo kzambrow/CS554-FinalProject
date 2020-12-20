@@ -45,17 +45,10 @@ const useStyles = makeStyles({
 		height: '100%',
 		width: '100%'
 	},
-	button: {
-		color: '#1e8678',
-		fontWeight: 'bold',
-		fontSize: 12
-	}
 });
 
 //TODO
 //Add nintendo id attribute to user 
-//Change color on user links and more info 
-//format account page
 
 function Account(props){
     //console.log(props.match.params.id); 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Redirect, NavLink } from 'react-router-dom';
+import { Redirect, NavLink, Link } from 'react-router-dom';
 import { AuthContext } from '../firebase/Auth';
 //import SocialSignIn from './SocialSignIn';
 import UploadProfilePic from './UploadProfilePic';
@@ -56,55 +56,60 @@ function EditAccount() {
 
     return (
         <div className="editAcc">
-            <nav className="navigation">
-                <ul>
-                    <li>
-                        <NavLink exact to="/changePassword" activeClassName="active" className="logo">
-                            Change your Password
-                        </NavLink>
-                    </li>
-                </ul>
-            </nav>
-            <div align="center">
-            <UploadProfilePic />
+            <div class="center">
+                    <UploadProfilePic />
             </div>
-            <p className="sign" align="center">Edit Account Info</p>
+            <p className="sign center" >Edit Account Info</p>
+            <br />
             <form className="form2" onSubmit={handleEdit}>
+
                 <div className="form-group">
+                    <label for="Username">
+                    </label>
                     <input
-                        className="un form-control"
+                        className="un form-control center"
                         type="text"
-                        align="center"
+                        
                         placeholder="Username"
                         name="Username"
                         id="Username"
                     />
                 </div>
+                <br />
                 <div className="form-group">
+                <label for="inGameName">
+                </label>
                     <input
-                        className="un form-control"
+                        className="un form-control center"
                         type="text"
-                        align="center"
+                        
                         placeholder="In Game Name"
                         name="inGameName"
                         id="inGameName"
                     />
                 </div>
+                <br />
                 <div className="form-group">
+                <label for="islandName">
+                </label>
                     <input
-                        className="un form-control"
+                        className="un form-control center"
                         type="text"
-                        align="center"
+                        
                         placeholder="Island Name"
                         name="islandName"
                         id="islandName"
                     />
                 </div>
-
+                <br />
                 <button className="submit" id="submitButton" name="submitButton" type="submit">
                     Save Info
-        </button>
+                </button>
             </form>
+            <br />
+            <Link exact to="/changePassword">
+                    Change your Password
+            </Link>
             <br />
         </div>
     );

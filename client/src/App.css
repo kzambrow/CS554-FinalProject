@@ -318,7 +318,11 @@ a {
     height: 60px;
   }
 
-  
+  .center {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
 
 
 
