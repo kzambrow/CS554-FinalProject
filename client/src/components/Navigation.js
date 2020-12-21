@@ -19,7 +19,6 @@ const NavigationAuth = () => {
     <div class = "topnav">
           <img class = "logo" src = "/imgs/turnip_logo.png" alt="No-img"/>
           <Link to="/">Turnip Exchange</Link>
-          <Link to="/">Home</Link>
           <Link to={'/account/' + currentUser.id}>Account</Link>
           <Link to={'/post/addpost'}>Add Post</Link>
           <Link to="#signout" onClick={doSignOut}> Sign Out</Link>  
@@ -33,7 +32,6 @@ const NavigationNonAuth = () => {
       <div class = "topnav">
           <img class = "logo" src = "/imgs/turnip_logo.png" alt="No-img"/>
           <Link to="/">Turnip Exchange</Link>
-          <Link to="/">Home</Link>
           <Link to='/signup' >Sign Up</Link>
           <Link to="/signin">Sign In</Link>
       </div>
