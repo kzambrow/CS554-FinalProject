@@ -16,5 +16,8 @@ then
 and the server and client will run
 
 if for some reason concurrently is not working, please
-cd into the server folder and npm install
-cd back into the root, then cd into the client folder and npm install
+cd into the server folder and run "npm install", then
+cd back into the root, then cd into the client folder and run "npm install",
+then you should be able to cd back into the root and "npm start".
+if the "npm start" still has issues due to concurrently not working, please cd into both the server and client and run 
+"npm start" in both of them.
