@@ -21,3 +21,5 @@ cd back into the root, then cd into the client folder and run "npm install",
 then you should be able to cd back into the root and "npm start".
 if the "npm start" still has issues due to concurrently not working, please cd into both the server and client and run 
 "npm start" in both of them.
+
+if the client does not open automatically, please go to localhost:3000
