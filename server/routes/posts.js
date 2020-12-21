@@ -101,16 +101,20 @@ router.get("/byUser/:id", async (req, res) => {
 router.post("/addPost", async (req, res) => {
     const body = req.body;
     const currentTime = new Date();
+    const expireTime = new Date(body.endTime + "Z");
+    
     if (body.price < 0) {
-        return res.status(400).json({ success: false, message: 'Price cannot be below 0' })
+        return res.status(400).json({ success: false, message: 'Price cannot be below 0'})
     }
-
+    if(currentTime > expireTime){
+        return res.status(400).json({ success: false, message: 'Expire time can not be in the past'})
+    }
     if (!body) {
         return res.status(400).json({ success: false, message: 'You must provide post info' })
     }
     const existPost =await Post.find({creator: body.creator, archived: false});
     if(existPost.length>0) return res.status(400).json({success: false, message: 'You already have an active post', data: existPost});
-
+    
     const poster = await User.findById(req.body.creator);
 
     const post = new Post({
@@ -147,16 +151,16 @@ router.post("/addPost", async (req, res) => {
 
 });
 
-router.post("/delete/:id", async (req, res) => {
-    await Post.findByIdAndUpdate(req.params.id, {$set:{archived: true}},(err, post) => {
+router.delete("/delete/:id", async (req, res) => {
+    console.log('id in  delete Routes is ', req.params.id);
+    await Post.findByIdAndDelete(req.params.id, (err, post) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-
         if (!post) {
-            return res.status(404).json({ success: false, error: 'Post doesn\'t exist or already expired' })
+            return res.status(404).json({ success: false, error: 'Post doesn\'t exist' })
         }
-        return res.status(200).json({ success: true, data: post })
+        return res.status(200).json("Post deleted" );
     }).catch(err => {
         console.log(err);
     })

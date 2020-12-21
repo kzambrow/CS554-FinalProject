@@ -36,7 +36,7 @@ function Post() {
     }
 
     if (posted) {
-        return <Redirect to="/" />;
+        return <Redirect to={"/account/" + currentUser.id} />;
     }
 
     //const redir = async () => {
@@ -80,7 +80,7 @@ function Post() {
                     />
                 </div> */}
                 <div className="form-group center">
-                <label for="ticketPrice">Ticket Price <br></br></label>
+                <label for="ticketPrice">Items Required<br></br></label>
                     <input
                         className="un form-control"
                         type="text"

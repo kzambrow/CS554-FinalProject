@@ -59,7 +59,8 @@ function Account(props){
     const [userData, setUserData] = useState(undefined); 
     const [userId, setUserId] = useState(props.match.params.id); 
     const [multerImage, setMulterImage] = useState("/imgs/turnip.png");
-
+    const [postId, setPostId] = useState(undefined);
+    const[isDelete, setIsDelete] = useState(false); 
     const { currentUser } = useContext(AuthContext);
     //console.log(currentUser.id); 
 
@@ -75,13 +76,42 @@ function Account(props){
             }
         }
         fetchData();
-    }, [userId]);
+    }, [userId, isDelete]);
     
+    useEffect(() =>{
+        async function deletePost(){
+                console.log('delete post id is ', userId);
+                try {
+                    const post = await axios.get(`http://localhost:5000/post/byUser/${userId}`); 
+                    if(post){
+                    setPostId(post.data.data._id);
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            };
+            deletePost();
+    }, [isDelete]);
+    
+    useEffect(() =>{
+        async function deletePost2(){
+            try{
+                if(postId){
+                    await axios.delete(`http://localhost:5000/post/delete/${postId}`)
+                }
+            }catch (e){
+            console.log(e);
+            }
+        };
+        deletePost2();
+    }, [postId]);
+  
     const buildCard = (show) => {
+        console.log('show is', show.archived);
         return (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={show.id}>
                 <Card className={classes.card} variant='outlined'>
-                    <CardActionArea>
+                    
                     <CardMedia
 								className={classes.media}
 								component='img'
@@ -89,34 +119,45 @@ function Account(props){
 								alt = 'No image'
 								title='show image'
 							/>
-                            <CardContent>
+                            <CardContent >
                                 <Typography variant='body2' color='textSecondary' component='p'>
                                     Type: {show.sell ? "Selling": "Buying"}
                                     <br></br>
                                     Price: {show.price}
                                     <br></br>
-                                    Ticket Price: {show.ticketPrice}
+                                    Items Required: {show.ticketPrice}
                                     <br></br>
                                     Rating: {show.rating}
                                     <br></br>
                                     datePosted: {show.Date}
                                     <br></br>
                                     expirationTime: {show.endTime}
+                                    <br></br>
+                                    Archived: {show.archived}
+                                    <br></br>
+                                    <br></br>
+                                    {currentUser && currentUser.id && currentUser.id === userId &&  (
+                                        <button onClick = { () => setIsDelete(true)}>Delete Post</button>
+                                    )}
+                                
+                                    <br></br>
+                                    <br></br>
                                 </Typography>
                             </CardContent>
-                        
-                    </CardActionArea>
+                   
                 </Card>
             </Grid>
         );
     };
+
+
     
     console.log('profilePost is ', profilePost); 
     let card = null;
     card =
-        profilePost && profilePost.data &&(
+        profilePost && profilePost.data && (
         buildCard(profilePost.data)
-    );
+        );
 
     //GET User Info to be displayed on the side
     useEffect(() => {
